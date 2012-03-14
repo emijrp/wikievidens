@@ -38,6 +38,60 @@ if PATH: os.chdir(PATH)
 class WikiEvidens:
     def __init__(self, master):
         self.master = master
+        self.block = False #semaphore
+        self.font = ("Arial", 10)
+        
+        self.label1 = ttk.Label(self.master)
+        self.label1.grid(row=0, column=0)
+        
+        #start main tabs
+        self.notebook = ttk.Notebook(self.master)
+        self.notebook.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
+        self.framedownload = ttk.Frame(self.master)
+        self.notebook.add(self.framedownload, text='Download')
+        self.framepreprocess = ttk.Frame(self.master)
+        self.notebook.add(self.framepreprocess, text='Preprocess')
+        self.frameanalysis = ttk.Frame(self.master)
+        self.notebook.add(self.frameanalysis, text='Analysis')
+        self.frameexport = ttk.Frame(self.master)
+        self.notebook.add(self.frameexport, text='Export')
+        #end main tabs
+        
+        #start download tabs
+        self.notebookdownloadlabel1 = Label(self.framedownload, text="The first step is to download a dataset.", anchor=W, font=self.font)
+        self.notebookdownloadlabel1.grid(row=0, column=0)
+        self.notebookdownload = ttk.Notebook(self.framedownload)
+        self.notebookdownload.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
+        self.framedownloadwikis = ttk.Frame(self.framedownload)
+        self.notebookdownload.add(self.framedownloadwikis, text='Wikis')
+        self.framedownloadother = ttk.Frame(self.framedownload)
+        self.notebookdownload.add(self.framedownloadother, text='Other')
+        self.framedownloaddumpgenerator = ttk.Frame(self.framedownload)
+        self.notebookdownload.add(self.framedownloaddumpgenerator, text='Dump generator')
+        #end download tabs
+        
+        #preprocess
+        
+        #start analysis tabs
+        self.notebookanalysislabel1 = Label(self.frameanalysis, text="No preprocessed dump has been loaded yet.", anchor=W, font=self.font)
+        self.notebookanalysislabel1.grid(row=0, column=0)
+        self.notebookanalysis = ttk.Notebook(self.frameanalysis)
+        self.notebookanalysis.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
+        self.frameanalysisglobal = ttk.Frame(self.frameanalysis)
+        self.notebookanalysis.add(self.frameanalysisglobal, text='Global')
+        self.frameanalysispages = ttk.Frame(self.frameanalysis)
+        self.notebookanalysis.add(self.frameanalysispages, text='Pages')
+        self.frameanalysisusers = ttk.Frame(self.frameanalysis)
+        self.notebookanalysis.add(self.frameanalysisusers, text='Users')
+        self.frameanalysissamples = ttk.Frame(self.frameanalysis)
+        self.notebookanalysis.add(self.frameanalysissamples, text='Samples')
+        #end analysis tabs
+        
+        #export
+        
+        #statusbar
+        self.status = Label(self.master, text="Welcome to %s. What do you want to do today?" % (NAME), bd=1, justify=LEFT, relief=SUNKEN, width=127)
+        self.status.grid(row=2, column=0, columnspan=1, sticky=W+E)
 
 def askclose():
     if tkMessageBox.askokcancel("Quit", "Do you really wish to exit?"):
