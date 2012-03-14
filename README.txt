@@ -1,16 +1,20 @@
-------------------------------------------------------------------------
- WikiEvidens
- A visualization and statistical tool for wikis
-------------------------------------------------------------------------
 
-Requirements
+== WikiEvidens ==
+A visualization and statistical tool for wikis.
 
+== Requirements ==
 
-Installation
+TODO.
 
+== Installation ==
 
-Usage
+TODO.
 
+== Usage ==
 
-Further information
+TODO.
+
+== Further information ==
+
+Project site: https://code.google.com/p/wikievidens/
 
