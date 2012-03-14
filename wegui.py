@@ -17,8 +17,11 @@
 
 import os
 import platform
+import random
+import re
 import sqlite3
 import thread
+import urllib
 import webbrowser
 
 #tkinter modules
@@ -27,6 +30,19 @@ import ttk
 import tkMessageBox
 import tkSimpleDialog
 import tkFileDialog
+
+wikifarms = {
+    'gentoo_wikicom': 'Gentoo Wiki',
+    'opensuseorg': 'OpenSuSE',
+    'referatacom': 'Referata',
+    'shoutwikicom': 'ShoutWiki',
+    'Unknown': 'Unknown',
+    'wikanda': 'Wikanda',
+    'wikifur': 'WikiFur',
+    'wikimedia': 'Wikimedia',
+    'wikitravelorg': 'WikiTravel',
+    'wikkii': 'Wikkii',
+}
 
 NAME = 'WikiEvidens'
 VERSION = '0.0.1'
@@ -38,6 +54,8 @@ if PATH: os.chdir(PATH)
 class WikiEvidens:
     def __init__(self, master):
         self.master = master
+        self.dumps = []
+        self.downloadpath = 'downloads'
         self.block = False #semaphore
         self.font = ("Arial", 10)
         
@@ -123,11 +141,11 @@ class WikiEvidens:
         
         #start download wikis tab
         self.framedownloadwikislabel1 = Label(self.framedownloadwikis, text="Choose a wiki dump to download.", anchor='center', font=self.font)
-        self.framedownloadwikislabel1.grid(row=0, column=0, sticky=W)
+        self.framedownloadwikislabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         self.framedownloadwikistreescrollbar = Scrollbar(self.framedownloadwikis)
-        self.framedownloadwikistreescrollbar.grid(row=1, column=1, sticky=W+E+N+S)
+        self.framedownloadwikistreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
         framedownloadwikiscolumns = ('dump', 'wikifarm', 'size', 'date', 'mirror', 'status')
-        self.framedownloadwikistree = ttk.Treeview(self.framedownloadwikis, height=29, columns=framedownloadwikiscolumns, show='headings', yscrollcommand=self.framedownloadwikistreescrollbar.set)
+        self.framedownloadwikistree = ttk.Treeview(self.framedownloadwikis, height=27, columns=framedownloadwikiscolumns, show='headings', yscrollcommand=self.framedownloadwikistreescrollbar.set)
         self.framedownloadwikistreescrollbar.config(command=self.framedownloadwikistree.yview)
         self.framedownloadwikistree.column('dump', width=460, minwidth=460, anchor='center')
         self.framedownloadwikistree.heading('dump', text='Dump')
@@ -141,11 +159,17 @@ class WikiEvidens:
         self.framedownloadwikistree.heading('mirror', text='Mirror')
         self.framedownloadwikistree.column('status', width=120, minwidth=120, anchor='center')
         self.framedownloadwikistree.heading('status', text='Status')
-        self.framedownloadwikistree.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
+        self.framedownloadwikistree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
         #[self.framedownloadwikistree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
-        #self.tree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
+        #self.framedownloadwikistree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         self.framedownloadwikistree.tag_configure('downloaded', background='lightgreen')
         self.framedownloadwikistree.tag_configure('nodownloaded', background='white')
+        self.framedownloadwikisbutton21 = Button(self.framedownloadwikis, text="Load available dumps", command=lambda: thread.start_new_thread(self.loadAvailableDumps, ()), width=15)
+        self.framedownloadwikisbutton21.grid(row=2, column=0)
+        self.framedownloadwikisbutton23 = Button(self.framedownloadwikis, text="Download selection", command=lambda: thread.start_new_thread(self.downloadDump, ()), width=15)
+        self.framedownloadwikisbutton23.grid(row=2, column=1)
+        self.framedownloadwikisbutton22 = Button(self.framedownloadwikis, text="Clear list", command=self.deleteAvailableDumps, width=10)
+        self.framedownloadwikisbutton22.grid(row=2, column=2)
         #end download wikis tab
     
     def callback(self):
@@ -165,7 +189,147 @@ class WikiEvidens:
         else:
             print msg
             self.status.config(text=msg, background='grey')
-
+    
+    def blocked(self):
+        self.msg(msg='There is a task in progress. Please, wait.', level='error')
+    
+    def downloadProgress(self, block_count, block_size, total_size):
+        try:
+            total_mb = total_size/1024/1024.0
+            downloaded = block_count *(block_size/1024/1024.0)
+            percent = downloaded/(total_mb/100.0)
+            if not random.randint(0,10):
+                msg = "%.1f MB of %.1f MB downloaded (%.1f%%)" % (downloaded, total_mb, percent <= 100 and percent or 100)
+                self.msg(msg)
+            #sys.stdout.write("%.1f MB of %.1f MB downloaded (%.2f%%)" %(downloaded, total_mb, percent))
+            #sys.stdout.flush()
+        except:
+            pass
+    
+    def downloadDump(self, event=None):
+        if self.block:
+            self.blocked()
+            return
+        else:
+            self.block = True
+        items = self.framedownloadwikistree.selection()
+        if items:
+            if not os.path.exists(self.downloadpath):
+                os.makedirs(self.downloadpath)
+            c = 0
+            d = 0
+            for item in items:
+                filepath = self.downloadpath and self.downloadpath + '/' + self.dumps[int(item)][0] or self.dumps[int(item)][0]
+                if os.path.exists(filepath):
+                    self.msg('That dump was downloaded before', level='ok')
+                    d += 1
+                else:
+                    self.msg("[%d of %d] Downloading %s from %s" % (c+1, len(items), self.framedownloadwikistree.item(item,"text"), self.dumps[int(item)][5]))
+                    f = urllib.urlretrieve(self.dumps[int(item)][5], filepath, reporthook=self.downloadProgress)
+                    msg='%s size is %s bytes large. Download successful!' % (self.dumps[int(item)][0], os.path.getsize(filepath))
+                    self.msg(msg=msg, level='ok')
+                    c += 1
+                self.dumps[int(item)] = self.dumps[int(item)][:6] + ['True']
+            if c + d == len(items):
+                self.msg('Downloaded %d of %d%s.' % (c, len(items), d and ' (and %d were previously downloaded)' % (d) or ''), level='ok')
+            else:
+                self.msg('Problems in %d dumps. Downloaded %d of %d (and %d were previously downloaded).' % (len(items)-(c+d), c, len(items), d), level='error')
+        else:
+            tkMessageBox.showerror("Error", "You have to select some dumps to download.")
+        self.clearAvailableDumps()
+        self.showAvailableDumps()
+        #self.filterAvailableDumps()
+        self.block = False
+    
+    def deleteAvailableDumps(self):
+        #really delete dump list and clear tree
+        self.clearAvailableDumps()
+        self.dumps = [] #reset list
+    
+    def clearAvailableDumps(self):
+        #clear tree
+        for i in range(len(self.dumps)):
+            self.framedownloadwikistree.delete(str(i))
+    
+    def showAvailableDumps(self):
+        c = 0
+        for filename, wikifarm, size, date, mirror, url, downloaded in self.dumps:
+            self.framedownloadwikistree.insert('', 'end', str(c), text=filename, values=(filename, wikifarm, size, date, mirror, downloaded and 'Downloaded' or 'Not downloaded'), tags=(downloaded and 'downloaded' or 'nodownloaded',))
+            c += 1
+    
+    def isDumpDownloaded(self, filename):
+        #improve, size check or md5sum?
+        if filename:
+            filepath = self.downloadpath and self.downloadpath + '/' + filename or filename
+            if os.path.exists(filepath):
+                return True
+        
+        """estsize = os.path.getsize(filepath)
+                c = 0
+                while int(estsize) >= 1024:
+                    estsize = estsize/1024.0
+                    c += 1
+                estsize = '%.1f %s' % (estsize, ['', 'KB', 'MB', 'GB', 'TB'][c])"""
+        
+        return False
+    
+    def loadAvailableDumps(self):
+        if self.block:
+            self.blocked()
+            return
+        else:
+            self.block = True
+        if self.dumps:
+            self.deleteAvailableDumps()
+        iaregexp = ur'/download/[^/]+/(?P<filename>[^>]+\.7z)">\s*(?P<size>[\d\.]+ (?:KB|MB|GB|TB))\s*</a>'
+        self.urls = [
+            ['Google Code', 'https://code.google.com/p/wikiteam/downloads/list?num=5000&start=0', ur'(?im)detail\?name=(?P<filename>[^&]+\.7z)&amp;can=2&amp;q=" style="white-space:nowrap">\s*(?P<size>[\d\.]+ (?:KB|MB|GB|TB))\s*</a></td>'],
+            #['Internet Archive', 'http://www.archive.org/details/referata.com-20111204', iaregexp],
+            #['Internet Archive', 'http://www.archive.org/details/WikiTeamMirror', iaregexp],
+            #['ScottDB', 'http://mirrors.sdboyd56.com/WikiTeam/', ur'<a href="(?P<filename>[^>]+\.7z)">(?P<size>[\d\.]+ (?:KB|MB|GB|TB))</a>'],
+            #['Wikimedia', 'http://dumps.wikimedia.org/backup-index.html', ur'(?P<size>)<a href="(?P<filename>[^>]+)">[^>]+</a>: <span class=\'done\'>Dump complete</span></li>']
+        ]
+        wikifarms_r = re.compile(ur"(%s)" % ('|'.join(wikifarms.keys())))
+        c = 0
+        for mirror, url, regexp in self.urls:
+            print 'Loading data from', mirror, url
+            self.msg(msg='Please wait... Loading data from %s %s' % (mirror, url))
+            f = urllib.urlopen(url)
+            m = re.compile(regexp).finditer(f.read())
+            for i in m:
+                filename = i.group('filename')
+                if mirror == 'Wikimedia':
+                    filename = '%s-pages-meta-history.xml.7z' % (re.sub('/', '-', filename))
+                wikifarm = 'Unknown'
+                if re.search(wikifarms_r, filename):
+                    wikifarm = re.findall(wikifarms_r, filename)[0]
+                wikifarm = wikifarms[wikifarm]
+                size = i.group('size')
+                if not size:
+                    size = 'Unknown'
+                date = 'Unknown'
+                if re.search(ur"\-(\d{8})[\.-]", filename):
+                    date = re.findall(ur"\-(\d{4})(\d{2})(\d{2})[\.-]", filename)[0]
+                    date = '%s-%s-%s' % (date[0], date[1], date[2])
+                elif re.search(ur"\-(\d{4}\-\d{2}\-\d{2})[\.-]", filename):
+                    date = re.findall(ur"\-(\d{4}\-\d{2}\-\d{2})[\.-]", filename)[0]
+                downloadurl = ''
+                if mirror == 'Google Code':
+                    downloadurl = 'https://wikiteam.googlecode.com/files/' + filename
+                elif mirror == 'Internet Archive':
+                    downloadurl = re.sub(ur'/details/', ur'/download/', url) + '/' + filename
+                elif mirror == 'ScottDB':
+                    downloadurl = url + '/' + filename
+                elif mirror == 'Wikimedia':
+                    downloadurl = 'http://dumps.wikimedia.org/' + filename.split('-')[0] + '/' + re.sub('-', '', date) + '/' + filename
+                downloaded = self.isDumpDownloaded(filename)
+                self.dumps.append([filename, wikifarm, size, date, mirror, downloadurl, downloaded])
+        self.dumps.sort()
+        self.showAvailableDumps()
+        #self.filterAvailableDumps()
+        self.msg(msg='Loaded %d available dumps!' % (len(self.dumps)), level='info')
+        self.block = False
+    
 def askclose():
     if tkMessageBox.askokcancel("Quit", "Do you really wish to exit?"):
         root.destroy()
