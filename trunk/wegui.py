@@ -117,7 +117,7 @@ class WikiEvidens:
         #end download tabs
         
         #start preprocess tab
-        self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="The second step is to preprocess a downloaded dataset.\n", anchor='center', font=self.font)
+        self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="The second step is to preprocess a downloaded dataset or load a preprocessed one.\n", anchor='center', font=self.font)
         self.notebookpreprocesslabel1.grid(row=0, column=0, sticky=W)
         #end preprocess tab
         
@@ -137,7 +137,7 @@ class WikiEvidens:
         #end analysis tabs
         
         #start export tab
-        self.notebookexportlabel1 = Label(self.frameexport, text="TODO...\n", anchor='center', font=self.font)
+        self.notebookexportlabel1 = Label(self.frameexport, text="You can export data from datasets.\n", anchor='center', font=self.font)
         self.notebookexportlabel1.grid(row=0, column=0, sticky=W)
         #end export tab
         
@@ -177,6 +177,17 @@ class WikiEvidens:
         self.framedownloadwikisbutton22 = Button(self.framedownloadwikis, text="Clear list", command=self.deleteAvailableDumps, width=10)
         self.framedownloadwikisbutton22.grid(row=2, column=2)
         #end download wikis tab
+        
+        #start download other tab
+        self.framedownloadotherlabel1 = Label(self.framedownloadother, text="Choose a dataset to download.", anchor='center', font=self.font)
+        self.framedownloadotherlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        #end download other tab
+        
+        #start download dumpgenerator tab
+        self.framedownloaddumpgeneratorlabel1 = Label(self.framedownloaddumpgenerator, text="You can download a wiki using API or index.php methods.", anchor='center', font=self.font)
+        self.framedownloaddumpgeneratorlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        #end download dumpgenerator tab
+        
     
     def callback(self):
         self.msg("Feature not implemented for the moment. Contributions are welcome.", level='info')
