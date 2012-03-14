@@ -76,13 +76,13 @@ class WikiEvidens:
         self.notebook = ttk.Notebook(self.master)
         self.notebook.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
         self.framedownload = ttk.Frame(self.master)
-        self.notebook.add(self.framedownload, text='Download')
+        self.notebook.add(self.framedownload, text='(1) Download')
         self.framepreprocess = ttk.Frame(self.master)
-        self.notebook.add(self.framepreprocess, text='Preprocess')
+        self.notebook.add(self.framepreprocess, text='(2) Preprocess')
         self.frameanalysis = ttk.Frame(self.master)
-        self.notebook.add(self.frameanalysis, text='Analysis')
+        self.notebook.add(self.frameanalysis, text='(3) Analysis')
         self.frameexport = ttk.Frame(self.master)
-        self.notebook.add(self.frameexport, text='Export')
+        self.notebook.add(self.frameexport, text='(4) Export')
         #end main tabs
         
         #start download tabs
