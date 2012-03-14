@@ -117,7 +117,7 @@ class WikiEvidens:
         #end download tabs
         
         #start preprocess tab
-        self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="TODO...\n", anchor='center', font=self.font)
+        self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="The second step is to preprocess a downloaded dataset.\n", anchor='center', font=self.font)
         self.notebookpreprocesslabel1.grid(row=0, column=0, sticky=W)
         #end preprocess tab
         
