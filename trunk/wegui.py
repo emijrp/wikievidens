@@ -116,10 +116,13 @@ class WikiEvidens:
         self.notebookdownload.add(self.framedownloaddumpgenerator, text='Dump generator')
         #end download tabs
         
-        #preprocess
+        #start preprocess tab
+        self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="TODO...\n", anchor='center', font=self.font)
+        self.notebookpreprocesslabel1.grid(row=0, column=0, sticky=W)
+        #end preprocess tab
         
         #start analysis tabs
-        self.notebookanalysislabel1 = Label(self.frameanalysis, text="No preprocessed dump has been loaded yet.", anchor='center', font=self.font)
+        self.notebookanalysislabel1 = Label(self.frameanalysis, text="No preprocessed dump has been loaded yet.\n", anchor='center', font=self.font)
         self.notebookanalysislabel1.grid(row=0, column=0, sticky=W)
         self.notebookanalysis = ttk.Notebook(self.frameanalysis)
         self.notebookanalysis.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
@@ -133,7 +136,10 @@ class WikiEvidens:
         self.notebookanalysis.add(self.frameanalysissamples, text='Samples')
         #end analysis tabs
         
-        #export
+        #start export tab
+        self.notebookexportlabel1 = Label(self.frameexport, text="TODO...\n", anchor='center', font=self.font)
+        self.notebookexportlabel1.grid(row=0, column=0, sticky=W)
+        #end export tab
         
         #statusbar
         self.status = Label(self.master, text="Welcome to %s. What do you want to do today?" % (NAME), bd=1, justify=LEFT, relief=SUNKEN, width=127, background='grey')
