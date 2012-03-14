@@ -41,6 +41,34 @@ class WikiEvidens:
         self.block = False #semaphore
         self.font = ("Arial", 10)
         
+        #start menu
+        menu = Menu(self.master)
+        master.config(menu=menu)
+
+        #begin file menu
+        filemenu = Menu(menu)
+        menu.add_cascade(label="File", menu=filemenu)
+        filemenu.add_command(label="Preferences", command=self.callback)
+        filemenu.add_separator()
+        filemenu.add_command(label="Exit", command=askclose)
+        #end file menu
+        
+        #begin view menu
+        viewmenu = Menu(menu)
+        menu.add_cascade(label="View", menu=viewmenu)
+        viewmenu.add_command(label="Console", command=self.callback)
+        #end view menu
+
+        #start help menu
+        helpmenu = Menu(menu)
+        menu.add_cascade(label="Help", menu=helpmenu)
+        helpmenu.add_command(label="About", command=self.callback)
+        helpmenu.add_command(label="FAQ", command=self.callback)
+        helpmenu.add_command(label="WikiEvidens homepage", command=lambda: webbrowser.open_new_tab(HOMEPAGE))
+        #end help menu
+        
+        #end menu
+        
         self.label1 = ttk.Label(self.master)
         self.label1.grid(row=0, column=0)
         
@@ -58,8 +86,8 @@ class WikiEvidens:
         #end main tabs
         
         #start download tabs
-        self.notebookdownloadlabel1 = Label(self.framedownload, text="The first step is to download a dataset.", anchor=W, font=self.font)
-        self.notebookdownloadlabel1.grid(row=0, column=0)
+        self.notebookdownloadlabel1 = Label(self.framedownload, text="The first step is to download a dataset.\n", anchor='center', font=self.font)
+        self.notebookdownloadlabel1.grid(row=0, column=0, sticky=W)
         self.notebookdownload = ttk.Notebook(self.framedownload)
         self.notebookdownload.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
         self.framedownloadwikis = ttk.Frame(self.framedownload)
@@ -73,8 +101,8 @@ class WikiEvidens:
         #preprocess
         
         #start analysis tabs
-        self.notebookanalysislabel1 = Label(self.frameanalysis, text="No preprocessed dump has been loaded yet.", anchor=W, font=self.font)
-        self.notebookanalysislabel1.grid(row=0, column=0)
+        self.notebookanalysislabel1 = Label(self.frameanalysis, text="No preprocessed dump has been loaded yet.", anchor='center', font=self.font)
+        self.notebookanalysislabel1.grid(row=0, column=0, sticky=W)
         self.notebookanalysis = ttk.Notebook(self.frameanalysis)
         self.notebookanalysis.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
         self.frameanalysisglobal = ttk.Frame(self.frameanalysis)
@@ -90,8 +118,53 @@ class WikiEvidens:
         #export
         
         #statusbar
-        self.status = Label(self.master, text="Welcome to %s. What do you want to do today?" % (NAME), bd=1, justify=LEFT, relief=SUNKEN, width=127)
+        self.status = Label(self.master, text="Welcome to %s. What do you want to do today?" % (NAME), bd=1, justify=LEFT, relief=SUNKEN, width=127, background='grey')
         self.status.grid(row=2, column=0, columnspan=1, sticky=W+E)
+        
+        #start download wikis tab
+        self.framedownloadwikislabel1 = Label(self.framedownloadwikis, text="Choose a wiki dump to download.", anchor='center', font=self.font)
+        self.framedownloadwikislabel1.grid(row=0, column=0, sticky=W)
+        self.framedownloadwikistreescrollbar = Scrollbar(self.framedownloadwikis)
+        self.framedownloadwikistreescrollbar.grid(row=1, column=1, sticky=W+E+N+S)
+        framedownloadwikiscolumns = ('dump', 'wikifarm', 'size', 'date', 'mirror', 'status')
+        self.framedownloadwikistree = ttk.Treeview(self.framedownloadwikis, height=29, columns=framedownloadwikiscolumns, show='headings', yscrollcommand=self.framedownloadwikistreescrollbar.set)
+        self.framedownloadwikistreescrollbar.config(command=self.framedownloadwikistree.yview)
+        self.framedownloadwikistree.column('dump', width=460, minwidth=460, anchor='center')
+        self.framedownloadwikistree.heading('dump', text='Dump')
+        self.framedownloadwikistree.column('wikifarm', width=100, minwidth=100, anchor='center')
+        self.framedownloadwikistree.heading('wikifarm', text='Wikifarm')
+        self.framedownloadwikistree.column('size', width=100, minwidth=100, anchor='center')
+        self.framedownloadwikistree.heading('size', text='Size')
+        self.framedownloadwikistree.column('date', width=100, minwidth=100, anchor='center')
+        self.framedownloadwikistree.heading('date', text='Date')
+        self.framedownloadwikistree.column('mirror', width=120, minwidth=120, anchor='center')
+        self.framedownloadwikistree.heading('mirror', text='Mirror')
+        self.framedownloadwikistree.column('status', width=120, minwidth=120, anchor='center')
+        self.framedownloadwikistree.heading('status', text='Status')
+        self.framedownloadwikistree.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
+        #[self.framedownloadwikistree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
+        #self.tree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
+        self.framedownloadwikistree.tag_configure('downloaded', background='lightgreen')
+        self.framedownloadwikistree.tag_configure('nodownloaded', background='white')
+        #end download wikis tab
+    
+    def callback(self):
+        self.msg("Feature not implemented for the moment. Contributions are welcome.", level='info')
+    
+    def msg(self, msg='', level=''):
+        levels = { 'info': 'lightgreen', 'warning': 'yellow', 'error': 'red' }
+        if levels.has_key(level.lower()):
+            print '%s: %s' % (level.upper(), msg)
+            self.status.config(text='%s: %s' % (level.upper(), msg), background=levels[level.lower()])
+            if level.lower() == 'info':
+                tkMessageBox.showinfo("Info", msg)
+            elif level.lower() == 'warning':
+                tkMessageBox.showwarning("Warning", msg)
+            elif level.lower() == 'error':
+                tkMessageBox.showerror("Error", msg)
+        else:
+            print msg
+            self.status.config(text=msg, background='grey')
 
 def askclose():
     if tkMessageBox.askokcancel("Quit", "Do you really wish to exit?"):
