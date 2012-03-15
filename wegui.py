@@ -37,6 +37,7 @@ matplotlib.use('TkAgg')
 from numpy import arange, sin, pi
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
+import pylab
 
 #wikievidens modules
 import weparser
@@ -68,6 +69,8 @@ class WikiEvidens:
         self.master = master
         self.availabledumps = []
         self.downloadeddumps = []
+        self.activedb = ''
+        self.wiki = ''
         self.downloadpath = 'download'
         self.preprocesspath = 'preprocess'
         self.exportpath = 'export'
@@ -133,7 +136,7 @@ class WikiEvidens:
         
         #start preprocess tab
         self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="The second step is to preprocess a downloaded dataset or to load a preprocessed one.\n", anchor='center', font=self.font)
-        self.notebookpreprocesslabel1.grid(row=0, column=0, sticky=W)
+        self.notebookpreprocesslabel1.grid(row=0, column=0, columnspan=4, sticky=W)
         #end preprocess tab
         
         #start analysis tabs
@@ -205,7 +208,7 @@ class WikiEvidens:
         
         #start preprocess tab
         self.framepreprocesstreescrollbar = Scrollbar(self.framepreprocess)
-        self.framepreprocesstreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
+        self.framepreprocesstreescrollbar.grid(row=1, column=4, sticky=W+E+N+S)
         framepreprocesscolumns = ('dump', 'wikifarm', 'size', 'date', 'status')
         self.framepreprocesstree = ttk.Treeview(self.framepreprocess, height=27, columns=framepreprocesscolumns, show='headings', yscrollcommand=self.framepreprocesstreescrollbar.set)
         self.framepreprocesstreescrollbar.config(command=self.framepreprocesstree.yview)
@@ -219,17 +222,19 @@ class WikiEvidens:
         self.framepreprocesstree.heading('date', text='Date')
         self.framepreprocesstree.column('status', width=240, minwidth=240, anchor='center')
         self.framepreprocesstree.heading('status', text='Status')
-        self.framepreprocesstree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
+        self.framepreprocesstree.grid(row=1, column=0, columnspan=4, sticky=W+E+N+S)
         #[self.framepreprocesstree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
         #self.framepreprocesstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         self.framepreprocesstree.tag_configure('preprocessed', background='lightgreen')
         self.framepreprocesstree.tag_configure('nopreprocessed', background='white')
-        self.framepreprocessbutton21 = Button(self.framepreprocess, text="Load downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=18)
-        self.framepreprocessbutton21.grid(row=2, column=0)
+        self.framepreprocessbutton23 = Button(self.framepreprocess, text="Scan downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=20)
+        self.framepreprocessbutton23.grid(row=2, column=0)
         self.framepreprocessbutton23 = Button(self.framepreprocess, text="Preprocess selection", command=lambda: thread.start_new_thread(self.preprocessDump, ()), width=15)
         self.framepreprocessbutton23.grid(row=2, column=1)
+        self.framepreprocessbutton23 = Button(self.framepreprocess, text="Load", command=lambda: thread.start_new_thread(self.activePreprocessedDump, ()), width=15)
+        self.framepreprocessbutton23.grid(row=2, column=2)
         self.framepreprocessbutton22 = Button(self.framepreprocess, text="Clear list", command=self.deleteDownloadedDumps, width=10)
-        self.framepreprocessbutton22.grid(row=2, column=2)
+        self.framepreprocessbutton22.grid(row=2, column=3)
         #end preprocess tab
         
         #start analysis global tab
@@ -244,8 +249,53 @@ class WikiEvidens:
         toolbar = NavigationToolbar2TkAgg( canvas, self.frameanalysisglobal )
         toolbar.update()
         canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
+        button1 = Button(self.frameanalysisglobal, text='Yearly graph', command=lambda: self.analysis('global-activity-yearly'), width=10)
+        button1.pack(side=TOP, fill=BOTH, expand=1)
         #end analysis global tab
+    
+    def activePreprocessedDump(self):
+        items = self.framepreprocesstree.selection()
+        if len(items) == 1:
+            filepath = self.preprocesspath and self.preprocesspath + '/' + self.downloadeddumps[int(items[0])][0] + '.db' or self.downloadeddumps[int(items[0])][0] + '.db'
+            if os.path.exists(filepath):
+                self.activedb = filepath
+                self.msg(msg="Loaded succesfull. Now, you can analyse.", level="info")
+            else:
+                self.msg(msg="That preprocessed dump doesn't exist.", level="error")
+        else:
+            self.msg(msg="You only can load a preprocessed dump a time.", level="error")
+            return
+    
+    def analysis(self, analysis):
+        if not self.activedb:
+            self.msg(msg="You must load a preprocessed dump first", level="error")
+            return
+        
+        conn = sqlite3.connect(self.activedb)
+        cursor = conn.cursor()
 
+        #global
+        if analysis.startswith('global'):
+            if analysis == 'global-summary':
+                import wesummary
+                wesummary.summary(cursor=cursor)
+            elif analysis.startswith('global-activity'):
+                import weactivity
+                if analysis == 'global-activity-all':
+                    weactivity.activityall(cursor=cursor, range='global', title=self.wiki)
+                elif analysis == 'global-activity-yearly':
+                    weactivity.activityyearly(cursor=cursor, range='global', title=self.wiki)
+                elif analysis == 'global-activity-monthly':
+                    weactivity.activitymonthly(cursor=cursor, range='global', title=self.wiki)
+                elif analysis == 'global-activity-dow':
+                    weactivity.activitydow(cursor=cursor, range='global', title=self.wiki)
+                elif analysis == 'global-activity-hourly':
+                    weactivity.activityhourly(cursor=cursor, range='global', title=self.wiki)
+                pylab.show()
+        
+        cursor.close()
+        conn.close()
+    
     def callback(self):
         self.msg("Feature not implemented for the moment. Contributions are welcome.", level='info')
     
@@ -453,7 +503,7 @@ class WikiEvidens:
         self.downloadeddumps.sort()
         self.showDownloadedDumps()
         #self.filterDownloadedDumps()
-        self.msg(msg='Loaded %d downloaded dumps!' % (len(self.downloadeddumps)), level='info')
+        #self.msg(msg='Loaded %d downloaded dumps!' % (len(self.downloadeddumps)), level='info')
         self.block = False
     
     def preprocessDump(self):
