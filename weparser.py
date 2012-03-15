@@ -71,14 +71,12 @@ def generateAuxTables(conn=None, cursor=None):
     generateUserTable(conn=conn, cursor=cursor)
 
 def parseMediaWikiXMLDump(dumpfilename, dbfilename):
-    if dumpfilename.endswith('.7z'):
-        s = subprocess.Popen('7z l %s' % dumpfilename, shell=True, stdout=subprocess.PIPE, bufsize=65535).stdout # fix, solo funciona en linux?
-        sout = s.read()
-        if not re.search(ur'(?im)Can not open file as archive', sout) and \
-           not re.search(ur'(?im)1 files, 0 folders\n$', sout):
-            print 'ERROR: the file %s contains more files than a .xml' % dumpfilename
-            return 
-            #os.rename(filename, '%s.corrupted' % filename)
+    #extract only the first .xml file available, scan the content
+    s = subprocess.Popen('7z l %s' % dumpfilename, shell=True, stdout=subprocess.PIPE, bufsize=65535).stdout
+    raw = s.read()
+    xmlfilename = ''
+    if re.findall(ur"(?im)^\d{4}-\d{2}-\d{2}.* ([^$]+\.xml)$", raw):
+        xmlfilename = re.findall(ur"(?im)^\d{4}-\d{2}-\d{2}.* ([^$]+\.xml)$", raw)[0]
     
     if os.path.exists(dbfilename): #si existe lo borramos, pues el usuario ha marcado sobreescribir, sino no entraría aquí #fix, mejor renombrar?
         os.remove(dbfilename)
@@ -102,7 +100,7 @@ def parseMediaWikiXMLDump(dumpfilename, dbfilename):
     r_sections = re.compile(ur'(?im)^(={1,6})[^=]+\1')
     r_templates = re.compile(ur'(?im)(^|[^\{])\{\{[^\{\}\|]+[\}\|]') # {{T1|...}} or {{T1}}
     
-    xml = xmlreader.XmlDump(dumpfilename, allrevisions=True)
+    xml = xmlreader.XmlDump(dumpfilename, innerxml=xmlfilename, allrevisions=True)
     errors = 0
     errors_page = 0
     page_id = -1 #impossible value
