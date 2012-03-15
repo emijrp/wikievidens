@@ -31,6 +31,14 @@ import tkMessageBox
 import tkSimpleDialog
 import tkFileDialog
 
+#stats modules
+import matplotlib
+matplotlib.use('TkAgg')
+from numpy import arange, sin, pi
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+from matplotlib.figure import Figure
+
+#globals
 wikifarms = {
     'gentoo_wikicom': 'Gentoo Wiki',
     'opensuseorg': 'OpenSuSE',
@@ -51,11 +59,15 @@ LINUX = platform.system().lower() == 'linux'
 PATH = os.path.dirname(__file__)
 if PATH: os.chdir(PATH)
 
+#start the fun
 class WikiEvidens:
     def __init__(self, master):
         self.master = master
-        self.dumps = []
-        self.downloadpath = 'downloads'
+        self.availabledumps = []
+        self.downloadeddumps = []
+        self.downloadpath = 'download'
+        self.preprocesspath = 'preprocess'
+        self.exportpath = 'export'
         self.block = False #semaphore
         self.font = ("Arial", 10)
         
@@ -117,7 +129,7 @@ class WikiEvidens:
         #end download tabs
         
         #start preprocess tab
-        self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="The second step is to preprocess a downloaded dataset or load a preprocessed one.\n", anchor='center', font=self.font)
+        self.notebookpreprocesslabel1 = Label(self.framepreprocess, text="The second step is to preprocess a downloaded dataset or to load a preprocessed one.\n", anchor='center', font=self.font)
         self.notebookpreprocesslabel1.grid(row=0, column=0, sticky=W)
         #end preprocess tab
         
@@ -188,7 +200,49 @@ class WikiEvidens:
         self.framedownloaddumpgeneratorlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         #end download dumpgenerator tab
         
-    
+        #start preprocess tab
+        self.framepreprocesstreescrollbar = Scrollbar(self.framepreprocess)
+        self.framepreprocesstreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
+        framepreprocesscolumns = ('dump', 'wikifarm', 'size', 'date', 'status')
+        self.framepreprocesstree = ttk.Treeview(self.framepreprocess, height=27, columns=framepreprocesscolumns, show='headings', yscrollcommand=self.framepreprocesstreescrollbar.set)
+        self.framepreprocesstreescrollbar.config(command=self.framepreprocesstree.yview)
+        self.framepreprocesstree.column('dump', width=460, minwidth=460, anchor='center')
+        self.framepreprocesstree.heading('dump', text='Dump')
+        self.framepreprocesstree.column('wikifarm', width=100, minwidth=100, anchor='center')
+        self.framepreprocesstree.heading('wikifarm', text='Wikifarm')
+        self.framepreprocesstree.column('size', width=100, minwidth=100, anchor='center')
+        self.framepreprocesstree.heading('size', text='Size')
+        self.framepreprocesstree.column('date', width=100, minwidth=100, anchor='center')
+        self.framepreprocesstree.heading('date', text='Date')
+        self.framepreprocesstree.column('status', width=240, minwidth=240, anchor='center')
+        self.framepreprocesstree.heading('status', text='Status')
+        self.framepreprocesstree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
+        #[self.framepreprocesstree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
+        #self.framepreprocesstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
+        self.framepreprocesstree.tag_configure('preprocessed', background='lightgreen')
+        self.framepreprocesstree.tag_configure('nopreprocessed', background='white')
+        self.framepreprocessbutton21 = Button(self.framepreprocess, text="Load downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=18)
+        self.framepreprocessbutton21.grid(row=2, column=0)
+        self.framepreprocessbutton23 = Button(self.framepreprocess, text="Preprocess selection", command=lambda: thread.start_new_thread(self.preprocessDump, ()), width=15)
+        self.framepreprocessbutton23.grid(row=2, column=1)
+        self.framepreprocessbutton22 = Button(self.framepreprocess, text="Clear list", command=self.deleteDownloadedDumps, width=10)
+        self.framepreprocessbutton22.grid(row=2, column=2)
+        #end preprocess tab
+        
+        #start analysis global tab
+        f = Figure(figsize=(8,5), dpi=100)
+        a = f.add_subplot(111)
+        t = arange(0.0,3.0,0.01)
+        s = sin(20*pi*t)
+        a.plot(t,s)
+        canvas = FigureCanvasTkAgg(f, master=self.frameanalysisglobal)
+        canvas.show()
+        canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+        toolbar = NavigationToolbar2TkAgg( canvas, self.frameanalysisglobal )
+        toolbar.update()
+        canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
+        #end analysis global tab
+
     def callback(self):
         self.msg("Feature not implemented for the moment. Contributions are welcome.", level='info')
     
@@ -236,17 +290,17 @@ class WikiEvidens:
             c = 0
             d = 0
             for item in items:
-                filepath = self.downloadpath and self.downloadpath + '/' + self.dumps[int(item)][0] or self.dumps[int(item)][0]
+                filepath = self.downloadpath and self.downloadpath + '/' + self.availabledumps[int(item)][0] or self.availabledumps[int(item)][0]
                 if os.path.exists(filepath):
                     self.msg('That dump was downloaded before', level='ok')
                     d += 1
                 else:
-                    self.msg("[%d of %d] Downloading %s from %s" % (c+1, len(items), self.framedownloadwikistree.item(item,"text"), self.dumps[int(item)][5]))
-                    f = urllib.urlretrieve(self.dumps[int(item)][5], filepath, reporthook=self.downloadProgress)
-                    msg='%s size is %s bytes large. Download successful!' % (self.dumps[int(item)][0], os.path.getsize(filepath))
+                    self.msg("[%d of %d] Downloading %s from %s" % (c+1, len(items), self.framedownloadwikistree.item(item,"text"), self.availabledumps[int(item)][5]))
+                    f = urllib.urlretrieve(self.availabledumps[int(item)][5], filepath, reporthook=self.downloadProgress)
+                    msg='%s size is %s bytes large. Download successful!' % (self.availabledumps[int(item)][0], os.path.getsize(filepath))
                     self.msg(msg=msg, level='ok')
                     c += 1
-                self.dumps[int(item)] = self.dumps[int(item)][:6] + ['True']
+                self.availabledumps[int(item)] = self.availabledumps[int(item)][:6] + ['True']
             if c + d == len(items):
                 self.msg('Downloaded %d of %d%s.' % (c, len(items), d and ' (and %d were previously downloaded)' % (d) or ''), level='ok')
             else:
@@ -261,34 +315,73 @@ class WikiEvidens:
     def deleteAvailableDumps(self):
         #really delete dump list and clear tree
         self.clearAvailableDumps()
-        self.dumps = [] #reset list
+        self.availabledumps = [] #reset list
+    
+    def deleteDownloadedDumps(self):
+        #really delete downloaded dump list and clear tree
+        self.clearDownloadedDumps()
+        self.downloadeddumps = [] #reset list
     
     def clearAvailableDumps(self):
         #clear tree
-        for i in range(len(self.dumps)):
+        for i in range(len(self.availabledumps)):
             self.framedownloadwikistree.delete(str(i))
+    
+    def clearDownloadedDumps(self):
+        #clear tree
+        for i in range(len(self.downloadeddumps)):
+            self.framepreprocesstree.delete(str(i))
     
     def showAvailableDumps(self):
         c = 0
-        for filename, wikifarm, size, date, mirror, url, downloaded in self.dumps:
+        for filename, wikifarm, size, date, mirror, url, downloaded in self.availabledumps:
             self.framedownloadwikistree.insert('', 'end', str(c), text=filename, values=(filename, wikifarm, size, date, mirror, downloaded and 'Downloaded' or 'Not downloaded'), tags=(downloaded and 'downloaded' or 'nodownloaded',))
             c += 1
     
-    def isDumpDownloaded(self, filename):
+    def showDownloadedDumps(self):
+        c = 0
+        for filename, wikifarm, size, date, preprocessed in self.downloadeddumps:
+            self.framepreprocesstree.insert('', 'end', str(c), text=filename, values=(filename, wikifarm, size, date, preprocessed and 'Preprocessed' or 'Not preprocessed'), tags=(preprocessed and 'preprocessed' or 'nopreprocessed',))
+            c += 1
+    
+    def isDumpDownloaded(self, filename=''):
         #improve, size check or md5sum?
         if filename:
             filepath = self.downloadpath and self.downloadpath + '/' + filename or filename
             if os.path.exists(filepath):
                 return True
-        
         """estsize = os.path.getsize(filepath)
                 c = 0
                 while int(estsize) >= 1024:
                     estsize = estsize/1024.0
                     c += 1
                 estsize = '%.1f %s' % (estsize, ['', 'KB', 'MB', 'GB', 'TB'][c])"""
-        
         return False
+    
+    def isDumpPreprocessed(self, filename=''):
+        #improve?
+        if filename:
+            filepath = self.preprocesspath and self.preprocesspath + '/' + filename +'.db' or filename + '.db'
+            if os.path.exists(filepath):
+                return True
+        return False
+    
+    def getDateFromFilename(self, filename=''):
+        date = 'Unknown'
+        if re.search(ur"\-(\d{8})[\.-]", filename):
+            date = re.findall(ur"\-(\d{4})(\d{2})(\d{2})[\.-]", filename)[0]
+            date = '%s-%s-%s' % (date[0], date[1], date[2])
+        elif re.search(ur"\-(\d{4}\-\d{2}\-\d{2})[\.-]", filename):
+            date = re.findall(ur"\-(\d{4}\-\d{2}\-\d{2})[\.-]", filename)[0]
+        return date
+    
+    def getWikifarmFromFilename(self, filename=''):
+        wikifarms_r = re.compile(ur"(%s)" % ('|'.join(wikifarms.keys())))
+        wikifarm = 'Unknown'
+        if re.search(wikifarms_r, filename):
+            wikifarm = re.findall(wikifarms_r, filename)[0]
+        wikifarm = wikifarms[wikifarm]
+        return wikifarm
     
     def loadAvailableDumps(self):
         if self.block:
@@ -296,7 +389,7 @@ class WikiEvidens:
             return
         else:
             self.block = True
-        if self.dumps:
+        if self.availabledumps:
             self.deleteAvailableDumps()
         iaregexp = ur'/download/[^/]+/(?P<filename>[^>]+\.7z)">\s*(?P<size>[\d\.]+ (?:KB|MB|GB|TB))\s*</a>'
         self.urls = [
@@ -306,7 +399,6 @@ class WikiEvidens:
             #['ScottDB', 'http://mirrors.sdboyd56.com/WikiTeam/', ur'<a href="(?P<filename>[^>]+\.7z)">(?P<size>[\d\.]+ (?:KB|MB|GB|TB))</a>'],
             #['Wikimedia', 'http://dumps.wikimedia.org/backup-index.html', ur'(?P<size>)<a href="(?P<filename>[^>]+)">[^>]+</a>: <span class=\'done\'>Dump complete</span></li>']
         ]
-        wikifarms_r = re.compile(ur"(%s)" % ('|'.join(wikifarms.keys())))
         c = 0
         for mirror, url, regexp in self.urls:
             print 'Loading data from', mirror, url
@@ -317,19 +409,11 @@ class WikiEvidens:
                 filename = i.group('filename')
                 if mirror == 'Wikimedia':
                     filename = '%s-pages-meta-history.xml.7z' % (re.sub('/', '-', filename))
-                wikifarm = 'Unknown'
-                if re.search(wikifarms_r, filename):
-                    wikifarm = re.findall(wikifarms_r, filename)[0]
-                wikifarm = wikifarms[wikifarm]
+                wikifarm = self.getWikifarmFromFilename(filename)
                 size = i.group('size')
                 if not size:
                     size = 'Unknown'
-                date = 'Unknown'
-                if re.search(ur"\-(\d{8})[\.-]", filename):
-                    date = re.findall(ur"\-(\d{4})(\d{2})(\d{2})[\.-]", filename)[0]
-                    date = '%s-%s-%s' % (date[0], date[1], date[2])
-                elif re.search(ur"\-(\d{4}\-\d{2}\-\d{2})[\.-]", filename):
-                    date = re.findall(ur"\-(\d{4}\-\d{2}\-\d{2})[\.-]", filename)[0]
+                date = self.getDateFromFilename(filename)
                 downloadurl = ''
                 if mirror == 'Google Code':
                     downloadurl = 'https://wikiteam.googlecode.com/files/' + filename
@@ -340,11 +424,33 @@ class WikiEvidens:
                 elif mirror == 'Wikimedia':
                     downloadurl = 'http://dumps.wikimedia.org/' + filename.split('-')[0] + '/' + re.sub('-', '', date) + '/' + filename
                 downloaded = self.isDumpDownloaded(filename)
-                self.dumps.append([filename, wikifarm, size, date, mirror, downloadurl, downloaded])
-        self.dumps.sort()
+                self.availabledumps.append([filename, wikifarm, size, date, mirror, downloadurl, downloaded])
+        self.availabledumps.sort()
         self.showAvailableDumps()
         #self.filterAvailableDumps()
-        self.msg(msg='Loaded %d available dumps!' % (len(self.dumps)), level='info')
+        self.msg(msg='Loaded %d available dumps!' % (len(self.availabledumps)), level='info')
+        self.block = False
+    
+    def loadDownloadedDumps(self):
+        if self.block:
+            self.blocked()
+            return
+        else:
+            self.block = True
+        if self.downloadeddumps:
+            self.deleteDownloadedDumps()
+        
+        for filename in os.listdir(self.downloadpath):
+            wikifarm = self.getWikifarmFromFilename(filename)
+            size = os.path.getsize('%s/%s' % (self.downloadpath, filename))
+            date = self.getDateFromFilename(filename)
+            preprocessed = self.isDumpPreprocessed(filename)
+            self.downloadeddumps.append([filename, wikifarm, size, date, preprocessed])
+        
+        self.downloadeddumps.sort()
+        self.showDownloadedDumps()
+        #self.filterDownloadedDumps()
+        self.msg(msg='Loaded %d downloaded dumps!' % (len(self.downloadeddumps)), level='info')
         self.block = False
     
 def askclose():
@@ -353,7 +459,7 @@ def askclose():
 
 if __name__ == "__main__":
     root = Tk()
-    width, height = 1024, 768
+    width, height = 1024, 758
     # calculate position x, y
     x = (root.winfo_screenwidth()/2) - (width/2) 
     y = (root.winfo_screenheight()/2) - (height/2)
