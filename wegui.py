@@ -188,7 +188,7 @@ class WikiEvidens:
         #self.framedownloadwikistree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         self.framedownloadwikistree.tag_configure('downloaded', background='lightgreen')
         self.framedownloadwikistree.tag_configure('nodownloaded', background='white')
-        self.framedownloadwikisbutton21 = Button(self.framedownloadwikis, text="Load available dumps", command=lambda: thread.start_new_thread(self.loadAvailableDumps, ()), width=15)
+        self.framedownloadwikisbutton21 = Button(self.framedownloadwikis, text="Scan available dumps", command=lambda: thread.start_new_thread(self.loadAvailableDumps, ()), width=15)
         self.framedownloadwikisbutton21.grid(row=2, column=0)
         self.framedownloadwikisbutton23 = Button(self.framedownloadwikis, text="Download selection", command=lambda: thread.start_new_thread(self.downloadDump, ()), width=15)
         self.framedownloadwikisbutton23.grid(row=2, column=1)
@@ -249,6 +249,7 @@ class WikiEvidens:
         toolbar = NavigationToolbar2TkAgg( canvas, self.frameanalysisglobal )
         toolbar.update()
         canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
+        
         button1 = Button(self.frameanalysisglobal, text='Yearly graph', command=lambda: self.analysis('global-activity-yearly'), width=10)
         button1.pack(side=TOP, fill=BOTH, expand=1)
         #end analysis global tab
@@ -259,6 +260,7 @@ class WikiEvidens:
             filepath = self.preprocesspath and self.preprocesspath + '/' + self.downloadeddumps[int(items[0])][0] + '.db' or self.downloadeddumps[int(items[0])][0] + '.db'
             if os.path.exists(filepath):
                 self.activedb = filepath
+                self.notebookanalysislabel1.config(text='You are analysing "%s".\n' % (self.activedb))
                 self.msg(msg="Loaded succesfull. Now, you can analyse.", level="info")
             else:
                 self.msg(msg="That preprocessed dump doesn't exist.", level="error")
@@ -300,7 +302,7 @@ class WikiEvidens:
         self.msg("Feature not implemented for the moment. Contributions are welcome.", level='info')
     
     def msg(self, msg='', level=''):
-        levels = { 'info': 'lightgreen', 'warning': 'yellow', 'error': 'red' }
+        levels = { 'info': 'lightgreen', 'warning': 'yellow', 'error': 'pink' }
         if levels.has_key(level.lower()):
             print '%s: %s' % (level.upper(), msg)
             self.status.config(text='%s: %s' % (level.upper(), msg), background=levels[level.lower()])
@@ -359,7 +361,7 @@ class WikiEvidens:
             else:
                 self.msg('Problems in %d dumps. Downloaded %d of %d (and %d were previously downloaded).' % (len(items)-(c+d), c, len(items), d), level='error')
         else:
-            tkMessageBox.showerror("Error", "You have to select some dumps to download.")
+            self.msg(msg="You have to select some dumps to download.", level="error")
         self.clearAvailableDumps()
         self.showAvailableDumps()
         #self.filterAvailableDumps()
