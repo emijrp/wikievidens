@@ -38,6 +38,9 @@ from numpy import arange, sin, pi
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
 
+#wikievidens modules
+import weparser
+
 #globals
 wikifarms = {
     'gentoo_wikicom': 'Gentoo Wiki',
@@ -292,13 +295,13 @@ class WikiEvidens:
             for item in items:
                 filepath = self.downloadpath and self.downloadpath + '/' + self.availabledumps[int(item)][0] or self.availabledumps[int(item)][0]
                 if os.path.exists(filepath):
-                    self.msg('That dump was downloaded before', level='ok')
+                    self.msg('That dump was downloaded before', level='info')
                     d += 1
                 else:
                     self.msg("[%d of %d] Downloading %s from %s" % (c+1, len(items), self.framedownloadwikistree.item(item,"text"), self.availabledumps[int(item)][5]))
                     f = urllib.urlretrieve(self.availabledumps[int(item)][5], filepath, reporthook=self.downloadProgress)
                     msg='%s size is %s bytes large. Download successful!' % (self.availabledumps[int(item)][0], os.path.getsize(filepath))
-                    self.msg(msg=msg, level='ok')
+                    self.msg(msg=msg, level='info')
                     c += 1
                 self.availabledumps[int(item)] = self.availabledumps[int(item)][:6] + ['True']
             if c + d == len(items):
@@ -451,6 +454,43 @@ class WikiEvidens:
         self.showDownloadedDumps()
         #self.filterDownloadedDumps()
         self.msg(msg='Loaded %d downloaded dumps!' % (len(self.downloadeddumps)), level='info')
+        self.block = False
+    
+    def preprocessDump(self):
+        if self.block:
+            self.blocked()
+            return
+        else:
+            self.block = True
+        items = self.framepreprocesstree.selection()
+        if items:
+            if not os.path.exists(self.preprocesspath):
+                os.makedirs(self.preprocesspath)
+            c = 0
+            d = 0
+            for item in items:
+                filepath = self.preprocesspath and self.preprocesspath + '/' + self.downloadeddumps[int(item)][0] + '.db' or self.downloadeddumps[int(item)][0] + '.db'
+                if os.path.exists(filepath):
+                    self.msg('That dump was preprocessed before', level='info')
+                    d += 1
+                else:
+                    self.msg("[%d of %d] Preprocessing %s" % (c+1, len(items), self.framepreprocesstree.item(item,"text")))
+                    dumppath = self.downloadpath + '/' + self.downloadeddumps[int(item)][0]
+                    weparser.parseMediaWikiXMLDump(dumpfilename=dumppath, dbfilename=filepath)
+                    msg='%s size is %s bytes large. Preprocess successful!' % (self.downloadeddumps[int(item)][0] + '.db', os.path.getsize(filepath))
+                    self.msg(msg=msg)
+                    c += 1
+                self.downloadeddumps[int(item)] = self.downloadeddumps[int(item)][:4] + ['True']
+            if c:
+                if c + d == len(items):
+                    self.msg('Preprocessed %d of %d%s.' % (c, len(items), d and ' (and %d were previously preprocessed)' % (d) or ''), level='info')
+                else:
+                    self.msg('Problems in %d dumps. Preprocessed %d of %d (and %d were previously preprocessed).' % (len(items)-(c+d), c, len(items), d), level='error')
+        else:
+            tkMessageBox.showerror("Error", "You have to select some dumps to preprocess.")
+        self.clearDownloadedDumps()
+        self.showDownloadedDumps()
+        #self.filterDownloadedDumps()
         self.block = False
     
 def askclose():
