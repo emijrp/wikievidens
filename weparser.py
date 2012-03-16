@@ -49,7 +49,7 @@ def createDB(conn=None, cursor=None):
     cursor.execute('''create table revision (rev_id integer, rev_title text, rev_page integer, rev_user_text text, rev_is_ipedit integer, rev_timestamp timestamp, rev_text_md5 text, rev_text_diff blob, rev_size integer, rev_comment text, rev_internal_links integer, rev_external_links integer, rev_interwikis integer, rev_sections integer, rev_templates integer)''')
     #rev_is_minor, rev_is_redirect, rev_highwords (bold/italics/bold+italics), rev_diff, ref_diff_len, rev_maths, rev_refs (<ref>, <ref name), rev_categories, ref_html_tags (- rev_refs, - rev_maths)
     cursor.execute('''create table page (page_id integer, page_title text, page_editcount integer, page_creation_timestamp timestamp, page_last_timestamp timestamp, page_text blob, page_internal_links integer, page_external_links integer, page_interwikis integer, page_sections integer, page_templates integer)''') 
-    #page_namespace, page_size (last rev size), page_views
+    #page_namespace, page_size (last rev size), page_views, page_editorscount (number of distinct editors)
     cursor.execute('''create table user (user_name text, user_is_ip integer, user_editcount integer, user_first_timestamp timestamp, user_last_timestamp timestamp)''') #fix, poner si es ip basándonos en ipedit?
     #user_id (viene en el dump? 0 para ips), user_is_anonymous (ips)
     conn.commit()
@@ -70,7 +70,7 @@ def generateAuxTables(conn=None, cursor=None):
     print '#'*30, '\n', 'Generating auxiliar tables', '\n', '#'*30
     generateUserTable(conn=conn, cursor=cursor)
 
-def parseMediaWikiXMLDump(dumpfilename, dbfilename):
+def parseMediaWikiXMLDump(self, dumpfilename, dbfilename):
     #extract only the first .xml file available, scan the content
     s = subprocess.Popen('7z l %s' % dumpfilename, shell=True, stdout=subprocess.PIPE, bufsize=65535).stdout
     raw = s.read()
@@ -192,7 +192,7 @@ def parseMediaWikiXMLDump(dumpfilename, dbfilename):
             errors += 1
         
         if (c+errors) % limit == 0:
-            print 'Analysed %d revisions [%d revs/sec]' % (c+errors, limit/(time.time()-t1))
+            self.msg(msg='Analysed %d revisions [%d revs/sec]' % (c+errors, limit/(time.time()-t1)))
             conn.commit()
             t1 = time.time()
         
