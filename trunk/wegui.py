@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
 import os
 import platform
 import random
@@ -57,11 +58,64 @@ wikifarms = {
 }
 
 NAME = 'WikiEvidens'
-VERSION = '0.0.1'
+VERSION = '0.0.3'
 HOMEPAGE = 'http://code.google.com/p/wikievidens/'
 LINUX = platform.system().lower() == 'linux'
 PATH = os.path.dirname(__file__)
 if PATH: os.chdir(PATH)
+
+# Dependences:
+# linux: python, python-tk, python-matplotlib, python-sqlite
+# windows: 
+# mac: 
+#
+# meter el xmlreader.py y el dumpgenerator.py usando svn externals?
+
+# TODO:
+#
+# el nltk.downloader() usa tkinter y tiene una abuena interfaz con barra de progreso, pestañas y todo, mirar cómo está hecho
+#
+# indicar % progreso al parsear el dump, en función de una estimación por el tamaño del fichero (depende si es 7z, bzip, etc [leer tamaño del .xml comprimido directamente si es posible])
+# almacenar sesiones o algo parecido para evitar tener que darle a preprocessing para que coja el proyecto, cada vez que arranca el programa
+## pero al final tienes que cargar la sesión/workplace que te interese, estamos en las mismas
+# capturar parámetros por si se quiere ejecutar sin gui desde consola: wegui.py --module=summary invalida la gui y muestra los datos por consola
+# cargar los proyectos de wikimedia y wikia (almacenar en una tabla en un sqlite propia? y actualizar cada poco?) http://download.wikimedia.org/backup-index.html http://community.wikia.com/wiki/Hub:Big_wikis http://community.wikia.com/index.php?title=Special:Newwikis&dir=prev&limit=500&showall=0 http://www.mediawiki.org/wiki/Sites_using_MediaWiki
+# Citizendium (interesantes gráficas http://en.citizendium.org/wiki/CZ:Statistics) no publican el historial completo, solo el current http://en.citizendium.org/wiki/CZ:Downloads
+# permitir descargar solo el historial de una página (special:Export tiene la pega de que solo muestra las últimas 1000 ediciones), con la Api te traes todo en bloques de 500 pero hay que hacer una función que llame a la API (en vez de utilizar pywikipediabot para no añadir una dependencia más)
+# hay otros dumps a parte de los 7z que tienen información útil, por ejemplo los images.sql con metadatos de las fotos, aunque solo los publica wikipedia
+# usar getopt para capturar parámetros desde consola
+# i18n http://www.learningpython.com/2006/12/03/translating-your-pythonpygtk-application/
+# write documentation
+
+#diferenciar entre activity (edits) y newpages
+
+# Ideas para análisis de wikis:
+# * reverts rate: ratio de reversiones (como de eficiente es la comunidad)
+# * ip geolocation: http://software77.net/geo-ip/?license
+# * análisis que permita buscar ciertas palabras en los comentarios de las ediciones
+# * mensajes entre usuarios (ediciones de usuarios en user talk:)
+# * calcular autoría por páginas (colorear el texto actual?)
+# * red/blue links progress
+#
+# Ideas para otros análisis que no usan dumps pero relacionados con wikis o wikipedia:
+# * el feed de donaciones
+# * log de visitas de domas?
+# * conectarse a irc y poder hacer estadisticas en vivo? o con la api dejando una ventana de unos segundos?
+#
+# otras ideas:
+# * mirar http://stats.wikimedia.org/reportcard/RC_2011_04_columns.html http://stats.wikimedia.org/reportcard/
+# * exporter: ventana que marcando los items (registros de la bbdd) que te interesa, los exporta desde la bbdd hacia un CSV u otros formatos, exportar un rango de fechas de revisiones http://en.wikipedia.org/w/index.php?title=User_talk:Emijrp/Wikipedia_Archive&oldid=399534070#How_can_i_get_all_the_revisions_of_a_language_for_a_duration_.3F
+# * necesidades de los investigadores http://www.mediawiki.org/wiki/Research_Data_Proposals
+# * external links analysis: http://linkypedia.inkdroid.org/websites/9/users/
+# que es más seguro hacer las cursor.execute, con ? o con %s ?
+# 
+# flipadas:
+# * ampliar la información de un punto haciendo clic en él: http://matplotlib.sourceforge.net/examples/event_handling/data_browser.py
+# * videos con matplotlib http://matplotlib.sourceforge.net/examples/animation/movie_demo.py
+# * más ejemplos de matplotlib http://matplotlib.sourceforge.net/examples/index.html
+# * mapas con R muy buenos http://flowingdata.com/2011/05/11/how-to-map-connections-with-great-circles/ http://www.webcitation.org/5zuFPrssa
+#
+# dispenser coord dumps: http://toolserver.org/~dispenser/dumps/
 
 #start the fun
 class WikiEvidens:
@@ -75,6 +129,8 @@ class WikiEvidens:
         self.preprocesspath = 'preprocess'
         self.exportpath = 'export'
         self.block = False #semaphore
+        self.users = []
+        self.pages = []
         self.font = ("Arial", 10)
         
         #start menu
@@ -132,6 +188,8 @@ class WikiEvidens:
         self.notebookdownload.add(self.framedownloadother, text='Other')
         self.framedownloaddumpgenerator = ttk.Frame(self.framedownload)
         self.notebookdownload.add(self.framedownloaddumpgenerator, text='Dump generator')
+        self.framedownloadlive = ttk.Frame(self.framedownload)
+        self.notebookdownload.add(self.framedownloadlive, text='Live!')
         #end download tabs
         
         #start preprocess tab
@@ -238,6 +296,13 @@ class WikiEvidens:
         #end preprocess tab
         
         #start analysis global tab
+        self.frameanalysisgloballabel1 = Label(self.frameanalysisglobal, text="Choose an analysis:", width=15, anchor=W)
+        self.frameanalysisgloballabel1.grid(row=0, column=0, sticky=W)
+        self.frameanalysisglobaloptionmenu1var = StringVar(self.frameanalysisglobal)
+        self.frameanalysisglobaloptionmenu1var.set("global-summary")
+        self.frameanalysisglobaloptionmenu1 = OptionMenu(self.frameanalysisglobal, self.frameanalysisglobaloptionmenu1var, self.frameanalysisglobaloptionmenu1var.get(), "global-activity-yearly", "global-activity-monthly", "global-activity-dow", "global-activity-hourly", "reverts-evolution", )
+        self.frameanalysisglobaloptionmenu1.grid(row=0, column=1, sticky=W)
+        """
         f = Figure(figsize=(8,5), dpi=100)
         a = f.add_subplot(111)
         t = arange(0.0,3.0,0.01)
@@ -249,10 +314,98 @@ class WikiEvidens:
         toolbar = NavigationToolbar2TkAgg( canvas, self.frameanalysisglobal )
         toolbar.update()
         canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
-        
-        button1 = Button(self.frameanalysisglobal, text='Yearly graph', command=lambda: self.analysis('global-activity-yearly'), width=10)
-        button1.pack(side=TOP, fill=BOTH, expand=1)
+        """
+        button1 = Button(self.frameanalysisglobal, text='Calculate', command=lambda: self.analysis(self.frameanalysisglobaloptionmenu1var.get()), width=10)
+        button1.grid(row=0, column=2, sticky=W)
         #end analysis global tab
+        
+        #start analysis pages tab
+        self.frameanalysispageslabel1 = Label(self.frameanalysispages, text="Choose a page to analyse.", anchor='center', font=self.font)
+        self.frameanalysispageslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        self.frameanalysispagestreescrollbar = Scrollbar(self.frameanalysispages)
+        self.frameanalysispagestreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
+        frameanalysispagescolumns = ('page name', 'first edit', 'last edit', 'age', 'edits')
+        self.frameanalysispagestree = ttk.Treeview(self.frameanalysispages, height=27, columns=frameanalysispagescolumns, show='headings', yscrollcommand=self.frameanalysispagestreescrollbar.set)
+        self.frameanalysispagestreescrollbar.config(command=self.frameanalysispagestree.yview)
+        self.frameanalysispagestree.column('page name', width=370, minwidth=370, anchor='center')
+        self.frameanalysispagestree.heading('page name', text='Page name')
+        self.frameanalysispagestree.column('first edit', width=145, minwidth=145, anchor='center')
+        self.frameanalysispagestree.heading('first edit', text='First edit')
+        self.frameanalysispagestree.column('last edit', width=145, minwidth=145, anchor='center')
+        self.frameanalysispagestree.heading('last edit', text='Last edit')
+        self.frameanalysispagestree.column('age', width=100, minwidth=100, anchor='center')
+        self.frameanalysispagestree.heading('age', text='Age in days')
+        self.frameanalysispagestree.column('edits', width=120, minwidth=120, anchor='center')
+        self.frameanalysispagestree.heading('edits', text='Edits')
+        self.frameanalysispagestree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
+        #[self.frameanalysispagestree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
+        #self.frameanalysispagestree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
+        #end analysis pages tab
+        
+        #start analysis users tab
+        self.frameanalysisuserslabel1 = Label(self.frameanalysisusers, text="Choose an user to analyse.", anchor='center', font=self.font)
+        self.frameanalysisuserslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        self.frameanalysisuserstreescrollbar = Scrollbar(self.frameanalysisusers)
+        self.frameanalysisuserstreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
+        frameanalysisuserscolumns = ('user name', 'first edit', 'last edit', 'age', 'edits')
+        self.frameanalysisuserstree = ttk.Treeview(self.frameanalysisusers, height=27, columns=frameanalysisuserscolumns, show='headings', yscrollcommand=self.frameanalysisuserstreescrollbar.set)
+        self.frameanalysisuserstreescrollbar.config(command=self.frameanalysisuserstree.yview)
+        self.frameanalysisuserstree.column('user name', width=370, minwidth=370, anchor='center')
+        self.frameanalysisuserstree.heading('user name', text='User name')
+        self.frameanalysisuserstree.column('first edit', width=145, minwidth=145, anchor='center')
+        self.frameanalysisuserstree.heading('first edit', text='First edit')
+        self.frameanalysisuserstree.column('last edit', width=145, minwidth=145, anchor='center')
+        self.frameanalysisuserstree.heading('last edit', text='Last edit')
+        self.frameanalysisuserstree.column('age', width=100, minwidth=100, anchor='center')
+        self.frameanalysisuserstree.heading('age', text='Age in days')
+        self.frameanalysisuserstree.column('edits', width=120, minwidth=120, anchor='center')
+        self.frameanalysisuserstree.heading('edits', text='Edits')
+        self.frameanalysisuserstree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
+        #[self.frameanalysisuserstree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
+        #self.frameanalysisuserstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
+        #end analysis users tab
+        
+        #start analysis samples tab
+        #end analysis samples tab
+    
+    def createCursor(self):
+        if self.activedb:
+            conn = sqlite3.connect(self.activedb)
+            cursor = conn.cursor()
+            return cursor
+        else:
+            print "Error, no cursor"
+            sys.exit()
+    
+    def str2date(self, d):
+        if d:
+            return datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
+        return None
+    
+    def loadPages(self):
+        for i in range(len(self.pages)):
+            self.frameanalysispagestree.delete(str(i))
+        cursor = self.createCursor()
+        result = cursor.execute("SELECT page_title, page_creation_timestamp, page_last_timestamp, page_editcount FROM page WHERE 1 ORDER BY page_title")
+        pages = [[page_title, page_creation_timestamp, page_last_timestamp, (self.str2date(page_last_timestamp)-self.str2date(page_creation_timestamp)).days, page_editcount] for page_title, page_creation_timestamp, page_last_timestamp, page_editcount in result]
+        c = 0
+        for page_title, firstedit, lastedit, age, edits in pages:
+            self.frameanalysispagestree.insert('', 'end', str(c), text=page_title, values=(page_title, firstedit, lastedit, age, edits))
+            self.pages.append(page_title)
+            c += 1
+        return
+    
+    def loadUsers(self):
+        for i in range(len(self.users)):
+            self.frameanalysisuserstree.delete(str(i))
+        cursor = self.createCursor()
+        result = cursor.execute("SELECT user_name, user_editcount, user_first_timestamp, user_last_timestamp FROM user WHERE 1 ORDER BY user_name")
+        users = [[user_name, user_first_timestamp, user_last_timestamp, (self.str2date(user_last_timestamp)-self.str2date(user_first_timestamp)).days, user_editcount] for user_name, user_editcount, user_first_timestamp, user_last_timestamp in result]
+        c = 0
+        for user_name, firstedit, lastedit, age, edits in users:
+            self.frameanalysisuserstree.insert('', 'end', str(c), text=user_name, values=(user_name, firstedit, lastedit, age, edits))
+            self.users.append(user_name)
+            c += 1
     
     def activePreprocessedDump(self):
         items = self.framepreprocesstree.selection()
@@ -261,7 +414,9 @@ class WikiEvidens:
             if os.path.exists(filepath):
                 self.activedb = filepath
                 self.notebookanalysislabel1.config(text='You are analysing "%s".\n' % (self.activedb))
-                self.msg(msg="Loaded succesfull. Now, you can analyse.", level="info")
+                self.loadUsers()
+                self.loadPages()
+                self.msg(msg="Loaded %s succesfull. Now, you can analyse." % (self.activedb), level="info")
             else:
                 self.msg(msg="That preprocessed dump doesn't exist.", level="error")
         else:
@@ -273,9 +428,13 @@ class WikiEvidens:
             self.msg(msg="You must load a preprocessed dump first", level="error")
             return
         
-        conn = sqlite3.connect(self.activedb)
-        cursor = conn.cursor()
-
+        if self.block:
+            self.blocked()
+            return
+        else:
+            self.block = True
+        
+        cursor = self.createCursor()
         #global
         if analysis.startswith('global'):
             if analysis == 'global-summary':
@@ -293,10 +452,13 @@ class WikiEvidens:
                     weactivity.activitydow(cursor=cursor, range='global', title=self.wiki)
                 elif analysis == 'global-activity-hourly':
                     weactivity.activityhourly(cursor=cursor, range='global', title=self.wiki)
+                self.block = False
                 pylab.show()
-        
-        cursor.close()
-        conn.close()
+        elif analysis == 'reverts-evolution':
+            import wereverts
+            wereverts.revertsEvolution(cursor=cursor, title='Reverts evolution @ %s' % (self.wiki))
+            self.block = False
+            pylab.show()
     
     def callback(self):
         self.msg("Feature not implemented for the moment. Contributions are welcome.", level='info')
@@ -528,7 +690,7 @@ class WikiEvidens:
                 else:
                     self.msg("[%d of %d] Preprocessing %s" % (c+1, len(items), self.framepreprocesstree.item(item,"text")))
                     dumppath = self.downloadpath + '/' + self.downloadeddumps[int(item)][0]
-                    weparser.parseMediaWikiXMLDump(dumpfilename=dumppath, dbfilename=filepath)
+                    weparser.parseMediaWikiXMLDump(self=self, dumpfilename=dumppath, dbfilename=filepath)
                     msg='%s size is %s bytes large. Preprocess successful!' % (self.downloadeddumps[int(item)][0] + '.db', os.path.getsize(filepath))
                     self.msg(msg=msg)
                     c += 1
