@@ -128,6 +128,7 @@ class WikiEvidens:
         self.downloadpath = 'download'
         self.preprocesspath = 'preprocess'
         self.exportpath = 'export'
+        self.outputpath = 'output'
         self.block = False #semaphore
         self.users = []
         self.pages = []
@@ -300,7 +301,7 @@ class WikiEvidens:
         self.frameanalysisgloballabel1.grid(row=0, column=0, sticky=W)
         self.frameanalysisglobaloptionmenu1var = StringVar(self.frameanalysisglobal)
         self.frameanalysisglobaloptionmenu1var.set("global-summary")
-        self.frameanalysisglobaloptionmenu1 = OptionMenu(self.frameanalysisglobal, self.frameanalysisglobaloptionmenu1var, self.frameanalysisglobaloptionmenu1var.get(), "global-activity-yearly", "global-activity-monthly", "global-activity-dow", "global-activity-hourly", "reverts-evolution", )
+        self.frameanalysisglobaloptionmenu1 = OptionMenu(self.frameanalysisglobal, self.frameanalysisglobaloptionmenu1var, self.frameanalysisglobaloptionmenu1var.get(), "global-activity-yearly", "global-activity-monthly", "global-activity-dow", "global-activity-hourly", "global-reverts-evolution", "global-newpages", "global-newusers", "global-graph-user-messages", "global-graph-user-edits-network",)
         self.frameanalysisglobaloptionmenu1.grid(row=0, column=1, sticky=W)
         """
         f = Figure(figsize=(8,5), dpi=100)
@@ -385,6 +386,7 @@ class WikiEvidens:
     def loadPages(self):
         for i in range(len(self.pages)):
             self.frameanalysispagestree.delete(str(i))
+        self.pages = []
         cursor = self.createCursor()
         result = cursor.execute("SELECT page_title, page_creation_timestamp, page_last_timestamp, page_editcount FROM page WHERE 1 ORDER BY page_title")
         pages = [[page_title, page_creation_timestamp, page_last_timestamp, (self.str2date(page_last_timestamp)-self.str2date(page_creation_timestamp)).days, page_editcount] for page_title, page_creation_timestamp, page_last_timestamp, page_editcount in result]
@@ -398,6 +400,7 @@ class WikiEvidens:
     def loadUsers(self):
         for i in range(len(self.users)):
             self.frameanalysisuserstree.delete(str(i))
+        self.users = []
         cursor = self.createCursor()
         result = cursor.execute("SELECT user_name, user_editcount, user_first_timestamp, user_last_timestamp FROM user WHERE 1 ORDER BY user_name")
         users = [[user_name, user_first_timestamp, user_last_timestamp, (self.str2date(user_last_timestamp)-self.str2date(user_first_timestamp)).days, user_editcount] for user_name, user_editcount, user_first_timestamp, user_last_timestamp in result]
@@ -413,6 +416,7 @@ class WikiEvidens:
             filepath = self.preprocesspath and self.preprocesspath + '/' + self.downloadeddumps[int(items[0])][0] + '.db' or self.downloadeddumps[int(items[0])][0] + '.db'
             if os.path.exists(filepath):
                 self.activedb = filepath
+                self.wiki = self.downloadeddumps[int(items[0])][0].split('.')[0]
                 self.notebookanalysislabel1.config(text='You are analysing "%s".\n' % (self.activedb))
                 self.loadUsers()
                 self.loadPages()
@@ -452,13 +456,24 @@ class WikiEvidens:
                     weactivity.activitydow(cursor=cursor, range='global', title=self.wiki)
                 elif analysis == 'global-activity-hourly':
                     weactivity.activityhourly(cursor=cursor, range='global', title=self.wiki)
-                self.block = False
-                pylab.show()
-        elif analysis == 'reverts-evolution':
-            import wereverts
-            wereverts.revertsEvolution(cursor=cursor, title='Reverts evolution @ %s' % (self.wiki))
-            self.block = False
-            pylab.show()
+            elif analysis == 'global-reverts-evolution':
+                import wereverts
+                wereverts.revertsEvolution(cursor=cursor, title='Global reverts evolution @ %s' % (self.wiki))
+            elif analysis == 'global-newpages':
+                import wenewpages
+                wenewpages.newpagesEvolution(cursor=cursor, title='Global newpages evolution @ %s' % (self.wiki))
+            elif analysis == 'global-newusers':
+                import wenewusers
+                wenewusers.newusersEvolution(cursor=cursor, title='Global newusers evolution @ %s' % (self.wiki))
+            elif analysis == 'global-graph-user-messages':
+                import wegraph
+                wegraph.graphUserMessages(self=self, cursor=cursor)
+            elif analysis == 'global-graph-user-edits-network':
+                import wegraph
+                wegraph.graphUserEditsNetwork(self=self, cursor=cursor)
+        
+        self.block = False
+        pylab.show()
     
     def callback(self):
         self.msg("Feature not implemented for the moment. Contributions are welcome.", level='info')
