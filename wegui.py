@@ -629,7 +629,7 @@ class WikiEvidens:
             #['Internet Archive', 'http://www.archive.org/details/referata.com-20111204', iaregexp],
             #['Internet Archive', 'http://www.archive.org/details/WikiTeamMirror', iaregexp],
             #['ScottDB', 'http://mirrors.sdboyd56.com/WikiTeam/', ur'<a href="(?P<filename>[^>]+\.7z)">(?P<size>[\d\.]+ (?:KB|MB|GB|TB))</a>'],
-            #['Wikimedia', 'http://dumps.wikimedia.org/backup-index.html', ur'(?P<size>)<a href="(?P<filename>[^>]+)">[^>]+</a>: <span class=\'done\'>Dump complete</span></li>']
+            ['Wikimedia', 'http://dumps.wikimedia.org/backup-index.html', ur'(?P<size>)<a href="(?P<filename>[^>]+)">[^>]+</a>: <span class=\'done\'>Dump complete</span></li>']
         ]
         c = 0
         for mirror, url, regexp in self.urls:
