@@ -325,21 +325,20 @@ class WikiEvidens:
         self.frameanalysispageslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         self.frameanalysispagestreescrollbar = Scrollbar(self.frameanalysispages)
         self.frameanalysispagestreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
-        frameanalysispagescolumns = ('page name', 'first edit', 'last edit', 'age', 'edits')
-        self.frameanalysispagestree = ttk.Treeview(self.frameanalysispages, height=27, columns=frameanalysispagescolumns, show='headings', yscrollcommand=self.frameanalysispagestreescrollbar.set)
+        self.frameanalysispagescolumns = ('page name', 'first edit', 'last edit', 'age', 'edits')
+        self.frameanalysispagestree = ttk.Treeview(self.frameanalysispages, height=27, columns=self.frameanalysispagescolumns, show='headings', yscrollcommand=self.frameanalysispagestreescrollbar.set)
         self.frameanalysispagestreescrollbar.config(command=self.frameanalysispagestree.yview)
         self.frameanalysispagestree.column('page name', width=370, minwidth=370, anchor='center')
-        self.frameanalysispagestree.heading('page name', text='Page name')
+        self.frameanalysispagestree.heading('page name', text='Page name', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='page name', reverse=False))
         self.frameanalysispagestree.column('first edit', width=145, minwidth=145, anchor='center')
-        self.frameanalysispagestree.heading('first edit', text='First edit')
+        self.frameanalysispagestree.heading('first edit', text='First edit', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='first edit', reverse=False))
         self.frameanalysispagestree.column('last edit', width=145, minwidth=145, anchor='center')
-        self.frameanalysispagestree.heading('last edit', text='Last edit')
+        self.frameanalysispagestree.heading('last edit', text='Last edit', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='last edit', reverse=False))
         self.frameanalysispagestree.column('age', width=100, minwidth=100, anchor='center')
-        self.frameanalysispagestree.heading('age', text='Age in days')
+        self.frameanalysispagestree.heading('age', text='Age in days', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='age', reverse=False))
         self.frameanalysispagestree.column('edits', width=120, minwidth=120, anchor='center')
-        self.frameanalysispagestree.heading('edits', text='Edits')
+        self.frameanalysispagestree.heading('edits', text='Edits', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='edits', reverse=False))
         self.frameanalysispagestree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
-        #[self.frameanalysispagestree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
         #self.frameanalysispagestree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         #end analysis pages tab
         
@@ -352,22 +351,43 @@ class WikiEvidens:
         self.frameanalysisuserstree = ttk.Treeview(self.frameanalysisusers, height=27, columns=frameanalysisuserscolumns, show='headings', yscrollcommand=self.frameanalysisuserstreescrollbar.set)
         self.frameanalysisuserstreescrollbar.config(command=self.frameanalysisuserstree.yview)
         self.frameanalysisuserstree.column('user name', width=370, minwidth=370, anchor='center')
-        self.frameanalysisuserstree.heading('user name', text='User name')
+        self.frameanalysisuserstree.heading('user name', text='User name', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='user name', reverse=False))
         self.frameanalysisuserstree.column('first edit', width=145, minwidth=145, anchor='center')
-        self.frameanalysisuserstree.heading('first edit', text='First edit')
+        self.frameanalysisuserstree.heading('first edit', text='First edit', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='first edit', reverse=False))
         self.frameanalysisuserstree.column('last edit', width=145, minwidth=145, anchor='center')
-        self.frameanalysisuserstree.heading('last edit', text='Last edit')
+        self.frameanalysisuserstree.heading('last edit', text='Last edit', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='last edit', reverse=False))
         self.frameanalysisuserstree.column('age', width=100, minwidth=100, anchor='center')
-        self.frameanalysisuserstree.heading('age', text='Age in days')
+        self.frameanalysisuserstree.heading('age', text='Age in days', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='age', reverse=False))
         self.frameanalysisuserstree.column('edits', width=120, minwidth=120, anchor='center')
-        self.frameanalysisuserstree.heading('edits', text='Edits')
+        self.frameanalysisuserstree.heading('edits', text='Edits', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='edits', reverse=False))
         self.frameanalysisuserstree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
-        #[self.frameanalysisuserstree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
         #self.frameanalysisuserstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         #end analysis users tab
         
         #start analysis samples tab
         #end analysis samples tab
+    
+    def treeSortColumn(self, tree=None, column=None, reverse=False):
+        if tree == 'frameanalysispagestree': #lo hago asi pq los heading() se generan uno detrás de otro y no puedo pasar el tree como parámetro antes de q terminen todos
+            tree = self.frameanalysispagestree
+        elif tree == 'frameanalysisuserstree':
+            tree = self.frameanalysisuserstree
+        isDigit = True
+        for k in tree.get_children(''):
+            if not tree.set(k, column).isdigit():
+                isDigit = False
+                break
+        l = []
+        if isDigit:
+            l = [(int(tree.set(k, column)), k) for k in tree.get_children('')]
+        else:
+            l = [(tree.set(k, column), k) for k in tree.get_children('')]
+        l.sort(reverse=reverse)
+
+        for index, (val, k) in enumerate(l):
+            tree.move(k, '', index)
+
+        tree.heading(column, command=lambda: self.treeSortColumn(tree=tree, column=column, reverse=not reverse))
     
     def createCursor(self):
         if self.activedb:
