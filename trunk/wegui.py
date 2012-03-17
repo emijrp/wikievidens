@@ -269,7 +269,7 @@ class WikiEvidens:
         self.framedownloadwikislabelframe1label3.grid(row=0, column=2, sticky=E)
         self.framedownloadwikislabelframe1optionmenu3var = StringVar(self.framedownloadwikislabelframe1)
         self.framedownloadwikislabelframe1optionmenu3var.set("all")
-        self.framedownloadwikislabelframe1optionmenu3 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu3var, self.framedownloadwikislabelframe1optionmenu3var.get(), "2011", "2012")
+        self.framedownloadwikislabelframe1optionmenu3 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu3var, self.framedownloadwikislabelframe1optionmenu3var.get(), "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012")
         self.framedownloadwikislabelframe1optionmenu3.grid(row=0, column=3)
         
         self.framedownloadwikislabelframe1label4 = Label(self.framedownloadwikislabelframe1, text="Mirror:")
@@ -282,7 +282,7 @@ class WikiEvidens:
         #buttons
         self.framedownloadwikisbutton1 = Button(self.framedownloadwikis, text="Scan available dumps", command=lambda: thread.start_new_thread(self.loadAvailableDumps, ()), width=15)
         self.framedownloadwikisbutton1.grid(row=2, column=0)
-        self.framedownloadwikisbutton4 = Button(self.framedownloadwikis, text="Apply filters", command=lambda: self.filterAvailableDumps, width=15)
+        self.framedownloadwikisbutton4 = Button(self.framedownloadwikis, text="Apply filters", command=self.filterAvailableDumps, width=15)
         self.framedownloadwikisbutton4.grid(row=3, column=0)
         self.framedownloadwikisbutton3 = Button(self.framedownloadwikis, text="Download selection", command=lambda: thread.start_new_thread(self.downloadDump, ()), width=15, anchor=E)
         self.framedownloadwikisbutton3.grid(row=2, column=2)
@@ -401,6 +401,33 @@ class WikiEvidens:
         
         #start analysis samples tab
         #end analysis samples tab
+    
+    def filterAvailableDumps(self):
+        self.clearAvailableDumps()
+        self.showAvailableDumps()
+        sizes = []
+        downloadedsizes = []
+        nodownloadedsizes = []
+        for i in range(len(self.availabledumps)):
+            if (self.framedownloadwikislabelframe1optionmenu1var.get() == 'all' and self.framedownloadwikislabelframe1optionmenu2var.get() == 'all' and self.framedownloadwikislabelframe1optionmenu3var.get() == 'all' and self.framedownloadwikislabelframe1optionmenu4var.get() == 'all'):
+                sizes.append(self.availabledumps[i][2])
+                if self.availabledumps[i][6]:
+                    downloadedsizes.append(self.availabledumps[i][2])
+                else:
+                    nodownloadedsizes.append(self.availabledumps[i][2])
+            elif (self.framedownloadwikislabelframe1optionmenu1var.get() != 'all' and not self.framedownloadwikislabelframe1optionmenu1var.get() == self.availabledumps[i][1]) or \
+                (self.framedownloadwikislabelframe1optionmenu2var.get() != 'all' and not self.framedownloadwikislabelframe1optionmenu2var.get() in self.availabledumps[i][2]) or \
+                (self.framedownloadwikislabelframe1optionmenu3var.get() != 'all' and not self.framedownloadwikislabelframe1optionmenu3var.get() in self.availabledumps[i][3]) or \
+                (self.framedownloadwikislabelframe1optionmenu4var.get() != 'all' and not self.framedownloadwikislabelframe1optionmenu4var.get() in self.availabledumps[i][4]):
+                self.framedownloadwikistree.detach(str(i)) #hide this item
+                sizes.append(self.availabledumps[i][2])
+                if self.availabledumps[i][6]:
+                    downloadedsizes.append(self.availabledumps[i][2])
+                else:
+                    nodownloadedsizes.append(self.availabledumps[i][2])
+        #self.label25var.set("Available dumps: %d (%.1f MB)" % (len(sizes), self.sumSizes(sizes)))
+        #self.label26var.set("Downloaded: %d (%.1f MB)" % (len(downloadedsizes), self.sumSizes(downloadedsizes)))
+        #self.label27var.set("Not downloaded: %d (%.1f MB)" % (len(nodownloadedsizes), self.sumSizes(nodownloadedsizes)))
     
     def treeSortColumn(self, tree=None, column=None, reverse=False):
         if tree == 'frameanalysispagestree': #lo hago asi pq los heading() se generan uno detrás de otro y no puedo pasar el tree como parámetro antes de q terminen todos
@@ -602,7 +629,7 @@ class WikiEvidens:
             self.msg(msg="You have to select some dumps to download.", level="error")
         self.clearAvailableDumps()
         self.showAvailableDumps()
-        #self.filterAvailableDumps()
+        self.filterAvailableDumps()
         self.block = False
     
     def deleteAvailableDumps(self):
@@ -720,7 +747,7 @@ class WikiEvidens:
                 self.availabledumps.append([filename, wikifarm, size, date, mirror, downloadurl, downloaded])
         self.availabledumps.sort()
         self.showAvailableDumps()
-        #self.filterAvailableDumps()
+        self.filterAvailableDumps()
         self.msg(msg='Loaded %d available dumps!' % (len(self.availabledumps)), level='info')
         self.block = False
     
