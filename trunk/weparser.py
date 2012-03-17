@@ -115,6 +115,7 @@ def parseMediaWikiXMLDump(self, dumpfilename, dbfilename):
     page_sections = 0
     page_templates = 0
     rev_last_text_for_diff = ''
+    
     for x in xml.parse(): #parsing the whole dump
         # Create page entry if needed
         if page_id != -1 and page_id != x.id:
@@ -195,7 +196,7 @@ def parseMediaWikiXMLDump(self, dumpfilename, dbfilename):
             self.msg(msg='Analysed %d revisions [%d revs/sec]' % (c+errors, limit/(time.time()-t1)))
             conn.commit()
             t1 = time.time()
-        
+    
     conn.commit() #para cuando son menos de limit o el resto
     print 'Total revisions [%d], correctly inserted [%d], errors [%d]' % (c+errors, c, errors)
     print 'Total pages [%d], correctly inserted [%d], errors [%d]' % (c_page+errors_page, c_page, errors_page)

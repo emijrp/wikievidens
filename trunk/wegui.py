@@ -431,6 +431,12 @@ class WikiEvidens:
             c += 1
     
     def activePreprocessedDump(self):
+        if self.block:
+            self.blocked()
+            return
+        else:
+            self.block = True
+        
         items = self.framepreprocesstree.selection()
         if len(items) == 1:
             filepath = self.preprocesspath and self.preprocesspath + '/' + self.downloadeddumps[int(items[0])][0] + '.db' or self.downloadeddumps[int(items[0])][0] + '.db'
@@ -446,6 +452,8 @@ class WikiEvidens:
         else:
             self.msg(msg="You only can load a preprocessed dump a time.", level="error")
             return
+        
+        self.block = False
     
     def analysis(self, analysis):
         if not self.activedb:
