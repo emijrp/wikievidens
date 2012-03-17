@@ -371,7 +371,7 @@ class WikiEvidens:
         #end analysis global tab
         
         #start analysis pages tab
-        self.frameanalysispageslabel1 = Label(self.frameanalysispages, text="Choose a page to analyse.", anchor='center', font=self.font)
+        self.frameanalysispageslabel1 = Label(self.frameanalysispages, text="Choose a page and an analysis:", anchor='center', font=self.font)
         self.frameanalysispageslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         self.frameanalysispagestreescrollbar = Scrollbar(self.frameanalysispages)
         self.frameanalysispagestreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
@@ -393,7 +393,7 @@ class WikiEvidens:
         #end analysis pages tab
         
         #start analysis users tab
-        self.frameanalysisuserslabel1 = Label(self.frameanalysisusers, text="Choose an user to analyse.", anchor='center', font=self.font)
+        self.frameanalysisuserslabel1 = Label(self.frameanalysisusers, text="Choose an user and an analysis:", anchor='center', font=self.font)
         self.frameanalysisuserslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         self.frameanalysisuserstreescrollbar = Scrollbar(self.frameanalysisusers)
         self.frameanalysisuserstreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
