@@ -278,7 +278,6 @@ class WikiEvidens:
         self.framedownloadwikislabelframe1optionmenu4var.set("all")
         self.framedownloadwikislabelframe1optionmenu4 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu4var, self.framedownloadwikislabelframe1optionmenu4var.get(), "Google Code", "Internet Archive", "ScottDB")
         self.framedownloadwikislabelframe1optionmenu4.grid(row=1, column=3)
-        
         #buttons
         self.framedownloadwikisbutton1 = Button(self.framedownloadwikis, text="Scan available dumps", command=lambda: thread.start_new_thread(self.loadAvailableDumps, ()), width=15)
         self.framedownloadwikisbutton1.grid(row=2, column=0)
@@ -321,6 +320,7 @@ class WikiEvidens:
         #self.framepreprocesstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         self.framepreprocesstree.tag_configure('preprocessed', background='lightgreen')
         self.framepreprocesstree.tag_configure('nopreprocessed', background='white')
+        #buttons
         self.framepreprocessbutton3 = Button(self.framepreprocess, text="Scan downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=18)
         self.framepreprocessbutton3.grid(row=2, column=0)
         self.framepreprocessbutton3 = Button(self.framepreprocess, text="Preprocess selection", command=lambda: thread.start_new_thread(self.preprocessDump, ()), width=18)
