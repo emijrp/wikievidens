@@ -127,7 +127,7 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
                 cursor.execute('INSERT OR IGNORE INTO page VALUES (?,?,?,?,?,?,?,?,?,?,?)', (page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, buffer(zlib.compress(page_text,9)), page_internal_links, page_external_links, page_interwikis, page_sections, page_templates))
                 #conn.commit()
                 c_page += 1
-                if c_page and c_page >= pagelimit:
+                if pagelimit and c_page >= pagelimit:
                     break
             else:
                 print '#'*30, '\n', 'ERROR PAGE:' , page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, 'text (', len(page_text), 'bytes)', page_text[:100], '\n', '#'*30
@@ -200,7 +200,7 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
             conn.commit()
             t1 = time.time()
         
-        if c and c >= revlimit:
+        if revlimit and c >= revlimit:
             break
         
     conn.commit() #para cuando son menos de limit o el resto
