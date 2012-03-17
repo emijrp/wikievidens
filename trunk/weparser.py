@@ -70,7 +70,7 @@ def generateAuxTables(conn=None, cursor=None):
     print '#'*30, '\n', 'Generating auxiliar tables', '\n', '#'*30
     generateUserTable(conn=conn, cursor=cursor)
 
-def parseMediaWikiXMLDump(self, dumpfilename, dbfilename):
+def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=None, pagelimit=None):
     #extract only the first .xml file available, scan the content
     s = subprocess.Popen('7z l %s' % dumpfilename, shell=True, stdout=subprocess.PIPE, bufsize=65535).stdout
     raw = s.read()
@@ -127,6 +127,8 @@ def parseMediaWikiXMLDump(self, dumpfilename, dbfilename):
                 cursor.execute('INSERT OR IGNORE INTO page VALUES (?,?,?,?,?,?,?,?,?,?,?)', (page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, buffer(zlib.compress(page_text,9)), page_internal_links, page_external_links, page_interwikis, page_sections, page_templates))
                 #conn.commit()
                 c_page += 1
+                if c_page and c_page >= pagelimit:
+                    break
             else:
                 print '#'*30, '\n', 'ERROR PAGE:' , page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, 'text (', len(page_text), 'bytes)', page_text[:100], '\n', '#'*30
                 errors_page += 1
@@ -197,7 +199,10 @@ def parseMediaWikiXMLDump(self, dumpfilename, dbfilename):
             self.msg(msg='Analysed %d revisions [%d revs/sec]' % (c+errors, limit/(time.time()-t1)))
             conn.commit()
             t1 = time.time()
-    
+        
+        if c and c >= revlimit:
+            break
+        
     conn.commit() #para cuando son menos de limit o el resto
     print 'Total revisions [%d], correctly inserted [%d], errors [%d]' % (c+errors, c, errors)
     print 'Total pages [%d], correctly inserted [%d], errors [%d]' % (c_page+errors_page, c_page, errors_page)
