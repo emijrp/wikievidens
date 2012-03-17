@@ -808,8 +808,14 @@ class WikiEvidens:
                 else:
                     self.msg("[%d of %d] Preprocessing %s" % (c+1, len(items), self.framepreprocesstree.item(item,"text")))
                     dumppath = self.downloadpath + '/' + self.downloadeddumps[int(item)][0]
+                    revlimit = None
+                    pagelimit = None
+                    if self.framepreprocesslabelframe1entry1var.get().isdigit():
+                        revlimit = int(self.framepreprocesslabelframe1entry1var.get())
+                    if self.framepreprocesslabelframe1entry2var.get().isdigit():
+                        pagelimit = int(self.framepreprocesslabelframe1entry2var.get())
                     import weparser
-                    weparser.parseMediaWikiXMLDump(self=self, dumpfilename=dumppath, dbfilename=filepath)
+                    weparser.parseMediaWikiXMLDump(self=self, dumpfilename=dumppath, dbfilename=filepath, revlimit=revlimit, pagelimit=pagelimit)
                     msg='%s size is %s bytes large. Preprocess successful!' % (self.downloadeddumps[int(item)][0] + '.db', os.path.getsize(filepath))
                     self.msg(msg=msg)
                     c += 1
