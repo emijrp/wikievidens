@@ -215,7 +215,7 @@ class WikiEvidens:
         #end analysis tabs
         
         #start export tab
-        self.notebookexportlabel1 = Label(self.frameexport, text="You can export data from datasets.\n", anchor='center', font=self.font)
+        self.notebookexportlabel1 = Label(self.frameexport, text="You can export data from datasets.\n\nTODO: date ranges, namespaces,...", anchor='center', font=self.font)
         self.notebookexportlabel1.grid(row=0, column=0, sticky=W)
         #end export tab
         
@@ -302,7 +302,7 @@ class WikiEvidens:
         
         #start preprocess tab
         self.framepreprocesstreescrollbar = Scrollbar(self.framepreprocess)
-        self.framepreprocesstreescrollbar.grid(row=1, column=4, sticky=W+E+N+S)
+        self.framepreprocesstreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
         framepreprocesscolumns = ('dump', 'wikifarm', 'size', 'date', 'status')
         self.framepreprocesstree = ttk.Treeview(self.framepreprocess, height=27, columns=framepreprocesscolumns, show='headings', yscrollcommand=self.framepreprocesstreescrollbar.set)
         self.framepreprocesstreescrollbar.config(command=self.framepreprocesstree.yview)
@@ -316,19 +316,19 @@ class WikiEvidens:
         self.framepreprocesstree.heading('date', text='Date')
         self.framepreprocesstree.column('status', width=240, minwidth=240, anchor='center')
         self.framepreprocesstree.heading('status', text='Status')
-        self.framepreprocesstree.grid(row=1, column=0, columnspan=4, sticky=W+E+N+S)
+        self.framepreprocesstree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
         #[self.framepreprocesstree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
         #self.framepreprocesstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         self.framepreprocesstree.tag_configure('preprocessed', background='lightgreen')
         self.framepreprocesstree.tag_configure('nopreprocessed', background='white')
-        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Scan downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=20)
+        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Scan downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=18)
         self.framepreprocessbutton3.grid(row=2, column=0)
-        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Preprocess selection", command=lambda: thread.start_new_thread(self.preprocessDump, ()), width=15)
-        self.framepreprocessbutton3.grid(row=2, column=1)
-        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Load", command=lambda: thread.start_new_thread(self.activePreprocessedDump, ()), width=15)
+        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Preprocess selection", command=lambda: thread.start_new_thread(self.preprocessDump, ()), width=18)
+        self.framepreprocessbutton3.grid(row=3, column=0)
+        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Load", command=lambda: thread.start_new_thread(self.activePreprocessedDump, ()), width=18)
         self.framepreprocessbutton3.grid(row=2, column=2)
-        self.framepreprocessbutton2 = Button(self.framepreprocess, text="Clear list", command=self.deleteDownloadedDumps, width=10)
-        self.framepreprocessbutton2.grid(row=2, column=3)
+        self.framepreprocessbutton2 = Button(self.framepreprocess, text="Clear list", command=self.deleteDownloadedDumps, width=18)
+        self.framepreprocessbutton2.grid(row=3, column=2)
         #end preprocess tab
         
         #start analysis global tab
