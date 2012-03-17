@@ -41,7 +41,7 @@ from matplotlib.figure import Figure
 import pylab
 
 #wikievidens modules
-import weparser
+import wecore
 
 #globals
 wikifarms = {
@@ -398,18 +398,13 @@ class WikiEvidens:
             print "Error, no cursor"
             sys.exit()
     
-    def str2date(self, d):
-        if d:
-            return datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
-        return None
-    
     def loadPages(self):
         for i in range(len(self.pages)):
             self.frameanalysispagestree.delete(str(i))
         self.pages = []
         cursor = self.createCursor()
         result = cursor.execute("SELECT page_title, page_creation_timestamp, page_last_timestamp, page_editcount FROM page WHERE 1 ORDER BY page_title")
-        pages = [[page_title, page_creation_timestamp, page_last_timestamp, (self.str2date(page_last_timestamp)-self.str2date(page_creation_timestamp)).days, page_editcount] for page_title, page_creation_timestamp, page_last_timestamp, page_editcount in result]
+        pages = [[page_title, page_creation_timestamp, page_last_timestamp, (wecore.str2date(page_last_timestamp)-wecore.str2date(page_creation_timestamp)).days, page_editcount] for page_title, page_creation_timestamp, page_last_timestamp, page_editcount in result]
         c = 0
         for page_title, firstedit, lastedit, age, edits in pages:
             self.frameanalysispagestree.insert('', 'end', str(c), text=page_title, values=(page_title, firstedit, lastedit, age, edits))
@@ -423,7 +418,7 @@ class WikiEvidens:
         self.users = []
         cursor = self.createCursor()
         result = cursor.execute("SELECT user_name, user_editcount, user_first_timestamp, user_last_timestamp FROM user WHERE 1 ORDER BY user_name")
-        users = [[user_name, user_first_timestamp, user_last_timestamp, (self.str2date(user_last_timestamp)-self.str2date(user_first_timestamp)).days, user_editcount] for user_name, user_editcount, user_first_timestamp, user_last_timestamp in result]
+        users = [[user_name, user_first_timestamp, user_last_timestamp, (wecore.str2date(user_last_timestamp)-wecore.str2date(user_first_timestamp)).days, user_editcount] for user_name, user_editcount, user_first_timestamp, user_last_timestamp in result]
         c = 0
         for user_name, firstedit, lastedit, age, edits in users:
             self.frameanalysisuserstree.insert('', 'end', str(c), text=user_name, values=(user_name, firstedit, lastedit, age, edits))
@@ -733,6 +728,7 @@ class WikiEvidens:
                 else:
                     self.msg("[%d of %d] Preprocessing %s" % (c+1, len(items), self.framepreprocesstree.item(item,"text")))
                     dumppath = self.downloadpath + '/' + self.downloadeddumps[int(item)][0]
+                    import weparser
                     weparser.parseMediaWikiXMLDump(self=self, dumpfilename=dumppath, dbfilename=filepath)
                     msg='%s size is %s bytes large. Preprocess successful!' % (self.downloadeddumps[int(item)][0] + '.db', os.path.getsize(filepath))
                     self.msg(msg=msg)

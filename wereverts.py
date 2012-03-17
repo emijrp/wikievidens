@@ -21,7 +21,6 @@ import datetime
 import sqlite3
 import tkMessageBox
 
-
 #fix
 #mirar como usa las fechas aquí http://matplotlib.sourceforge.net/examples/api/date_demo.html
 #nube de puntos http://matplotlib.sourceforge.net/examples/api/unicode_minus.html
@@ -43,12 +42,12 @@ def revertsEvolution(cursor=None, title=''):
         revision = [rev_page, rev_id, rev_timestamp, rev_text_md5]
         
         if page:
-            if rev_page == page[0][0]: #new revision for this page
+            if rev_page == page[0][0]: #new revision for this page?
                 page.append(revision)
             else: #previous page finished, analyse
                 c = 0
                 for temprev in page:
-                    if temprev[3] in [temprev2[3] for temprev2 in page[:c]]: #is a revert of a previous rev in this page
+                    if temprev[3] in [temprev2[3] for temprev2 in page[:c]]: #is a revert of a previous rev in this page?
                         temprevdate = datetime.date(year=int(temprev[2][0:4]), month=int(temprev[2][5:7]), day=int(temprev[2][8:10]))
                         if reverts.has_key(temprevdate):
                             reverts[temprevdate] += 1
@@ -56,7 +55,7 @@ def revertsEvolution(cursor=None, title=''):
                             reverts[temprevdate] = 1
                     c += 1
                 
-                page = [revision] #reset
+                page.append(revision) #reset
         else:
             page.append(revision)
     
