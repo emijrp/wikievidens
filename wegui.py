@@ -749,9 +749,10 @@ class WikiEvidens:
             m = re.compile(regexp).finditer(f.read())
             for i in m:
                 filename = i.group('filename')
+                wikifarm = self.getWikifarmFromFilename(filename)
                 if mirror == 'Wikimedia':
                     filename = '%s-pages-meta-history.xml.7z' % (re.sub('/', '-', filename))
-                wikifarm = self.getWikifarmFromFilename(filename)
+                    wikifarm = wikifarms['wikimedia']
                 size = i.group('size')
                 if not size:
                     size = 'Unknown'
