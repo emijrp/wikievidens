@@ -232,17 +232,17 @@ class WikiEvidens:
         self.framedownloadwikistree = ttk.Treeview(self.framedownloadwikis, height=24, columns=framedownloadwikiscolumns, show='headings', yscrollcommand=self.framedownloadwikistreescrollbar.set)
         self.framedownloadwikistreescrollbar.config(command=self.framedownloadwikistree.yview)
         self.framedownloadwikistree.column('dump', width=460, minwidth=460, anchor='center')
-        self.framedownloadwikistree.heading('dump', text='Dump')
+        self.framedownloadwikistree.heading('dump', text='Dump', command=lambda: self.treeSortColumn(tree='framedownloadwikistree', column='dump', reverse=False))
         self.framedownloadwikistree.column('wikifarm', width=100, minwidth=100, anchor='center')
-        self.framedownloadwikistree.heading('wikifarm', text='Wikifarm')
+        self.framedownloadwikistree.heading('wikifarm', text='Wikifarm', command=lambda: self.treeSortColumn(tree='framedownloadwikistree', column='wikifarm', reverse=False))
         self.framedownloadwikistree.column('size', width=100, minwidth=100, anchor='center')
-        self.framedownloadwikistree.heading('size', text='Size')
+        self.framedownloadwikistree.heading('size', text='Size', command=lambda: self.treeSortColumn(tree='framedownloadwikistree', column='size', reverse=False))
         self.framedownloadwikistree.column('date', width=100, minwidth=100, anchor='center')
-        self.framedownloadwikistree.heading('date', text='Date')
+        self.framedownloadwikistree.heading('date', text='Date', command=lambda: self.treeSortColumn(tree='framedownloadwikistree', column='date', reverse=False))
         self.framedownloadwikistree.column('mirror', width=120, minwidth=120, anchor='center')
-        self.framedownloadwikistree.heading('mirror', text='Mirror')
+        self.framedownloadwikistree.heading('mirror', text='Mirror', command=lambda: self.treeSortColumn(tree='framedownloadwikistree', column='mirror', reverse=False))
         self.framedownloadwikistree.column('status', width=120, minwidth=120, anchor='center')
-        self.framedownloadwikistree.heading('status', text='Status')
+        self.framedownloadwikistree.heading('status', text='Status', command=lambda: self.treeSortColumn(tree='framedownloadwikistree', column='status', reverse=False))
         self.framedownloadwikistree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
         #[self.framedownloadwikistree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
         #self.framedownloadwikistree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
@@ -306,15 +306,15 @@ class WikiEvidens:
         self.framepreprocesstree = ttk.Treeview(self.framepreprocess, height=27, columns=framepreprocesscolumns, show='headings', yscrollcommand=self.framepreprocesstreescrollbar.set)
         self.framepreprocesstreescrollbar.config(command=self.framepreprocesstree.yview)
         self.framepreprocesstree.column('dump', width=460, minwidth=460, anchor='center')
-        self.framepreprocesstree.heading('dump', text='Dump')
+        self.framepreprocesstree.heading('dump', text='Dump', command=lambda: self.treeSortColumn(tree='framepreprocesstree', column='dump', reverse=False))
         self.framepreprocesstree.column('wikifarm', width=100, minwidth=100, anchor='center')
-        self.framepreprocesstree.heading('wikifarm', text='Wikifarm')
+        self.framepreprocesstree.heading('wikifarm', text='Wikifarm', command=lambda: self.treeSortColumn(tree='framepreprocesstree', column='wikifarm', reverse=False))
         self.framepreprocesstree.column('size', width=100, minwidth=100, anchor='center')
-        self.framepreprocesstree.heading('size', text='Size')
+        self.framepreprocesstree.heading('size', text='Size', command=lambda: self.treeSortColumn(tree='framepreprocesstree', column='size', reverse=False))
         self.framepreprocesstree.column('date', width=100, minwidth=100, anchor='center')
-        self.framepreprocesstree.heading('date', text='Date')
+        self.framepreprocesstree.heading('date', text='Date', command=lambda: self.treeSortColumn(tree='framepreprocesstree', column='date', reverse=False))
         self.framepreprocesstree.column('status', width=240, minwidth=240, anchor='center')
-        self.framepreprocesstree.heading('status', text='Status')
+        self.framepreprocesstree.heading('status', text='Status', command=lambda: self.treeSortColumn(tree='framepreprocesstree', column='status', reverse=False))
         self.framepreprocesstree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
         #[self.framepreprocesstree.heading(column, text=column, command=lambda: self.treeSortColumn(column=column, reverse=False)) for column in columns]        
         #self.framepreprocesstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
@@ -449,11 +449,18 @@ class WikiEvidens:
             tree = self.frameanalysispagestree
         elif tree == 'frameanalysisuserstree':
             tree = self.frameanalysisuserstree
+        elif tree == 'framepreprocesstree':
+            tree = self.framepreprocesstree
+        elif tree == 'framedownloadwikistree':
+            tree = self.framedownloadwikistree
         isDigit = True
         for k in tree.get_children(''):
             if not tree.set(k, column).isdigit():
                 isDigit = False
                 break
+        isBytes = False
+        if not isDigit:
+            pass
         l = []
         if isDigit:
             l = [(int(tree.set(k, column)), k) for k in tree.get_children('')]
