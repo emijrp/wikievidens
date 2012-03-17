@@ -66,6 +66,7 @@ if PATH: os.chdir(PATH)
 
 # Dependences:
 # linux: python, python-tk, python-matplotlib, python-sqlite
+#        optional: graphviz
 # windows: 
 # mac: 
 #
@@ -224,11 +225,11 @@ class WikiEvidens:
         
         #start download wikis tab
         self.framedownloadwikislabel1 = Label(self.framedownloadwikis, text="Choose a wiki dump to download.", anchor='center', font=self.font)
-        self.framedownloadwikislabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        self.framedownloadwikislabel1.grid(row=0, column=0, columnspan=4, sticky=W)
         self.framedownloadwikistreescrollbar = Scrollbar(self.framedownloadwikis)
         self.framedownloadwikistreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
         framedownloadwikiscolumns = ('dump', 'wikifarm', 'size', 'date', 'mirror', 'status')
-        self.framedownloadwikistree = ttk.Treeview(self.framedownloadwikis, height=27, columns=framedownloadwikiscolumns, show='headings', yscrollcommand=self.framedownloadwikistreescrollbar.set)
+        self.framedownloadwikistree = ttk.Treeview(self.framedownloadwikis, height=24, columns=framedownloadwikiscolumns, show='headings', yscrollcommand=self.framedownloadwikistreescrollbar.set)
         self.framedownloadwikistreescrollbar.config(command=self.framedownloadwikistree.yview)
         self.framedownloadwikistree.column('dump', width=460, minwidth=460, anchor='center')
         self.framedownloadwikistree.heading('dump', text='Dump')
@@ -247,12 +248,46 @@ class WikiEvidens:
         #self.framedownloadwikistree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         self.framedownloadwikistree.tag_configure('downloaded', background='lightgreen')
         self.framedownloadwikistree.tag_configure('nodownloaded', background='white')
-        self.framedownloadwikisbutton21 = Button(self.framedownloadwikis, text="Scan available dumps", command=lambda: thread.start_new_thread(self.loadAvailableDumps, ()), width=15)
-        self.framedownloadwikisbutton21.grid(row=2, column=0)
-        self.framedownloadwikisbutton23 = Button(self.framedownloadwikis, text="Download selection", command=lambda: thread.start_new_thread(self.downloadDump, ()), width=15)
-        self.framedownloadwikisbutton23.grid(row=2, column=1)
-        self.framedownloadwikisbutton22 = Button(self.framedownloadwikis, text="Clear list", command=self.deleteAvailableDumps, width=10)
-        self.framedownloadwikisbutton22.grid(row=2, column=2)
+        #filters
+        self.framedownloadwikislabelframe1 = LabelFrame(self.framedownloadwikis, text="Filter options")
+        self.framedownloadwikislabelframe1.grid(row=2, column=1, rowspan=2, pady=5)
+        self.framedownloadwikislabelframe1label1 = Label(self.framedownloadwikislabelframe1, text="Wikifarm:")
+        self.framedownloadwikislabelframe1label1.grid(row=0, column=0, sticky=E)
+        self.framedownloadwikislabelframe1optionmenu1var = StringVar(self.framedownloadwikislabelframe1)
+        self.framedownloadwikislabelframe1optionmenu1var.set("all")
+        self.framedownloadwikislabelframe1optionmenu1 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu1var, self.framedownloadwikislabelframe1optionmenu1var.get(), "Gentoo Wiki", "OpenSuSE", "Referata", "ShoutWiki", "Unknown", "Wikanda", "WikiFur", "Wikimedia", "WikiTravel", "Wikkii")
+        self.framedownloadwikislabelframe1optionmenu1.grid(row=0, column=1)
+        
+        self.framedownloadwikislabelframe1label2 = Label(self.framedownloadwikislabelframe1, text="Size:")
+        self.framedownloadwikislabelframe1label2.grid(row=1, column=0, sticky=E)
+        self.framedownloadwikislabelframe1optionmenu2var = StringVar(self.framedownloadwikislabelframe1)
+        self.framedownloadwikislabelframe1optionmenu2var.set("all")
+        self.framedownloadwikislabelframe1optionmenu2 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu2var, self.framedownloadwikislabelframe1optionmenu2var.get(), "KB", "MB", "GB", "TB")
+        self.framedownloadwikislabelframe1optionmenu2.grid(row=1, column=1)
+        
+        self.framedownloadwikislabelframe1label3 = Label(self.framedownloadwikislabelframe1, text="Date:")
+        self.framedownloadwikislabelframe1label3.grid(row=0, column=2, sticky=E)
+        self.framedownloadwikislabelframe1optionmenu3var = StringVar(self.framedownloadwikislabelframe1)
+        self.framedownloadwikislabelframe1optionmenu3var.set("all")
+        self.framedownloadwikislabelframe1optionmenu3 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu3var, self.framedownloadwikislabelframe1optionmenu3var.get(), "2011", "2012")
+        self.framedownloadwikislabelframe1optionmenu3.grid(row=0, column=3)
+        
+        self.framedownloadwikislabelframe1label4 = Label(self.framedownloadwikislabelframe1, text="Mirror:")
+        self.framedownloadwikislabelframe1label4.grid(row=1, column=2, sticky=E)
+        self.framedownloadwikislabelframe1optionmenu4var = StringVar(self.framedownloadwikislabelframe1)
+        self.framedownloadwikislabelframe1optionmenu4var.set("all")
+        self.framedownloadwikislabelframe1optionmenu4 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu4var, self.framedownloadwikislabelframe1optionmenu4var.get(), "Google Code", "Internet Archive", "ScottDB")
+        self.framedownloadwikislabelframe1optionmenu4.grid(row=1, column=3)
+        
+        #buttons
+        self.framedownloadwikisbutton1 = Button(self.framedownloadwikis, text="Scan available dumps", command=lambda: thread.start_new_thread(self.loadAvailableDumps, ()), width=15)
+        self.framedownloadwikisbutton1.grid(row=2, column=0)
+        self.framedownloadwikisbutton4 = Button(self.framedownloadwikis, text="Apply filters", command=lambda: self.filterAvailableDumps, width=15)
+        self.framedownloadwikisbutton4.grid(row=3, column=0)
+        self.framedownloadwikisbutton3 = Button(self.framedownloadwikis, text="Download selection", command=lambda: thread.start_new_thread(self.downloadDump, ()), width=15, anchor=E)
+        self.framedownloadwikisbutton3.grid(row=2, column=2)
+        self.framedownloadwikisbutton2 = Button(self.framedownloadwikis, text="Clear list", command=self.deleteAvailableDumps, width=15)
+        self.framedownloadwikisbutton2.grid(row=3, column=2)
         #end download wikis tab
         
         #start download other tab
@@ -286,14 +321,14 @@ class WikiEvidens:
         #self.framepreprocesstree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
         self.framepreprocesstree.tag_configure('preprocessed', background='lightgreen')
         self.framepreprocesstree.tag_configure('nopreprocessed', background='white')
-        self.framepreprocessbutton23 = Button(self.framepreprocess, text="Scan downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=20)
-        self.framepreprocessbutton23.grid(row=2, column=0)
-        self.framepreprocessbutton23 = Button(self.framepreprocess, text="Preprocess selection", command=lambda: thread.start_new_thread(self.preprocessDump, ()), width=15)
-        self.framepreprocessbutton23.grid(row=2, column=1)
-        self.framepreprocessbutton23 = Button(self.framepreprocess, text="Load", command=lambda: thread.start_new_thread(self.activePreprocessedDump, ()), width=15)
-        self.framepreprocessbutton23.grid(row=2, column=2)
-        self.framepreprocessbutton22 = Button(self.framepreprocess, text="Clear list", command=self.deleteDownloadedDumps, width=10)
-        self.framepreprocessbutton22.grid(row=2, column=3)
+        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Scan downloaded dumps", command=lambda: thread.start_new_thread(self.loadDownloadedDumps, ()), width=20)
+        self.framepreprocessbutton3.grid(row=2, column=0)
+        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Preprocess selection", command=lambda: thread.start_new_thread(self.preprocessDump, ()), width=15)
+        self.framepreprocessbutton3.grid(row=2, column=1)
+        self.framepreprocessbutton3 = Button(self.framepreprocess, text="Load", command=lambda: thread.start_new_thread(self.activePreprocessedDump, ()), width=15)
+        self.framepreprocessbutton3.grid(row=2, column=2)
+        self.framepreprocessbutton2 = Button(self.framepreprocess, text="Clear list", command=self.deleteDownloadedDumps, width=10)
+        self.framepreprocessbutton2.grid(row=2, column=3)
         #end preprocess tab
         
         #start analysis global tab
