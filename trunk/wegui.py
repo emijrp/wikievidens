@@ -301,7 +301,7 @@ class WikiEvidens:
         self.frameanalysisgloballabel1.grid(row=0, column=0, sticky=W)
         self.frameanalysisglobaloptionmenu1var = StringVar(self.frameanalysisglobal)
         self.frameanalysisglobaloptionmenu1var.set("global-summary")
-        self.frameanalysisglobaloptionmenu1 = OptionMenu(self.frameanalysisglobal, self.frameanalysisglobaloptionmenu1var, self.frameanalysisglobaloptionmenu1var.get(), "global-activity-yearly", "global-activity-monthly", "global-activity-dow", "global-activity-hourly", "global-reverts-evolution", "global-newpages", "global-newusers", "global-graph-user-messages", "global-graph-user-edits-network",)
+        self.frameanalysisglobaloptionmenu1 = OptionMenu(self.frameanalysisglobal, self.frameanalysisglobaloptionmenu1var, self.frameanalysisglobaloptionmenu1var.get(), "global-activity-yearly", "global-activity-monthly", "global-activity-dow", "global-activity-hourly", "global-reverts-evolution", "global-reverted-words", "global-newpages", "global-newusers", "global-graph-user-messages", "global-graph-user-edits-network",)
         self.frameanalysisglobaloptionmenu1.grid(row=0, column=1, sticky=W)
         """
         f = Figure(figsize=(8,5), dpi=100)
@@ -482,6 +482,9 @@ class WikiEvidens:
             elif analysis == 'global-reverts-evolution':
                 import wereverts
                 wereverts.revertsEvolution(cursor=cursor, title='Global reverts evolution @ %s' % (self.wiki))
+            elif analysis == 'global-reverted-words':
+                import wereverts
+                wereverts.revertedWords(cursor=cursor, title='Global reverted words @ %s' % (self.wiki))
             elif analysis == 'global-newpages':
                 import wenewpages
                 wenewpages.newpagesEvolution(cursor=cursor, title='Global newpages evolution @ %s' % (self.wiki))
