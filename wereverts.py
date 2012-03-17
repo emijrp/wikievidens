@@ -18,8 +18,11 @@
 from Tkinter import *
 
 import datetime
+import re
 import sqlite3
 import tkMessageBox
+
+import wecore
 
 #fix
 #mirar como usa las fechas aquí http://matplotlib.sourceforge.net/examples/api/date_demo.html
@@ -27,10 +30,7 @@ import tkMessageBox
 #dateranges http://matplotlib.sourceforge.net/examples/pylab_examples/date_demo_rrule.html
 
 def revertsEvolution(cursor=None, title=''):
-    """result = cursor.execute("SELECT rev_timestamp FROM revision WHERE 1 ORDER BY rev_timestamp ASC LIMIT 1")
-    for row in result:
-        return row[0], row[1]"""
-    
+    #checks one revision with all the previous revision in the same page
     result = cursor.execute("SELECT rev_page, rev_id, rev_timestamp, rev_text_md5 FROM revision WHERE 1 ORDER BY rev_page, rev_timestamp ASC")
     page = []
     reverts = {}
@@ -48,7 +48,7 @@ def revertsEvolution(cursor=None, title=''):
                 c = 0
                 for temprev in page:
                     if temprev[3] in [temprev2[3] for temprev2 in page[:c]]: #is a revert of a previous rev in this page?
-                        temprevdate = datetime.date(year=int(temprev[2][0:4]), month=int(temprev[2][5:7]), day=int(temprev[2][8:10]))
+                        temprevdate = wecore.str2date(temprev[2]).strftime('%Y-%m-%d')
                         if reverts.has_key(temprevdate):
                             reverts[temprevdate] += 1
                         else:
@@ -103,3 +103,38 @@ def revertsEvolution(cursor=None, title=''):
     ax.set_yscale('log')
     labels = ax.get_xticklabels()
     pylab.setp(labels, rotation=30, fontsize=10)
+
+def revertedWords(cursor=None, title='', onlyAnon=True):
+    #compare revision triplets A, B, C, if md5(A) == md5(C) then B has been reverted
+    result = cursor.execute("SELECT rev_page, rev_id, rev_timestamp, rev_text, rev_text_md5, rev_is_ipedit FROM revision WHERE 1 ORDER BY rev_page, rev_timestamp ASC")
+    page = []
+    revertedwords = {}
+    w_r = re.compile(ur'\w+')
+    for row in result:
+        rev_page = row[0]
+        rev_id = row[1]
+        rev_timestamp = row[2]
+        rev_text = row[3]
+        rev_text_md5 = row[4]
+        rev_is_ipedit = int(row[5])
+        revision = [rev_page, rev_id, rev_timestamp, rev_text, rev_text_md5, rev_is_ipedit]
+        
+        if page:
+            if rev_page == page[0][0]: #new revision for this page?
+                page.append(revision)
+            else: #previous page finished, analyse
+                c = 0
+                for temprev in page:
+                    if c>0 and c<len(page)-1 and page[c-1][4] == page[c+1][4]: #prev and next revs are equal? then this is a reverted revision
+                        if onlyAnon and rev_is_ipedit == 1 or not onlyAnon:
+                            for word in list(set(re.findall(w_r, page[c][3].lower())) - set(re.findall(w_r, page[c-1][3].lower()))):
+                                revertedwords[word] = revertedwords.get(word, 0) + 1
+                    c += 1
+                page = [revision] #reset
+        else:
+            page.append(revision)
+    
+    l = [[times, word] for word, times in revertedwords.items()]
+    l.sort()
+    
+    print '\n'.join(['%s, %s' % (times, word) for times, word in l[-100:]])

@@ -15,7 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-def str2date(self, d):
+import datetime
+
+def str2date(d):
     if d:
         return datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
     return None
