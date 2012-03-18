@@ -83,3 +83,21 @@ def activityall(cursor=None, range='', entity='', title=''):
     activitymonthly(cursor=cursor, range=range, entity=entity, title=title)
     activitydow(cursor=cursor, range=range, entity=entity, title=title)
     activityhourly(cursor=cursor, range=range, entity=entity, title=title)
+
+def regsvsanons(cursor=None):
+    result = cursor.execute("SELECT STRFTIME('%Y-%m', rev_timestamp) AS timesplit, COUNT(*) AS count FROM revision WHERE 1 GROUP BY timesplit ORDER BY timesplit ASC")
+    revs = {}
+    for timesplit, count in result:
+        if not revs.has_key(timesplit):
+            revs[timesplit] = {'alledits': 0, 'anonsedits': 0}
+        revs[timesplit]['alledits'] = count
+    
+    result = cursor.execute("SELECT STRFTIME('%Y-%m', rev_timestamp) AS timesplit, COUNT(*) AS count FROM revision WHERE rev_is_ipedit=1 GROUP BY timesplit ORDER BY timesplit ASC")
+    for timesplit, count in result:
+        if not revs.has_key(timesplit):
+            revs[timesplit] = {'alledits': 0, 'anonsedits': 0}
+        revs[timesplit]['anonsedits'] = count
+    
+    l = [[k, v['alledits'], v['anonsedits']] for k, v in revs.items()]
+    l.sort()
+    print '\n'.join(['%s, %s, %s' % (k, v1, v2) for k, v1, v2 in l])
