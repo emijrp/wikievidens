@@ -530,6 +530,7 @@ class WikiEvidens:
                 self.msg(msg="That preprocessed dump doesn't exist.", level="error")
         else:
             self.msg(msg="You only can load a preprocessed dump a time.", level="error")
+            self.block = False
             return
         
         self.block = False
