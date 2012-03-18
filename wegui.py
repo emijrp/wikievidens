@@ -58,7 +58,7 @@ wikifarms = {
 }
 
 NAME = 'WikiEvidens'
-VERSION = '0.0.5'
+VERSION = '0.0.6'
 HOMEPAGE = 'http://code.google.com/p/wikievidens/'
 LINUX = platform.system().lower() == 'linux'
 PATH = os.path.dirname(__file__)
@@ -373,7 +373,7 @@ class WikiEvidens:
         
         #start analysis pages tab
         self.frameanalysispageslabel1 = Label(self.frameanalysispages, text="Choose a page and an analysis:", anchor='center', font=self.font)
-        self.frameanalysispageslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        self.frameanalysispageslabel1.grid(row=0, column=0, columnspan=2, sticky=W)
         self.frameanalysispagestreescrollbar = Scrollbar(self.frameanalysispages)
         self.frameanalysispagestreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
         self.frameanalysispagescolumns = ('page name', 'first edit', 'last edit', 'age', 'edits')
@@ -390,7 +390,8 @@ class WikiEvidens:
         self.frameanalysispagestree.column('edits', width=120, minwidth=120, anchor='center')
         self.frameanalysispagestree.heading('edits', text='Edits', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='edits', reverse=False))
         self.frameanalysispagestree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
-        #self.frameanalysispagestree.bind("<Double-1>", (lambda: thread.start_new_thread(self.downloadDump, ())))
+        self.frameanalysispagesbutton1 = Button(self.frameanalysispages, text="AAA", command=lambda: self.analysis(analysis='pages-authorship'))
+        self.frameanalysispagesbutton1.grid(row=0, column=2)
         #end analysis pages tab
         
         #start analysis users tab
@@ -588,6 +589,10 @@ class WikiEvidens:
             elif analysis == 'global-graph-user-edits-network':
                 import wegraph
                 wegraph.graphUserEditsNetwork(self=self, cursor=cursor)
+        elif analysis.startswith('pages'):
+            if analysis == 'pages-authorship':
+                import weauthorship
+                weauthorship.authorship(cursor=cursor, page_title=self.pages[int(self.frameanalysispagestree.selection()[0])])
         
         self.block = False
         pylab.show()
