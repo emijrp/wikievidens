@@ -19,14 +19,18 @@ import re
 import sqlite3
 import zlib
 
-def mostUsedWords(cursor=None):
+import nltk
+
+def mostUsedWords(cursor=None, ignoreStopWords=True):
     result = cursor.execute("SELECT page_id, page_text FROM page WHERE 1")
     
-    words_r = re.compile(ur"\w+")
+    words_r = re.compile(ur"(\w+(?:'\w+)?)")
     words = {}
     for page_id, page_text_blob in result:
         page_text = zlib.decompress(page_text_blob)
         for word in re.findall(words_r, page_text.lower()):
+            if ignoreStopWords and word in nltk.corpus.stopwords.words('english'):
+                continue
             words[word] = words.get(word, 0) + 1
     
     l = [[times, word] for word, times in words.items()]
