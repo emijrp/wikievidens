@@ -47,12 +47,14 @@ import wecore
 wikifarms = {
     'gentoo_wikicom': 'Gentoo Wiki',
     'opensuseorg': 'OpenSuSE',
+    'osl2uca': 'OSLUCA',
     'referatacom': 'Referata',
     'shoutwikicom': 'ShoutWiki',
     'Unknown': 'Unknown',
     'wikanda': 'Wikanda',
     'wikifur': 'WikiFur',
     'wikimedia': 'Wikimedia',
+    'wikisuca': 'OSLUCA',
     'wikitravelorg': 'WikiTravel',
     'wikkii': 'Wikkii',
 }
@@ -256,7 +258,7 @@ class WikiEvidens:
         self.framedownloadwikislabelframe1label1.grid(row=0, column=0, sticky=E)
         self.framedownloadwikislabelframe1optionmenu1var = StringVar(self.framedownloadwikislabelframe1)
         self.framedownloadwikislabelframe1optionmenu1var.set("all")
-        self.framedownloadwikislabelframe1optionmenu1 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu1var, self.framedownloadwikislabelframe1optionmenu1var.get(), "Gentoo Wiki", "OpenSuSE", "Referata", "ShoutWiki", "Unknown", "Wikanda", "WikiFur", "Wikimedia", "WikiTravel", "Wikkii")
+        self.framedownloadwikislabelframe1optionmenu1 = OptionMenu(self.framedownloadwikislabelframe1, self.framedownloadwikislabelframe1optionmenu1var, self.framedownloadwikislabelframe1optionmenu1var.get(), "Gentoo Wiki", "OpenSuSE", "OSLUCA", "Referata", "ShoutWiki", "Unknown", "Wikanda", "WikiFur", "Wikimedia", "WikiTravel", "Wikkii")
         self.framedownloadwikislabelframe1optionmenu1.grid(row=0, column=1)
         
         self.framedownloadwikislabelframe1label2 = Label(self.framedownloadwikislabelframe1, text="Size:")

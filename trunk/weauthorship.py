@@ -60,6 +60,7 @@ def authorship(cursor=None, page_title=None):
     parts = output.splitlines()
     c = 0
     users = []
+    chars = {}
     for part in parts:
         c += 1
         part=part.strip()
@@ -72,6 +73,7 @@ def authorship(cursor=None, page_title=None):
                     text.tag_add(user, start, end)
                     if user not in users:
                         users.append(user)
+                    chars[user] = chars.get(user, 0) + len(part)
                     break
     
     #tags
@@ -97,6 +99,6 @@ def authorship(cursor=None, page_title=None):
     tree.grid(row=3, column=0, columnspan=1, sticky=W+E+N+S)
     c = 0
     for user in users:
-        tree.insert('', 'end', str(c), text=user, values=(user, 0), tags=(user,))
+        tree.insert('', 'end', str(c), text=user, values=(user, chars[user]), tags=(user,))
         tree.tag_configure(user, background=colors[user])
         c += 1
