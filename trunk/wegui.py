@@ -97,6 +97,7 @@ if PATH: os.chdir(PATH)
 # * mensajes entre usuarios (ediciones de usuarios en user talk:)
 # * calcular autoría por páginas (colorear el texto actual?)
 # * red/blue links progress
+# * http://meta.wikimedia.org/wiki/Research:Wikimedia_Summer_of_Research_2011/Summary_of_Findings
 #
 # Ideas para otros análisis que no usan dumps pero relacionados con wikis o wikipedia:
 # * el feed de donaciones
