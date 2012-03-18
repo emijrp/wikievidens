@@ -352,7 +352,7 @@ class WikiEvidens:
         self.frameanalysisgloballabel1.grid(row=0, column=0, sticky=W)
         self.frameanalysisglobaloptionmenu1var = StringVar(self.frameanalysisglobal)
         self.frameanalysisglobaloptionmenu1var.set("global-summary")
-        self.frameanalysisglobaloptionmenu1 = OptionMenu(self.frameanalysisglobal, self.frameanalysisglobaloptionmenu1var, self.frameanalysisglobaloptionmenu1var.get(), "global-activity-yearly", "global-activity-monthly", "global-activity-dow", "global-activity-hourly", "global-reverts-evolution", "global-reverted-words", "global-newpages", "global-newusers", "global-graph-user-messages", "global-graph-user-edits-network", "global-nlp-mostusedwords", )
+        self.frameanalysisglobaloptionmenu1 = OptionMenu(self.frameanalysisglobal, self.frameanalysisglobaloptionmenu1var, self.frameanalysisglobaloptionmenu1var.get(), "global-activity-yearly", "global-activity-monthly", "global-activity-dow", "global-activity-hourly", "global-activity-regs-vs-anons", "global-reverts-evolution", "global-reverted-words", "global-newpages", "global-newusers", "global-graph-user-messages", "global-graph-user-edits-network", "global-nlp-mostusedwords", )
         self.frameanalysisglobaloptionmenu1.grid(row=0, column=1, sticky=W)
         """
         f = Figure(figsize=(8,5), dpi=100)
@@ -565,6 +565,8 @@ class WikiEvidens:
                     weactivity.activitydow(cursor=cursor, range='global', title=self.wiki)
                 elif analysis == 'global-activity-hourly':
                     weactivity.activityhourly(cursor=cursor, range='global', title=self.wiki)
+                elif analysis == 'global-activity-regs-vs-anons':
+                    weactivity.regsvsanons(cursor=cursor)
             elif analysis == 'global-nlp-mostusedwords':
                 import wenlp
                 wenlp.mostUsedWords(cursor=cursor)
