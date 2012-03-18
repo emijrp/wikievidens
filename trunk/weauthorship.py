@@ -38,7 +38,7 @@ def authorship(cursor=None, page_title=None):
     
     frame = Tk()
     frame.title('Authorship')
-    width, height = 855, 700
+    width, height = 858, 700
     # calculate position x, y
     x = (frame.winfo_screenwidth()/2) - (width/2) 
     y = (frame.winfo_screenheight()/2) - (height/2)
@@ -97,5 +97,6 @@ def authorship(cursor=None, page_title=None):
     tree.grid(row=3, column=0, columnspan=1, sticky=W+E+N+S)
     c = 0
     for user in users:
-        tree.insert('', 'end', str(c), text=user, values=(user, colors[user]))
+        tree.insert('', 'end', str(c), text=user, values=(user, 0), tags=(user,))
+        tree.tag_configure(user, background=colors[user])
         c += 1
