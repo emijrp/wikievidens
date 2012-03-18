@@ -98,6 +98,28 @@ def regsvsanons(cursor=None):
             revs[timesplit] = {'alledits': 0, 'anonsedits': 0}
         revs[timesplit]['anonsedits'] = count
     
-    l = [[k, v['alledits'], v['anonsedits']] for k, v in revs.items()]
+    l = [[k, v['alledits'], v['alledits']-v['anonsedits'], v['anonsedits']] for k, v in revs.items()]
     l.sort()
-    print '\n'.join(['%s, %s, %s' % (k, v1, v2) for k, v1, v2 in l])
+    print '\n'.join(['%s, %s, %s, %s' % (k, v1, v2, v3) for k, v1, v2, v3 in l])
+    
+    fig = pylab.figure()
+    subfig = fig.add_subplot(1,1,1)
+    subfig.set_title('Edits percent by user class evolution')
+    ind = numpy.arange(len(l))
+    anonedits = [v3/(v1/100.0) for k, v1, v2, v3 in l]
+    regedits = [v2/(v1/100.0) for k, v1, v2, v3 in l]
+    alledits = [100]*len(l)
+    pylab.plot(ind, alledits)
+    pylab.plot(ind, regedits)
+    pylab.fill_between(ind, alledits, regedits, color='cyan') 
+    pylab.fill_between(ind, regedits, 0, color='magenta') 
+    #p1 = subfig.plot(numpy.arange(len(l)), alledits, color='g', align='center')
+    #p2 = subfig.plot(numpy.arange(len(l)), anonedits, bottom=alledits, color='y', align='center')
+    subfig.legend()
+    #subfig.set_title(subtitle)
+    subfig.set_xlabel('Date (YYYY-MM)')
+    subfig.set_xticks(numpy.arange(len(l)))
+    subfig.set_xticklabels([k for k, v1, v2, v3 in l])
+    subfig.set_ylabel('Percent edits')
+    labels = subfig.get_xticklabels()
+    pylab.setp(labels, rotation=30, fontsize=10)
