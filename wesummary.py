@@ -146,8 +146,8 @@ def summary(cursor=None):
     x = (frame.winfo_screenwidth()/2) - (width/2) 
     y = (frame.winfo_screenheight()/2) - (height/2)
     frame.geometry('%dx%d+%d+%d' % (width, height, x, y))
-    #frame.minsize(width=width, height=height)
-    #frame.maxsize(width=width, height=height)
+    frame.minsize(width=width, height=height)
+    frame.maxsize(width=width, height=height)
     
     scrollbar = Scrollbar(frame)
     scrollbar.grid(row=0, column=1, sticky=W+E+N+S)
