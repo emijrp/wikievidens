@@ -594,7 +594,10 @@ class WikiEvidens:
         elif analysis.startswith('pages'):
             if analysis == 'pages-authorship':
                 import weauthorship
-                weauthorship.authorship(cursor=cursor, page_title=self.pages[int(self.frameanalysispagestree.selection()[0])])
+                if self.frameanalysispagestree.selection():
+                    weauthorship.authorship(cursor=cursor, page_title=self.pages[int(self.frameanalysispagestree.selection()[0])])
+                else:
+                    self.msg(msg="Choose a page first!", level="error")
         
         self.block = False
         pylab.show()
