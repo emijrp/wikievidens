@@ -38,7 +38,7 @@ def authorship(cursor=None, page_title=None):
     
     frame = Tk()
     frame.title('Authorship')
-    width, height = 858, 700
+    width, height = 965, 700
     # calculate position x, y
     x = (frame.winfo_screenwidth()/2) - (width/2) 
     y = (frame.winfo_screenheight()/2) - (height/2)
@@ -46,12 +46,12 @@ def authorship(cursor=None, page_title=None):
     frame.minsize(width=width, height=height)
     frame.maxsize(width=width, height=height)
     
-    label1 = Label(frame, text='\nAuthorship of "%s" last revision:' % (page_title))
+    label1 = Label(frame, text='Authorship of "%s" last revision:' % (page_title))
     label1.grid(row=0, column=0, columnspan=2, sticky=W)
     scrollbar = Scrollbar(frame)
     scrollbar.grid(row=1, column=1, sticky=W+E+N+S)
     #fix: con un label sería mejor?
-    text = Text(frame, wrap=WORD, width=120, height=32, yscrollcommand=scrollbar.set)
+    text = Text(frame, wrap=WORD, width=100, height=42, yscrollcommand=scrollbar.set)
     text.insert(INSERT, output)
     text.config(state=NORMAL) #si lo pongo en solo lectura (DISABLED), no deja copiar/pegar con ctrl-c
     text.grid(row=1, column=0)
@@ -85,18 +85,18 @@ def authorship(cursor=None, page_title=None):
     print colors.items()
 
     #legend, treeview
-    label2 = Label(frame, text="\nLegend:")
-    label2.grid(row=2, column=0, columnspan=2, sticky=W)
+    label2 = Label(frame, text="Legend:")
+    label2.grid(row=0, column=2, columnspan=2, sticky=W)
     treescrollbar = Scrollbar(frame)
-    treescrollbar.grid(row=3, column=1, sticky=W+E+N+S)
+    treescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
     treecolumns = ('user name', 'chars')
-    tree = ttk.Treeview(frame, height=6, columns=treecolumns, show='headings', yscrollcommand=treescrollbar.set)
+    tree = ttk.Treeview(frame, height=30, columns=treecolumns, show='headings', yscrollcommand=treescrollbar.set)
     treescrollbar.config(command=tree.yview)
-    tree.column('user name', width=460, minwidth=460, anchor='center')
+    tree.column('user name', width=150, minwidth=150, anchor='center')
     tree.heading('user name', text='User name', )
-    tree.column('chars', width=100, minwidth=100, anchor='center')
+    tree.column('chars', width=80, minwidth=80, anchor='center')
     tree.heading('chars', text='Chars', )
-    tree.grid(row=3, column=0, columnspan=1, sticky=W+E+N+S)
+    tree.grid(row=1, column=2, sticky=W+E+N+S)
     c = 0
     for user in users:
         tree.insert('', 'end', str(c), text=user, values=(user, chars[user]), tags=(user,))
