@@ -9,13 +9,21 @@
   * Global, page-by-page, user-by-user and sample analysis
     * Summary
     * Activity by year, month, day of week, hour
+    * Networks visualization
+    * Authorship scanner
   * Export in several formats
 
 == Download ==
 
+You can download !WikiEvidens code from SVN repository: {{{svn checkout http://wikievidens.googlecode.com/svn/trunk/ wikievidens-read-only}}}
+
 == Install ==
 
-  * Requirements: python, python-tk, python-sqlite, python-matplotlib (optional: python-nltk, graphviz)
+To install !WikiEvidens you have to fulfill these requirements:
+  * Mandatory: python, python-tk, python-sqlite, python-matplotlib
+  * Optional: python-nltk, graphviz
+
+After installing all that, you can run !WikiEvidens like this: {{{python wegui.py}}}
 
 == Documentation ==
 
