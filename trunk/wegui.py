@@ -378,7 +378,7 @@ class WikiEvidens:
         self.frameanalysispageslabel1.grid(row=0, column=0, columnspan=2, sticky=W)
         self.frameanalysispagestreescrollbar = Scrollbar(self.frameanalysispages)
         self.frameanalysispagestreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
-        self.frameanalysispagescolumns = ('page name', 'first edit', 'last edit', 'age', 'edits')
+        self.frameanalysispagescolumns = ('page name', 'first edit', 'last edit', 'age', 'size', 'edits')
         self.frameanalysispagestree = ttk.Treeview(self.frameanalysispages, height=27, columns=self.frameanalysispagescolumns, show='headings', yscrollcommand=self.frameanalysispagestreescrollbar.set)
         self.frameanalysispagestreescrollbar.config(command=self.frameanalysispagestree.yview)
         self.frameanalysispagestree.column('page name', width=370, minwidth=370, anchor='center')
@@ -389,7 +389,9 @@ class WikiEvidens:
         self.frameanalysispagestree.heading('last edit', text='Last edit', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='last edit', reverse=False))
         self.frameanalysispagestree.column('age', width=100, minwidth=100, anchor='center')
         self.frameanalysispagestree.heading('age', text='Age (days)', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='age', reverse=False))
-        self.frameanalysispagestree.column('edits', width=120, minwidth=120, anchor='center')
+        self.frameanalysispagestree.column('size', width=100, minwidth=100, anchor='center')
+        self.frameanalysispagestree.heading('size', text='Size (KB)', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='size', reverse=False))
+        self.frameanalysispagestree.column('edits', width=100, minwidth=100, anchor='center')
         self.frameanalysispagestree.heading('edits', text='Edits', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='edits', reverse=False))
         self.frameanalysispagestree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
         self.frameanalysispagesbutton1 = Button(self.frameanalysispages, text="Calculate", command=lambda: self.analysis(analysis='pages-authorship'))
@@ -491,11 +493,11 @@ class WikiEvidens:
             self.frameanalysispagestree.delete(str(i))
         self.pages = []
         cursor = self.createCursor()
-        result = cursor.execute("SELECT page_title, page_creation_timestamp, page_last_timestamp, page_editcount FROM page WHERE 1 ORDER BY page_title")
-        pages = [[page_title, page_creation_timestamp, page_last_timestamp, (wecore.str2date(page_last_timestamp)-wecore.str2date(page_creation_timestamp)).days, page_editcount] for page_title, page_creation_timestamp, page_last_timestamp, page_editcount in result]
+        result = cursor.execute("SELECT page_title, page_creation_timestamp, page_last_timestamp, page_size, page_editcount FROM page WHERE 1 ORDER BY page_title")
+        pages = [[page_title, page_creation_timestamp, page_last_timestamp, (wecore.str2date(page_last_timestamp)-wecore.str2date(page_creation_timestamp)).days, '%.2f' % (int(page_size)/1024.0), page_editcount] for page_title, page_creation_timestamp, page_last_timestamp, page_size, page_editcount in result]
         c = 0
-        for page_title, firstedit, lastedit, age, edits in pages:
-            self.frameanalysispagestree.insert('', 'end', str(c), text=page_title, values=(page_title, firstedit, lastedit, age, edits))
+        for page_title, firstedit, lastedit, age, size, edits in pages:
+            self.frameanalysispagestree.insert('', 'end', str(c), text=page_title, values=(page_title, firstedit, lastedit, age, size, edits))
             self.pages.append(page_title)
             c += 1
         return

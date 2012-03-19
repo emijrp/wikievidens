@@ -48,8 +48,8 @@ def createDB(conn=None, cursor=None):
     cursor.execute('''create table image (img_name text)''') #quien la ha subido? eso no está en el xml, sino en pagelogging...
     cursor.execute('''create table revision (rev_id integer, rev_title text, rev_page integer, rev_user_text text, rev_is_ipedit integer, rev_timestamp timestamp, rev_text text, rev_text_md5 text, rev_text_diff blob, rev_size integer, rev_comment text, rev_internal_links integer, rev_external_links integer, rev_interwikis integer, rev_sections integer, rev_templates integer)''')
     #rev_is_minor, rev_is_redirect, rev_highwords (bold/italics/bold+italics), rev_diff, ref_diff_len, rev_maths, rev_refs (<ref>, <ref name), rev_categories, ref_html_tags (- rev_refs, - rev_maths)
-    cursor.execute('''create table page (page_id integer, page_title text, page_editcount integer, page_creation_timestamp timestamp, page_last_timestamp timestamp, page_text blob, page_internal_links integer, page_external_links integer, page_interwikis integer, page_sections integer, page_templates integer)''') 
-    #page_namespace, page_size (last rev size), page_views, page_editorscount (number of distinct editors)
+    cursor.execute('''create table page (page_id integer, page_title text, page_editcount integer, page_creation_timestamp timestamp, page_last_timestamp timestamp, page_text blob, page_size integer, page_internal_links integer, page_external_links integer, page_interwikis integer, page_sections integer, page_templates integer)''') 
+    #page_namespace, page_views, page_editorscount (number of distinct editors)
     cursor.execute('''create table user (user_name text, user_is_ip integer, user_editcount integer, user_first_timestamp timestamp, user_last_timestamp timestamp)''') #fix, poner si es ip basándonos en ipedit?
     #user_id (viene en el dump? 0 para ips), user_is_anonymous (ips)
     conn.commit()
@@ -109,6 +109,7 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
     page_creation_timestamp = ''
     page_last_timestamp = ''
     page_text = ''
+    page_size = 0
     page_internal_links = 0
     page_external_links = 0
     page_interwikis = 0
@@ -124,13 +125,13 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
                 #fix add namespace detector
                 #fix add rev_id actual para cada pagina
                 #meter estos valores para cada página usando la última revisión del historial: rev_size, rev_internal_links, rev_external_links, rev_interwikis, rev_sections, rev_timestamp, rev_text_md5; NO: rev_comment
-                cursor.execute('INSERT OR IGNORE INTO page VALUES (?,?,?,?,?,?,?,?,?,?,?)', (page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, buffer(zlib.compress(page_text,9)), page_internal_links, page_external_links, page_interwikis, page_sections, page_templates))
+                cursor.execute('INSERT OR IGNORE INTO page VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', (page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, buffer(zlib.compress(page_text,9)), page_size, page_internal_links, page_external_links, page_interwikis, page_sections, page_templates))
                 #conn.commit()
                 c_page += 1
                 if pagelimit and c_page >= pagelimit:
                     break
             else:
-                print '#'*30, '\n', 'ERROR PAGE:' , page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, 'text (', len(page_text), 'bytes)', page_text[:100], '\n', '#'*30
+                print '#'*30, '\n', 'ERROR PAGE:' , page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, 'text (', page_size, 'bytes)', page_text[:100], '\n', '#'*30
                 errors_page += 1
             #reset values
             page_id = x.id
@@ -139,6 +140,7 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
             page_creation_timestamp = ''
             page_last_timestamp = ''
             page_text = ''
+            page_size = 0
             page_internal_links = 0
             page_external_links = 0
             page_interwikis = 0
@@ -177,6 +179,7 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
         if not page_last_timestamp or rev_timestamp > page_last_timestamp:
             page_last_timestamp = rev_timestamp
             page_text = x_text_encoded
+            page_size = len(x_text_encoded)
             page_internal_links = rev_internal_links
             page_external_links = rev_external_links
             page_interwikis = rev_interwikis
