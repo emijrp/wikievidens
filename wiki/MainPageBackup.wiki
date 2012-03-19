@@ -1,10 +1,21 @@
-== What is WikiEvidens? ==
+== What is !WikiEvidens? ==
 
-*WikiEvidens* is a visualization and statistical tool for wikis. It is in planning stage. Stay tuned.
+*!WikiEvidens* is a visualization and statistical tool for wikis. It is in planning stage. Stay tuned.
 
 == Features ==
 
+  * Wiki datasets downloader
+  * Wiki XML preprocessor
+  * Global, page-by-page, user-by-user and sample analysis
+    * Summary
+    * Activity by year, month, day of week, hour
+  * Export in several formats
+
 == Download ==
+
+== Install ==
+
+  * Requirements: python, python-tk, python-sqlite, python-matplotlib (optional: python-nltk, graphviz)
 
 == Documentation ==
 
