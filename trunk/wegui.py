@@ -388,11 +388,11 @@ class WikiEvidens:
         self.frameanalysispagestree.column('last edit', width=145, minwidth=145, anchor='center')
         self.frameanalysispagestree.heading('last edit', text='Last edit', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='last edit', reverse=False))
         self.frameanalysispagestree.column('age', width=100, minwidth=100, anchor='center')
-        self.frameanalysispagestree.heading('age', text='Age in days', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='age', reverse=False))
+        self.frameanalysispagestree.heading('age', text='Age (days)', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='age', reverse=False))
         self.frameanalysispagestree.column('edits', width=120, minwidth=120, anchor='center')
         self.frameanalysispagestree.heading('edits', text='Edits', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='edits', reverse=False))
         self.frameanalysispagestree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
-        self.frameanalysispagesbutton1 = Button(self.frameanalysispages, text="AAA", command=lambda: self.analysis(analysis='pages-authorship'))
+        self.frameanalysispagesbutton1 = Button(self.frameanalysispages, text="Calculate", command=lambda: self.analysis(analysis='pages-authorship'))
         self.frameanalysispagesbutton1.grid(row=0, column=2)
         #end analysis pages tab
         
@@ -411,7 +411,7 @@ class WikiEvidens:
         self.frameanalysisuserstree.column('last edit', width=145, minwidth=145, anchor='center')
         self.frameanalysisuserstree.heading('last edit', text='Last edit', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='last edit', reverse=False))
         self.frameanalysisuserstree.column('age', width=100, minwidth=100, anchor='center')
-        self.frameanalysisuserstree.heading('age', text='Age in days', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='age', reverse=False))
+        self.frameanalysisuserstree.heading('age', text='Age (days)', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='age', reverse=False))
         self.frameanalysisuserstree.column('edits', width=120, minwidth=120, anchor='center')
         self.frameanalysisuserstree.heading('edits', text='Edits', command=lambda: self.treeSortColumn(tree='frameanalysisuserstree', column='edits', reverse=False))
         self.frameanalysisuserstree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)

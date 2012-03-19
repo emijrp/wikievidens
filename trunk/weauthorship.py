@@ -98,7 +98,10 @@ def authorship(cursor=None, page_title=None):
     tree.heading('chars', text='Chars', )
     tree.grid(row=1, column=2, sticky=W+E+N+S)
     c = 0
-    for user in users:
-        tree.insert('', 'end', str(c), text=user, values=(user, chars[user]), tags=(user,))
+    users_sort = [[chars[user], user] for user in users]
+    users_sort.sort(reverse=True)
+    users_sort = [[user, userchars] for userchars, user in users_sort]
+    for user, userchars in users_sort:
+        tree.insert('', 'end', str(c), text=user, values=(user, userchars), tags=(user,))
         tree.tag_configure(user, background=colors[user])
         c += 1
