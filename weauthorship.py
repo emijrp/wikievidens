@@ -63,12 +63,12 @@ def authorship(cursor=None, page_title=None):
     chars = {}
     for part in parts:
         c += 1
-        part=part.strip()
+        part = part.strip()
         if part:
             for user, rev in revs:
                 if part in rev:
                     start = text.search(part, 1.0)
-                    end = text.search(part, 1.0).split('.')[0]+'.'+str(len(part))
+                    end = text.search(part, 1.0).split('.')[0]+'.'+str(int(start.split('.')[1])+len(part))
                     print user, start, end, part[:50]
                     text.tag_add(user, start, end)
                     if user not in users:
