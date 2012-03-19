@@ -25,6 +25,13 @@ To install !WikiEvidens you have to fulfill these requirements:
 
 After installing all that, you can run !WikiEvidens like this: {{{python wegui.py}}}
 
+== First steps ==
+
+Using !WikiEvidens tabs, follow the next steps to analyse a wiki:
+  * (1) Download a wiki dump
+  * (2) Preprocess the downloaded wiki dump
+  * (3) Analysis what you want: all the wiki, just a page, just an user, ...
+
 == Documentation ==
 
 == Contribute ==
