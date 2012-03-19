@@ -459,17 +459,20 @@ class WikiEvidens:
             tree = self.framepreprocesstree
         elif tree == 'framedownloadwikistree':
             tree = self.framedownloadwikistree
-        isDigit = True
+        isNumeric = True
         for k in tree.get_children(''):
-            if not tree.set(k, column).isdigit():
-                isDigit = False
+            try:
+                i = float(tree.set(k, column))
+            except ValueError, TypeError:
+                # not numeric
+                isNumeric = False
                 break
         isBytes = False
-        if not isDigit:
+        if not isNumeric:
             pass
         l = []
-        if isDigit:
-            l = [(int(tree.set(k, column)), k) for k in tree.get_children('')]
+        if isNumeric:
+            l = [(float(tree.set(k, column)), k) for k in tree.get_children('')]
         else:
             l = [(tree.set(k, column), k) for k in tree.get_children('')]
         l.sort(reverse=reverse)
