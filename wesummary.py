@@ -50,7 +50,7 @@ def totalEdits(cursor=None, page_title=None, user_name=None):
 def totalPages(cursor=None, page_title=None, user_name=None):
     if page_title:
         #fix, return 1 ?
-        result = cursor.execute("SELECT COUNT(DISTINCT rev_page) AS count FROM page WHERE rev_title=?", (page_title,))
+        result = cursor.execute("SELECT COUNT(DISTINCT rev_page) AS count FROM revision WHERE rev_title=?", (page_title,))
     elif user_name:
         result = cursor.execute("SELECT COUNT(DISTINCT rev_page) AS count FROM revision WHERE rev_user_text=?", (user_name,))
     else:

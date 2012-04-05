@@ -191,6 +191,8 @@ class WikiEvidens:
         self.notebookdownload.add(self.framedownloadwikis, text='Wikis')
         self.framedownloadother = ttk.Frame(self.framedownload)
         self.notebookdownload.add(self.framedownloadother, text='Other')
+        self.framedownloadspecialexport = ttk.Frame(self.framedownload)
+        self.notebookdownload.add(self.framedownloadspecialexport, text='Special:Export')
         self.framedownloaddumpgenerator = ttk.Frame(self.framedownload)
         self.notebookdownload.add(self.framedownloaddumpgenerator, text='Dump generator')
         self.framedownloadlive = ttk.Frame(self.framedownload)
