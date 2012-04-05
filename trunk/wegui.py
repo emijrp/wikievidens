@@ -617,7 +617,12 @@ class WikiEvidens:
             else:
                 self.msg(msg="Choose a page first!", level="error")
         elif analysis.startswith('users'):
-            pass
+            if self.frameanalysisuserstree.selection():
+                if analysis == 'users-summary':
+                    import wesummary
+                    wesummary.summary(cursor=cursor, user_name=self.users[int(self.frameanalysisuserstree.selection()[0])])
+            else:
+                self.msg(msg="Choose an user first!", level="error")
         
         self.block = False
         pylab.show()

@@ -25,9 +25,11 @@ import tkMessageBox
 
 #ideas para el resumen: total links, media ediciones/pag, total size (last page edits), total visits, total files, user with most edits, 
 
-def totalEdits(cursor=None, page_title=None):
+def totalEdits(cursor=None, page_title=None, user_name=None):
     if page_title:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_title=?", (0, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_user_text=?", (0, user_name))
     else:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=?", (0,))
     edits_by_reg = 0
@@ -36,6 +38,8 @@ def totalEdits(cursor=None, page_title=None):
     
     if page_title:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_title=?", (1, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_user_text=?", (1, user_name))
     else:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=?", (1,))
     edits_by_unreg = 0
@@ -43,18 +47,23 @@ def totalEdits(cursor=None, page_title=None):
         edits_by_unreg = row[0]
     return edits_by_reg, edits_by_unreg
 
-def totalPages(cursor=None, page_title=None):
+def totalPages(cursor=None, page_title=None, user_name=None):
     if page_title:
-        result = cursor.execute("SELECT COUNT(page_id) AS count FROM page WHERE page_title=?", (page_title,))
+        #fix, return 1 ?
+        result = cursor.execute("SELECT COUNT(DISTINCT rev_page) AS count FROM page WHERE rev_title=?", (page_title,))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(DISTINCT rev_page) AS count FROM revision WHERE rev_user_text=?", (user_name,))
     else:
-        result = cursor.execute("SELECT COUNT(page_id) AS count FROM page WHERE 1")
+        result = cursor.execute("SELECT COUNT(DISTINCT rev_page) AS count FROM revision WHERE 1")
     for row in result:
         return row[0]
     return 0
 
-def totalUsers(cursor=None, page_title=None):
+def totalUsers(cursor=None, page_title=None, user_name=None):
     if page_title:
         result = cursor.execute("SELECT COUNT(DISTINCT rev_user_text) AS count FROM revision WHERE rev_is_ipedit=? AND rev_title=?", (0, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(DISTINCT rev_user_text) AS count FROM revision WHERE rev_is_ipedit=? AND rev_user_text=?", (0, user_name))
     else:
         result = cursor.execute("SELECT COUNT(DISTINCT rev_user_text) AS count FROM revision WHERE rev_is_ipedit=?", (0,))
     registered_users = 0
@@ -63,6 +72,8 @@ def totalUsers(cursor=None, page_title=None):
         
     if page_title:
         result = cursor.execute("SELECT COUNT(DISTINCT rev_user_text) AS count FROM revision WHERE rev_is_ipedit=? AND rev_title=?", (1, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(DISTINCT rev_user_text) AS count FROM revision WHERE rev_is_ipedit=? AND rev_user_text=?", (1, user_name))
     else:
         result = cursor.execute("SELECT COUNT(DISTINCT rev_user_text) AS count FROM revision WHERE rev_is_ipedit=?", (1,))
     unregistered_users = 0
@@ -70,18 +81,22 @@ def totalUsers(cursor=None, page_title=None):
         unregistered_users = row[0]
     return registered_users, unregistered_users
 
-def firstEdit(cursor=None, page_title=None):
+def firstEdit(cursor=None, page_title=None, user_name=None):
     if page_title:
         result = cursor.execute("SELECT rev_timestamp, rev_user_text FROM revision WHERE rev_title=? ORDER BY rev_timestamp ASC LIMIT 1", (page_title,))
+    elif user_name:
+        result = cursor.execute("SELECT rev_timestamp, rev_user_text FROM revision WHERE rev_user_text=? ORDER BY rev_timestamp ASC LIMIT 1", (user_name,))
     else:
         result = cursor.execute("SELECT rev_timestamp, rev_user_text FROM revision WHERE 1 ORDER BY rev_timestamp ASC LIMIT 1")
     for row in result:
         return row[0], row[1]
     return '', ''
 
-def lastEdit(cursor=None, page_title=None):
+def lastEdit(cursor=None, page_title=None, user_name=None):
     if page_title:
         result = cursor.execute("SELECT rev_timestamp, rev_user_text FROM revision WHERE rev_title=? ORDER BY rev_timestamp DESC LIMIT 1", (page_title,))
+    elif user_name:
+        result = cursor.execute("SELECT rev_timestamp, rev_user_text FROM revision WHERE rev_user_text=? ORDER BY rev_timestamp DESC LIMIT 1", (user_name,))
     else:
         result = cursor.execute("SELECT rev_timestamp, rev_user_text FROM revision WHERE 1 ORDER BY rev_timestamp DESC LIMIT 1")
     for row in result:
@@ -93,9 +108,11 @@ def lifespan(firstedit='', lastedit=''):
         return (datetime.datetime.strptime(lastedit, '%Y-%m-%d %H:%M:%S') - datetime.datetime.strptime(firstedit, '%Y-%m-%d %H:%M:%S')).days
     return 'Unknown'
 
-def editSummaryUsage(cursor=None, page_title=None):
+def editSummaryUsage(cursor=None, page_title=None, user_name=None):
     if page_title:
         result = cursor.execute("SELECT COUNT(rev_comment) FROM revision WHERE rev_comment <> '' AND rev_is_ipedit=? AND rev_title=?", (0, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(rev_comment) FROM revision WHERE rev_comment <> '' AND rev_is_ipedit=? AND rev_user_text=?", (0, user_name))
     else:
         result = cursor.execute("SELECT COUNT(rev_comment) FROM revision WHERE rev_comment <> '' AND rev_is_ipedit=?", (0,))
     edits_by_reg = 0
@@ -104,6 +121,8 @@ def editSummaryUsage(cursor=None, page_title=None):
     
     if page_title:
         result = cursor.execute("SELECT COUNT(rev_comment) FROM revision WHERE rev_comment <> '' AND rev_is_ipedit=? AND rev_title=?", (1, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(rev_comment) FROM revision WHERE rev_comment <> '' AND rev_is_ipedit=? AND rev_user_text=?", (1, user_name))
     else:
         result = cursor.execute("SELECT COUNT(rev_comment) FROM revision WHERE rev_comment <> '' AND rev_is_ipedit=?", (1,))
     edits_by_unreg = 0
@@ -112,20 +131,24 @@ def editSummaryUsage(cursor=None, page_title=None):
     
     return edits_by_reg, edits_by_unreg
 
-def totalLinks(cursor=None, page_title=None):
+def totalLinks(cursor=None, page_title=None, user_name=None):
     #fix recorrer la última revisión de cada página
     if page_title:
         result = cursor.execute("SELECT SUM(page_internal_links), SUM(page_external_links), SUM(page_interwikis), SUM(page_templates) FROM page WHERE page_title=?", (page_title,))
+    elif user_name:
+        return 0, 0, 0, 0
     else:
         result = cursor.execute("SELECT SUM(page_internal_links), SUM(page_external_links), SUM(page_interwikis), SUM(page_templates) FROM page WHERE 1")
     for row in result:
         return row[0], row[1], row[2], row[3]
     return 0, 0, 0, 0
 
-def totalSections(cursor=None, page_title=None):
+def totalSections(cursor=None, page_title=None, user_name=None):
     #fix recorrer la última revisión de cada página
     if page_title:
         result = cursor.execute("SELECT SUM(page_sections) FROM page WHERE page_title=?", (page_title,))
+    elif user_name:
+        return 0
     else:
         result = cursor.execute("SELECT SUM(page_sections) FROM page WHERE 1")
     for row in result:
@@ -135,15 +158,15 @@ def totalSections(cursor=None, page_title=None):
 def summary(cursor=None, page_title=None, user_name=None):
     #sugerencias: páginas por nm (y separando redirects de no redirects), log events? deletes, page moves
     
-    pages = totalPages(cursor=cursor, page_title=page_title)
-    edits_by_reg, edits_by_unreg = totalEdits(cursor=cursor, page_title=page_title)
-    registered_users, unregistered_users = totalUsers(cursor=cursor, page_title=page_title)
-    firstedit, fuser = firstEdit(cursor=cursor, page_title=page_title)
-    lastedit, luser = lastEdit(cursor=cursor, page_title=page_title)
+    pages = totalPages(cursor=cursor, page_title=page_title, user_name=user_name)
+    edits_by_reg, edits_by_unreg = totalEdits(cursor=cursor, page_title=page_title, user_name=user_name)
+    registered_users, unregistered_users = totalUsers(cursor=cursor, page_title=page_title, user_name=user_name)
+    firstedit, fuser = firstEdit(cursor=cursor, page_title=page_title, user_name=user_name)
+    lastedit, luser = lastEdit(cursor=cursor, page_title=page_title, user_name=user_name)
     age = lifespan(firstedit=firstedit, lastedit=lastedit)
-    summaries_by_reg, summaries_by_unreg = editSummaryUsage(cursor=cursor, page_title=page_title)
-    links, external_links, interwikis, template_transclusions = totalLinks(cursor=cursor, page_title=page_title)
-    sections = totalSections(cursor=cursor, page_title=page_title)
+    summaries_by_reg, summaries_by_unreg = editSummaryUsage(cursor=cursor, page_title=page_title, user_name=user_name)
+    links, external_links, interwikis, template_transclusions = totalLinks(cursor=cursor, page_title=page_title, user_name=user_name)
+    sections = totalSections(cursor=cursor, page_title=page_title, user_name=user_name)
     
     output = ''
     if page_title:
