@@ -220,20 +220,24 @@ def summary(cursor=None, page_title=None, user_name=None):
     text.grid(row=0, column=0)
     #scrollbar.config(command=text.yview)
 
-def editsByRegisteredUsers(cursor=None, page_title=None):
+def editsByRegisteredUsers(cursor=None, page_title=None, user_name=None):
     #fix esto debería estar en una tabla summary ya?
     if page_title:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_title=?", (0, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_user_text=?", (0, user_name))
     else:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=?", (0,))
     for row in result:
         return row[0]
     return 0
 
-def editsByAnonymousUsers(cursor=None, page_title=None):
+def editsByAnonymousUsers(cursor=None, page_title=None, user_name=None):
     #fix esto debería estar en una tabla summary ya?
     if page_title:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_title=?", (1, page_title))
+    elif user_name:
+        result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=? AND rev_user_text=?", (1, user_name))
     else:
         result = cursor.execute("SELECT COUNT(rev_id) AS count FROM revision WHERE rev_is_ipedit=?", (1,))
     for row in result:
