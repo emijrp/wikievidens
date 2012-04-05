@@ -369,13 +369,19 @@ class WikiEvidens:
         toolbar.update()
         canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=1)
         """
-        button1 = Button(self.frameanalysisglobal, text='Calculate', command=lambda: self.analysis(self.frameanalysisglobaloptionmenu1var.get()), width=10)
-        button1.grid(row=0, column=2, sticky=W)
+        self.frameanalysisglobalbutton1 = Button(self.frameanalysisglobal, text='Calculate', command=lambda: self.analysis(self.frameanalysisglobaloptionmenu1var.get()), width=10)
+        self.frameanalysisglobalbutton1.grid(row=0, column=2, sticky=W)
         #end analysis global tab
         
         #start analysis pages tab
         self.frameanalysispageslabel1 = Label(self.frameanalysispages, text="Choose a page and an analysis:", anchor='center', font=self.font)
-        self.frameanalysispageslabel1.grid(row=0, column=0, columnspan=2, sticky=W)
+        self.frameanalysispageslabel1.grid(row=0, column=0, sticky=E)
+        self.frameanalysispagesoptionmenu1var = StringVar(self.frameanalysispages)
+        self.frameanalysispagesoptionmenu1var.set("pages-summary")
+        self.frameanalysispagesoptionmenu1 = OptionMenu(self.frameanalysispages, self.frameanalysispagesoptionmenu1var, self.frameanalysispagesoptionmenu1var.get(), "pages-activity-yearly", "pages-activity-monthly", "pages-activity-dow", "pages-activity-hourly", )
+        self.frameanalysispagesoptionmenu1.grid(row=0, column=1, sticky=W+E)
+        self.frameanalysispagesbutton1 = Button(self.frameanalysispages, text="Calculate", command=lambda: self.analysis(self.frameanalysispagesoptionmenu1var.get()), width=10)
+        self.frameanalysispagesbutton1.grid(row=0, column=2, sticky=W)
         self.frameanalysispagestreescrollbar = Scrollbar(self.frameanalysispages)
         self.frameanalysispagestreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
         self.frameanalysispagescolumns = ('page name', 'first edit', 'last edit', 'age', 'size', 'edits')
@@ -394,13 +400,17 @@ class WikiEvidens:
         self.frameanalysispagestree.column('edits', width=100, minwidth=100, anchor='center')
         self.frameanalysispagestree.heading('edits', text='Edits', command=lambda: self.treeSortColumn(tree='frameanalysispagestree', column='edits', reverse=False))
         self.frameanalysispagestree.grid(row=1, column=0, columnspan=3, sticky=W+E+N+S)
-        self.frameanalysispagesbutton1 = Button(self.frameanalysispages, text="Calculate", command=lambda: self.analysis(analysis='pages-authorship'))
-        self.frameanalysispagesbutton1.grid(row=0, column=2)
         #end analysis pages tab
         
         #start analysis users tab
         self.frameanalysisuserslabel1 = Label(self.frameanalysisusers, text="Choose an user and an analysis:", anchor='center', font=self.font)
-        self.frameanalysisuserslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        self.frameanalysisuserslabel1.grid(row=0, column=0, sticky=E)
+        self.frameanalysisusersoptionmenu1var = StringVar(self.frameanalysisusers)
+        self.frameanalysisusersoptionmenu1var.set("users-summary")
+        self.frameanalysisusersoptionmenu1 = OptionMenu(self.frameanalysisusers, self.frameanalysisusersoptionmenu1var, self.frameanalysisusersoptionmenu1var.get(), "users-activity-yearly", "users-activity-monthly", "users-activity-dow", "users-activity-hourly", )
+        self.frameanalysisusersoptionmenu1.grid(row=0, column=1, sticky=W+E)
+        self.frameanalysisusersbutton1 = Button(self.frameanalysisusers, text="Calculate", command=lambda: self.analysis(self.frameanalysisusersoptionmenu1var.get()), width=10)
+        self.frameanalysisusersbutton1.grid(row=0, column=2, sticky=W)
         self.frameanalysisuserstreescrollbar = Scrollbar(self.frameanalysisusers)
         self.frameanalysisuserstreescrollbar.grid(row=1, column=3, sticky=W+E+N+S)
         frameanalysisuserscolumns = ('user name', 'first edit', 'last edit', 'age', 'edits')
