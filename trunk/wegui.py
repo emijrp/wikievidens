@@ -631,9 +631,22 @@ class WikiEvidens:
                 self.msg(msg="Choose a page first!", level="error")
         elif analysis.startswith('users'):
             if self.frameanalysisuserstree.selection():
+                user_name = self.users[int(self.frameanalysisuserstree.selection()[0])]
                 if analysis == 'users-summary':
                     import wesummary
-                    wesummary.summary(cursor=cursor, user_name=self.users[int(self.frameanalysisuserstree.selection()[0])])
+                    wesummary.summary(cursor=cursor, user_name=user_name)
+                elif analysis.startswith('users-activity'):
+                    import weactivity
+                    if analysis == 'users-activity-all':
+                        weactivity.activityall(cursor=cursor, range='user', entity=user_name, title=user_name)
+                    elif analysis == 'users-activity-yearly':
+                        weactivity.activityyearly(cursor=cursor, range='user', entity=user_name, title=user_name)
+                    elif analysis == 'users-activity-monthly':
+                        weactivity.activitymonthly(cursor=cursor, range='user', entity=user_name, title=user_name)
+                    elif analysis == 'users-activity-dow':
+                        weactivity.activitydow(cursor=cursor, range='user', entity=user_name, title=user_name)
+                    elif analysis == 'users-activity-hourly':
+                        weactivity.activityhourly(cursor=cursor, range='user', entity=user_name, title=user_name)
             else:
                 self.msg(msg="Choose an user first!", level="error")
         
