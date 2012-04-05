@@ -189,14 +189,14 @@ class WikiEvidens:
         self.notebookdownload.grid(row=1, column=0, columnspan=1, sticky=W+E+N+S)
         self.framedownloadwikis = ttk.Frame(self.framedownload)
         self.notebookdownload.add(self.framedownloadwikis, text='Wikis')
-        self.framedownloadother = ttk.Frame(self.framedownload)
-        self.notebookdownload.add(self.framedownloadother, text='Other')
         self.framedownloadspecialexport = ttk.Frame(self.framedownload)
         self.notebookdownload.add(self.framedownloadspecialexport, text='Special:Export')
         self.framedownloaddumpgenerator = ttk.Frame(self.framedownload)
         self.notebookdownload.add(self.framedownloaddumpgenerator, text='Dump generator')
         self.framedownloadlive = ttk.Frame(self.framedownload)
         self.notebookdownload.add(self.framedownloadlive, text='Live!')
+        self.framedownloadotherdatasets = ttk.Frame(self.framedownload)
+        self.notebookdownload.add(self.framedownloadotherdatasets, text='Other datasets')
         #end download tabs
         
         #start preprocess tab
@@ -294,10 +294,10 @@ class WikiEvidens:
         self.framedownloadwikisbutton2.grid(row=3, column=2)
         #end download wikis tab
         
-        #start download other tab
-        self.framedownloadotherlabel1 = Label(self.framedownloadother, text="Choose a dataset to download.", anchor='center', font=self.font)
-        self.framedownloadotherlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
-        #end download other tab
+        #start download other datasets tab
+        self.framedownloadotherdatasetslabel1 = Label(self.framedownloadotherdatasets, text="Choose a dataset to download.", anchor='center', font=self.font)
+        self.framedownloadotherdatasetslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        #end download other datasets tab
         
         #start download dumpgenerator tab
         self.framedownloaddumpgeneratorlabel1 = Label(self.framedownloaddumpgenerator, text="You can download a wiki using API or index.php methods.", anchor='center', font=self.font)
