@@ -607,12 +607,17 @@ class WikiEvidens:
                 import wegraph
                 wegraph.graphUserEditsNetwork(self=self, cursor=cursor)
         elif analysis.startswith('pages'):
-            if analysis == 'pages-authorship':
-                import weauthorship
-                if self.frameanalysispagestree.selection():
+            if self.frameanalysispagestree.selection():
+                if analysis == 'pages-summary':
+                    import wesummary
+                    wesummary.summary(cursor=cursor, page_title=self.pages[int(self.frameanalysispagestree.selection()[0])])
+                elif analysis == 'pages-authorship':
+                    import weauthorship
                     weauthorship.authorship(cursor=cursor, page_title=self.pages[int(self.frameanalysispagestree.selection()[0])])
-                else:
-                    self.msg(msg="Choose a page first!", level="error")
+            else:
+                self.msg(msg="Choose a page first!", level="error")
+        elif analysis.startswith('users'):
+            pass
         
         self.block = False
         pylab.show()
