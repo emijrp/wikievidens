@@ -129,6 +129,7 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
                 #conn.commit()
                 c_page += 1
                 if pagelimit and c_page >= pagelimit:
+                    page_id = ''
                     break
             else:
                 print '#'*30, '\n', 'ERROR PAGE:' , page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, 'text (', page_size, 'bytes)', page_text[:100], '\n', '#'*30
@@ -151,6 +152,8 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
         page_editcount += 1
         rev_id = int(x.revisionid)
         rev_title = x.title
+        if page_title == '':
+            page_title = x.title
         rev_page = x.id
         if page_id == -1:
             page_id = rev_page
@@ -205,8 +208,14 @@ def parseMediaWikiXMLDump(self, dumpfilename=None, dbfilename=None, revlimit=Non
         
         if revlimit and c >= revlimit:
             break
-        
+    
+    #add the last page
+    if page_id and page_title and page_editcount and page_creation_timestamp and page_last_timestamp: #page_text not needed, it can be a blanked page
+        cursor.execute('INSERT OR IGNORE INTO page VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', (page_id, page_title, page_editcount, page_creation_timestamp, page_last_timestamp, buffer(zlib.compress(page_text,9)), page_size, page_internal_links, page_external_links, page_interwikis, page_sections, page_templates))
+        c_page += 1
+    
     conn.commit() #para cuando son menos de limit o el resto
+    
     print 'Total revisions [%d], correctly inserted [%d], errors [%d]' % (c+errors, c, errors)
     print 'Total pages [%d], correctly inserted [%d], errors [%d]' % (c_page+errors_page, c_page, errors_page)
     print 'Total time [%d secs or %2f minutes or %2f hours]' % (time.time()-tt, (time.time()-tt)/60.0, (time.time()-tt)/3600.0)
