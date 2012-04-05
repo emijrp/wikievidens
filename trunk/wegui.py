@@ -608,9 +608,22 @@ class WikiEvidens:
                 wegraph.graphUserEditsNetwork(self=self, cursor=cursor)
         elif analysis.startswith('pages'):
             if self.frameanalysispagestree.selection():
+                page_title = self.pages[int(self.frameanalysispagestree.selection()[0])]
                 if analysis == 'pages-summary':
                     import wesummary
-                    wesummary.summary(cursor=cursor, page_title=self.pages[int(self.frameanalysispagestree.selection()[0])])
+                    wesummary.summary(cursor=cursor, page_title=page_title)
+                elif analysis.startswith('pages-activity'):
+                    import weactivity
+                    if analysis == 'pages-activity-all':
+                        weactivity.activityall(cursor=cursor, range='page', entity=page_title, title=page_title)
+                    elif analysis == 'pages-activity-yearly':
+                        weactivity.activityyearly(cursor=cursor, range='page', entity=page_title, title=page_title)
+                    elif analysis == 'pages-activity-monthly':
+                        weactivity.activitymonthly(cursor=cursor, range='page', entity=page_title, title=page_title)
+                    elif analysis == 'pages-activity-dow':
+                        weactivity.activitydow(cursor=cursor, range='page', entity=page_title, title=page_title)
+                    elif analysis == 'pages-activity-hourly':
+                        weactivity.activityhourly(cursor=cursor, range='page', entity=page_title, title=page_title)
                 elif analysis == 'pages-authorship':
                     import weauthorship
                     weauthorship.authorship(cursor=cursor, page_title=self.pages[int(self.frameanalysispagestree.selection()[0])])
