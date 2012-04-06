@@ -1,1 +1,7 @@
-test
+== First steps ==
+
+Using !WikiEvidens tabs, follow the next steps to analyse a wiki:
+  * (1) Download a wiki dump
+  * (2) Preprocess the downloaded wiki dump
+  * (3) Analyse what you want: the whole wiki, single page, single user, page or user batches, categories...
+  * (4) Export data
