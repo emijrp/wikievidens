@@ -295,7 +295,7 @@ class WikiEvidens:
         #end download wikis tab
         
         #start download special:export tab
-        self.framedownloadspecialexportlabel1 = Label(self.framedownloadspecialexport, text="You can download data using the MediaWiki Special:Export interface.", anchor='center', font=self.font)
+        self.framedownloadspecialexportlabel1 = Label(self.framedownloadspecialexport, text="You can download data using the MediaWiki Special:Export interface.\n", anchor='center', font=self.font)
         self.framedownloadspecialexportlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         self.framedownloadspecialexportlabel2 = Label(self.framedownloadspecialexport, text="Export interface:", anchor='center', font=self.font)
         self.framedownloadspecialexportlabel2.grid(row=1, column=0, sticky=E)
@@ -309,6 +309,12 @@ class WikiEvidens:
         self.framedownloadspecialexportentry2var.set("")
         self.framedownloadspecialexportentry2 = Entry(self.framedownloadspecialexport, textvariable=self.framedownloadspecialexportentry2var, width=40)
         self.framedownloadspecialexportentry2.grid(row=2, column=1)
+        self.framedownloadspecialexportscrollbar = Scrollbar(self.framedownloadspecialexport)
+        self.framedownloadspecialexportscrollbar.grid(row=3, column=4, sticky=W+E+N+S)
+        self.framedownloadspecialexporttext = Text(self.framedownloadspecialexport, wrap=WORD, width=60, height=10, yscrollcommand=self.framedownloadspecialexportscrollbar.set)
+        self.framedownloadspecialexporttext.insert(INSERT, '')
+        self.framedownloadspecialexporttext.config(state=NORMAL)
+        self.framedownloadspecialexporttext.grid(row=3, column=0, columnspan=2, sticky=W+E)
         #end download special:export tab
         
         #start download dumpgenerator tab
