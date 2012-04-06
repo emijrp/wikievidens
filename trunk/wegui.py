@@ -60,7 +60,7 @@ wikifarms = {
 }
 
 NAME = 'WikiEvidens'
-VERSION = '0.0.7'
+VERSION = '0.0.8'
 HOMEPAGE = 'http://code.google.com/p/wikievidens/'
 LINUX = platform.system().lower() == 'linux'
 PATH = os.path.dirname(__file__)
