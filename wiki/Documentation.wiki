@@ -26,3 +26,7 @@ Using !WikiEvidens tabs, follow the next steps to analyse a wiki:
 == Analysis tab ==
 
 == Export tab ==
+
+== Collaborate ==
+
+== Acknowledgements ==
