@@ -311,10 +311,12 @@ class WikiEvidens:
         self.framedownloadspecialexportentry2.grid(row=2, column=1)
         self.framedownloadspecialexportscrollbar = Scrollbar(self.framedownloadspecialexport)
         self.framedownloadspecialexportscrollbar.grid(row=3, column=4, sticky=W+E+N+S)
-        self.framedownloadspecialexporttext = Text(self.framedownloadspecialexport, wrap=WORD, width=60, height=10, yscrollcommand=self.framedownloadspecialexportscrollbar.set)
+        self.framedownloadspecialexporttext = Text(self.framedownloadspecialexport, wrap=WORD, width=60, height=20, yscrollcommand=self.framedownloadspecialexportscrollbar.set)
         self.framedownloadspecialexporttext.insert(INSERT, '')
         self.framedownloadspecialexporttext.config(state=NORMAL)
         self.framedownloadspecialexporttext.grid(row=3, column=0, columnspan=2, sticky=W+E)
+        self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Download", command=self.callback, width=15)
+        self.framedownloadspecialexportbutton1.grid(row=4, column=1, sticky=E)
         #end download special:export tab
         
         #start download dumpgenerator tab
