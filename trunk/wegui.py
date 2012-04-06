@@ -21,8 +21,9 @@ import platform
 import random
 import re
 import sqlite3
+import time
 import thread
-import urllib
+import urllib, urllib2
 import webbrowser
 
 #tkinter modules
@@ -315,7 +316,7 @@ class WikiEvidens:
         self.framedownloadspecialexporttext.insert(INSERT, '')
         self.framedownloadspecialexporttext.config(state=NORMAL)
         self.framedownloadspecialexporttext.grid(row=3, column=0, columnspan=2, sticky=W+E)
-        self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Download", command=self.callback, width=15)
+        self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Download", command=self.downloadSpecialExport, width=15)
         self.framedownloadspecialexportbutton1.grid(row=4, column=1, sticky=E)
         #end download special:export tab
         
@@ -465,6 +466,29 @@ class WikiEvidens:
         #start analysis samples tab
         #end analysis samples tab
     
+    def downloadSpecialExport(self):
+        #documentation http://www.mediawiki.org/wiki/Manual:Parameters_to_Special:Export
+        import dumpgenerator
+        #fix lo suyo es pedir el Special:Export en el Entry, pero luego nos hace falta el index.php o la api.php ...
+        config = { 'curonly': 0, 'api': '', 'index': self.framedownloadspecialexportentry1var.get()}
+        titles = re.sub(ur'\n\n+', ur'\n', self.framedownloadspecialexporttext.get(1.0, END)).strip().splitlines()
+        xmls = []
+        header = ''
+        footer = ''
+        for title in titles:
+            xmltemp = dumpgenerator.getXMLPage(config=config, title=title.encode('utf-8'), verbose=False)
+            if not header:
+                header = xmltemp.split('<page>')[0]
+            if not footer:
+                footer = xmltemp.split('</page>\n')[1]
+            xmls.append(dumpgenerator.cleanXML(xmltemp))
+        
+        xml = header + ''.join(xmls) + footer
+        xmlfilename = '%s-%s-%s.xml' % (dumpgenerator.domain2prefix(config=config), datetime.datetime.now().strftime('%Y%m%d-%H%M%S'), config['curonly'] and 'current' or 'history')
+        xmlfile = open('%s/%s' % (self.downloadpath, xmlfilename), 'w')
+        xmlfile.write(xml)
+        xmlfile.close()
+        
     def filterAvailableDumps(self):
         self.clearAvailableDumps()
         self.showAvailableDumps()
