@@ -380,7 +380,7 @@ class WikiEvidens:
         self.frameanalysispageslabel1.grid(row=0, column=0, sticky=E)
         self.frameanalysispagesoptionmenu1var = StringVar(self.frameanalysispages)
         self.frameanalysispagesoptionmenu1var.set("pages-summary")
-        self.frameanalysispagesoptionmenu1 = OptionMenu(self.frameanalysispages, self.frameanalysispagesoptionmenu1var, self.frameanalysispagesoptionmenu1var.get(), "pages-activity-yearly", "pages-activity-monthly", "pages-activity-dow", "pages-activity-hourly", "pages-activity-all", )
+        self.frameanalysispagesoptionmenu1 = OptionMenu(self.frameanalysispages, self.frameanalysispagesoptionmenu1var, self.frameanalysispagesoptionmenu1var.get(), "pages-activity-yearly", "pages-activity-monthly", "pages-activity-dow", "pages-activity-hourly", "pages-activity-all", "pages-authorship", )
         self.frameanalysispagesoptionmenu1.grid(row=0, column=1, sticky=W+E)
         self.frameanalysispagesbutton1 = Button(self.frameanalysispages, text="Calculate", command=lambda: self.analysis(self.frameanalysispagesoptionmenu1var.get()), width=10)
         self.frameanalysispagesbutton1.grid(row=0, column=2, sticky=W)
