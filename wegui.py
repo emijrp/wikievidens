@@ -298,11 +298,17 @@ class WikiEvidens:
         self.framedownloadspecialexportlabel1 = Label(self.framedownloadspecialexport, text="You can download data using the MediaWiki Special:Export interface.", anchor='center', font=self.font)
         self.framedownloadspecialexportlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         self.framedownloadspecialexportlabel2 = Label(self.framedownloadspecialexport, text="Export interface:", anchor='center', font=self.font)
-        self.framedownloadspecialexportlabel2.grid(row=1, column=0, sticky=W)
+        self.framedownloadspecialexportlabel2.grid(row=1, column=0, sticky=E)
         self.framedownloadspecialexportentry1var = StringVar(self.framepreprocess)
         self.framedownloadspecialexportentry1var.set("http://en.wikipedia.org/wiki/Special:Export")
         self.framedownloadspecialexportentry1 = Entry(self.framedownloadspecialexport, textvariable=self.framedownloadspecialexportentry1var, width=40)
         self.framedownloadspecialexportentry1.grid(row=1, column=1)
+        self.framedownloadspecialexportlabel3 = Label(self.framedownloadspecialexport, text="Add pages from category:", anchor='center', font=self.font)
+        self.framedownloadspecialexportlabel3.grid(row=2, column=0, sticky=W)
+        self.framedownloadspecialexportentry2var = StringVar(self.framepreprocess)
+        self.framedownloadspecialexportentry2var.set("")
+        self.framedownloadspecialexportentry2 = Entry(self.framedownloadspecialexport, textvariable=self.framedownloadspecialexportentry2var, width=40)
+        self.framedownloadspecialexportentry2.grid(row=2, column=1)
         #end download special:export tab
         
         #start download dumpgenerator tab
