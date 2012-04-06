@@ -1,4 +1,16 @@
 #labels Featured
+== What is !WikiEvidens? ==
+
+== How to install !WikiEvidens? ==
+
+=== GNU/Linux ===
+
+In Ubuntu...
+
+=== Windows ===
+
+...
+
 == First steps ==
 
 Using !WikiEvidens tabs, follow the next steps to analyse a wiki:
@@ -6,3 +18,11 @@ Using !WikiEvidens tabs, follow the next steps to analyse a wiki:
   * (2) Preprocess the downloaded wiki dump
   * (3) Analyse what you want: the whole wiki, single page, single user, page or user batches, categories...
   * (4) Export data
+
+== Download tab ==
+
+== Preprocess tab ==
+
+== Analysis tab ==
+
+== Export tab ==
