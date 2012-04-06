@@ -1,7 +1,7 @@
 #labels Featured
 == What is !WikiEvidens? ==
 
-*!WikiEvidens is a visualization and statistical tool for wikis.* It is alpha.
+*!WikiEvidens is a statistical and visualization tool for wikis.* It is alpha.
 
 == How to install !WikiEvidens? ==
 
