@@ -294,15 +294,25 @@ class WikiEvidens:
         self.framedownloadwikisbutton2.grid(row=3, column=2)
         #end download wikis tab
         
-        #start download other datasets tab
-        self.framedownloadotherdatasetslabel1 = Label(self.framedownloadotherdatasets, text="Choose a dataset to download.", anchor='center', font=self.font)
-        self.framedownloadotherdatasetslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
-        #end download other datasets tab
+        #start download special:export tab
+        self.framedownloadspecialexportlabel1 = Label(self.framedownloadspecialexport, text="You can download data from Special:Export interface.", anchor='center', font=self.font)
+        self.framedownloadspecialexportlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        #end download special:export tab
         
         #start download dumpgenerator tab
         self.framedownloaddumpgeneratorlabel1 = Label(self.framedownloaddumpgenerator, text="You can download a wiki using API or index.php methods.", anchor='center', font=self.font)
         self.framedownloaddumpgeneratorlabel1.grid(row=0, column=0, columnspan=3, sticky=W)
         #end download dumpgenerator tab
+        
+        #start download live! tab
+        self.framedownloadlivelabel1 = Label(self.framedownloadlive, text="You can download data from IRC or API in real-time mode.", anchor='center', font=self.font)
+        self.framedownloadlivelabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        #end download live! tab
+        
+        #start download other datasets tab
+        self.framedownloadotherdatasetslabel1 = Label(self.framedownloadotherdatasets, text="Choose a dataset to download.", anchor='center', font=self.font)
+        self.framedownloadotherdatasetslabel1.grid(row=0, column=0, columnspan=3, sticky=W)
+        #end download other datasets tab
         
         #start preprocess tab
         self.framepreprocesstreescrollbar = Scrollbar(self.framepreprocess)
