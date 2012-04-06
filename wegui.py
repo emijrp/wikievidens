@@ -316,7 +316,7 @@ class WikiEvidens:
         self.framedownloadspecialexporttext.insert(INSERT, '')
         self.framedownloadspecialexporttext.config(state=NORMAL)
         self.framedownloadspecialexporttext.grid(row=3, column=0, columnspan=2, sticky=W+E)
-        self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Download", command=self.downloadSpecialExport, width=15)
+        self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Download", command=lambda: thread.start_new_thread(self.downloadSpecialExport, ()), width=15)
         self.framedownloadspecialexportbutton1.grid(row=4, column=1, sticky=E)
         #end download special:export tab
         
@@ -469,9 +469,19 @@ class WikiEvidens:
     def downloadSpecialExport(self):
         #documentation http://www.mediawiki.org/wiki/Manual:Parameters_to_Special:Export
         import dumpgenerator
+        if self.block:
+            self.blocked()
+            return
+        else:
+            self.block = True
+        
         #fix lo suyo es pedir el Special:Export en el Entry, pero luego nos hace falta el index.php o la api.php ...
         config = { 'curonly': 0, 'api': '', 'index': self.framedownloadspecialexportentry1var.get()}
         titles = re.sub(ur'\n\n+', ur'\n', self.framedownloadspecialexporttext.get(1.0, END)).strip().splitlines()
+        if not titles:
+            self.msg(msg='You have to add one page title at least.', level='error')
+            self.block = False
+            return 
         xmls = []
         header = ''
         footer = ''
@@ -488,6 +498,8 @@ class WikiEvidens:
         xmlfile = open('%s/%s' % (self.downloadpath, xmlfilename), 'w')
         xmlfile.write(xml)
         xmlfile.close()
+        self.msg(msg='"%s" file has been saved at "%s" directory' % (xmlfilename, self.downloadpath), level="info")
+        self.block = False
         
     def filterAvailableDumps(self):
         self.clearAvailableDumps()
