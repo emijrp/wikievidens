@@ -1,7 +1,11 @@
 #labels Featured
 == What is !WikiEvidens? ==
 
+...
+
 == How to install !WikiEvidens? ==
+
+...
 
 === GNU/Linux ===
 
@@ -21,12 +25,22 @@ Using !WikiEvidens tabs, follow the next steps to analyse a wiki:
 
 == Download tab ==
 
+...
+
 == Preprocess tab ==
+
+...
 
 == Analysis tab ==
 
+...
+
 == Export tab ==
 
+...
+
 == Collaborate ==
+
+...
 
 == Acknowledgements ==
