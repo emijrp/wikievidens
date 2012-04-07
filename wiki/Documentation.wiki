@@ -16,7 +16,7 @@ To *install* !WikiEvidens you have to fulfill these requirements:
 
 All the packages above are available in Ubuntu repositories. You have two choices:
   * Use the console: {{{sudo apt-get install ...}}}
-  * ...or use the Software Center.
+  * ...or use the Ubuntu Software Centre.
 
 === Windows ===
 
