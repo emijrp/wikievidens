@@ -1,3 +1,4 @@
+#summary Learn to install and use WikiEvidens
 #labels Featured
 == What is !WikiEvidens? ==
 
