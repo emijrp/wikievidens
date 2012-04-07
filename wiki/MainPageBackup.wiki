@@ -1,7 +1,6 @@
 == What is !WikiEvidens? ==
-*!WikiEvidens is a visualization and statistical tool for wikis.* It is in planning stage. Stay tuned.
-
-<a href="http://wikipapers.referata.com/wiki/File:Wikievidens0.0.6.png"><img src="http://wikipapers.referata.com/w/images/Wikievidens0.0.6.png" width=500px/></a>
+<img src="http://wikipapers.referata.com/w/images/Wikievidens0.0.6.png" width=400px align=right/>
+*!WikiEvidens is a statistical and visualization tool for wikis.* It is developed by [https://sites.google.com/site/emijrp/ Emilio J. Rodríguez-Posada] and it is on alpha stage.
 
 == Features ==
   * Wiki datasets *downloader*
@@ -13,24 +12,12 @@
     * Authorship scanner
   * *Export* in several formats
 
-== Download ==
-
-You can download !WikiEvidens code from SVN repository: {{{svn checkout http://wikievidens.googlecode.com/svn/trunk/ wikievidens-read-only}}}
-
-== Install ==
-
-To install !WikiEvidens you have to fulfill these requirements:
-  * Mandatory: python, python-tk, python-sqlite, p7zip-full, python-matplotlib
-  * Optional: python-nltk, graphviz
-
-After installing all that, you can run !WikiEvidens like this: {{{python wegui.py}}}
-
 == Documentation ==
 
-We are working in a complete [Documentation].
+Learn to install and use !WikiEvidens. We are working in a complete *[Documentation]*.
 
 == Contribute ==
-If you want to send any *suggestion*, reach me at emijrp@gmail.com. For *bugs*, you can use the [http://code.google.com/p/wikievidens/issues/list issues] section.
+If you want to send any *suggestion*, reach me at emijrp@gmail.com. For *bugs*, you can use the *[http://code.google.com/p/wikievidens/issues/list issues]* section.
 
 <table width=99%>
 <tr><td align=center>
