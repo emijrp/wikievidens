@@ -27,10 +27,10 @@ All the packages above are available in Ubuntu repositories. You have two choice
 After installing the requirements and downloading !WikiEvidens, you can run the application like this: {{{python wegui.py}}}
 
 !WikiEvidens is divided into tabs. Follow the next steps to analyse a wiki:
-  * (1) Download a wiki dump
-  * (2) Preprocess the downloaded wiki dump
-  * (3) Analyse what you want: the whole wiki, single page, single user, page or user batches, categories...
-  * (4) Export data
+  # Download a wiki dump
+  # Preprocess the downloaded wiki dump
+  # Analyse what you want: the whole wiki, single page, single user, page or user batches, categories...
+  # Export data
 
 == Download tab ==
 
