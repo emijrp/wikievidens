@@ -24,7 +24,7 @@ All the packages above are available in Ubuntu repositories. You have two choice
 
 == First steps ==
 
-After installing the requirements and downloading !Wikievidens, you can run the application like this: {{{python wegui.py}}}
+After installing the requirements and downloading !WikiEvidens, you can run the application like this: {{{python wegui.py}}}
 
 !WikiEvidens is divided into tabs. Follow the next steps to analyse a wiki:
   * (1) Download a wiki dump
