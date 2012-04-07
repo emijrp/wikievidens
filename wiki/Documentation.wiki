@@ -15,7 +15,7 @@ To *install* !WikiEvidens you have to fulfill these requirements:
 === GNU/Linux ===
 
 All the packages above are available in Ubuntu repositories. You have two choices:
-  * USe the console: {{{sudo apt-get install ...}}}
+  * Use the console: {{{sudo apt-get install python, python-tk, python-sqlite, p7zip-full, python-matplotlib, python-nltk, graphviz}}}
   * ...or use the Software Center.
 
 === Windows ===
