@@ -13,7 +13,7 @@ To *install* !WikiEvidens you have to fulfill these requirements:
 
 === GNU/Linux ===
 
-All the packages above are available in Ubuntu aptitude.
+All the packages above are available in Ubuntu aptitude. Just use {{{sudo apt-get install ...}}} or the Software Center.
 
 === Windows ===
 
