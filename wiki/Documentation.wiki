@@ -32,6 +32,8 @@ After installing the requirements and downloading !WikiEvidens, you can run the 
   # Analyse what you want: the whole wiki, single page, single user, page or user batches, categories...
   # Export data
 
+In the next sections there are further information about every tab.
+
 == Download tab ==
 
 ...
