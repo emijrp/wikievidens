@@ -36,7 +36,13 @@ In the next sections there are further information about every tab.
 
 == Download tab ==
 
-...
+=== Wikis ===
+
+=== Special:Export ===
+
+=== Dump generator ===
+
+=== Other datasets ===
 
 == Preprocess tab ==
 
@@ -44,7 +50,13 @@ In the next sections there are further information about every tab.
 
 == Analysis tab ==
 
-...
+=== Global ===
+
+=== Pages ===
+
+=== Users ===
+
+=== Samples ===
 
 == Export tab ==
 
