@@ -77,6 +77,8 @@ if PATH: os.chdir(PATH)
 
 # TODO:
 #
+# mejoras para el xmlreader.py: leer <minor/>
+#
 # el nltk.downloader() usa tkinter y tiene una abuena interfaz con barra de progreso, pestañas y todo, mirar cómo está hecho
 #
 # indicar % progreso al parsear el dump, en función de una estimación por el tamaño del fichero (depende si es 7z, bzip, etc [leer tamaño del .xml comprimido directamente si es posible])
