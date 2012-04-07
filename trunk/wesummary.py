@@ -157,6 +157,7 @@ def totalSections(cursor=None, page_title=None, user_name=None):
 
 def summary(cursor=None, page_title=None, user_name=None):
     #sugerencias: páginas por nm (y separando redirects de no redirects), log events? deletes, page moves
+    #more ideas http://toolserver.org/~tparis/articleinfo/index.php?article=Main_Page&lang=en&wiki=wikipedia
     
     pages = totalPages(cursor=cursor, page_title=page_title, user_name=user_name)
     edits_by_reg, edits_by_unreg = totalEdits(cursor=cursor, page_title=page_title, user_name=user_name)
@@ -185,6 +186,7 @@ def summary(cursor=None, page_title=None, user_name=None):
     output += '           = %d (unregistered users)\n' % (unregistered_users)
     output += 'Revs/user  = %.2f (by registered users)\n' % (float(edits_by_reg)/registered_users)
     output += '           = %.2f (by unregistered users)\n' % (edits_by_unreg and float(edits_by_unreg)/unregistered_users or 0)
+    output += '           = %.2f (by both)\n' % (edits_by_reg+edits_by_unreg and float(edits_by_reg+edits_by_unreg)/(registered_users+unregistered_users) or 0)
     output += 'First edit = %s (User:%s)\n' % (firstedit, fuser)
     output += 'Last edit  = %s (User:%s)\n' % (lastedit, luser)
     output += 'Age        = %d days (%.2f years)\n' % (age, age/365.0)
