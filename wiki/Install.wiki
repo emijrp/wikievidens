@@ -4,7 +4,7 @@
 *Table of contents:*
 <wiki:toc />
 
-== Download ==
+== Download !WikiEvidens ==
 
 You can *download* !WikiEvidens code from SVN repository: {{{svn checkout http://wikievidens.googlecode.com/svn/trunk/ wikievidens-read-only}}}
 
