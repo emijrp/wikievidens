@@ -1,0 +1,12 @@
+#summary The sidebar page
+
+  * What is WikiEvidens?
+  * Requirements
+  * Download
+  * Install
+  * Usage
+    * Download tab
+    * Preprocess tab
+    * Analysis tab
+    * Export tab
+  * Collaborate
