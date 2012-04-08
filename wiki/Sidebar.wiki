@@ -1,12 +1,12 @@
 #summary The sidebar page
 
   * [Documentation What is !WikiEvidens?]
-  * Requirements
-  * Download
-  * Install
-  * Usage
-    * Download tab
-    * Preprocess tab
-    * Analysis tab
-    * Export tab
-  * Collaborate
+  * [Requirements Requirements]
+  * [Download Download]
+  * [Install Install]
+  * [Usage Usage]
+    * [DownloadTab Download tab]
+    * [PreprocessTab reprocess tab]
+    * [AnalysisTab Analysis tab]
+    * [ExportTab Export tab]
+  * [Collaborate Collaborate]
