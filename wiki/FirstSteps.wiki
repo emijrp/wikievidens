@@ -6,9 +6,9 @@
 After installing the requirements and downloading !WikiEvidens, you can run the application like this: {{{python wegui.py}}}
 
 !WikiEvidens is divided into tabs. Follow the next steps to analyse a wiki:
-  # Download a wiki dump
-  # Preprocess the downloaded wiki dump
-  # Analyse what you want: the whole wiki, single page, single user, page or user batches, categories...
-  # Export data
+  # [DownloadTab Download] a wiki dump
+  # [PreprocessTab Preprocess] the downloaded wiki dump
+  # [AnalysisTab Analyse] what you want: the whole wiki, single page, single user, page or user batches, categories...
+  # [ExportTab Export] data
 
 In the next sections there are further information about every tab.
