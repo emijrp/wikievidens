@@ -6,7 +6,7 @@
   * [Install Install]
   * [Usage Usage]
     * [DownloadTab Download tab]
-    * [PreprocessTab reprocess tab]
+    * [PreprocessTab Preprocess tab]
     * [AnalysisTab Analysis tab]
     * [ExportTab Export tab]
   * [Collaborate Collaborate]
