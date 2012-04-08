@@ -10,4 +10,4 @@
     * [PreprocessTab Preprocess tab]
     * [AnalysisTab Analysis tab]
     * [ExportTab Export tab]
-  * [Collaborate Collaborate]
+  * [Contribute Contribute]
