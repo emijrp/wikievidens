@@ -2,11 +2,11 @@
 #sidebar Sidebar
 
 == Features ==
-  * Wiki datasets *downloader*
-  * Wiki XML *preprocessor*
-  * Global, page-by-page, user-by-user and sample *analysis*
+  * Wiki datasets *[DownloadTab downloader]*
+  * Wiki XML *[PreprocessTab preprocessor]*
+  * Global, page-by-page, user-by-user and sample *[AnalysisTab analysis]*
     * Summary
     * Activity by year, month, day of week, hour
     * Networks visualization
     * Authorship scanner
-  * *Export* in several formats
+  * *[ExportTab Export]* in several formats
