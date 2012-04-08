@@ -3,6 +3,16 @@
 #sidebar Sidebar
 == What is !WikiEvidens? ==
 
-*!WikiEvidens is a statistical and visualization tool for wikis.* It is alpha.
+*!WikiEvidens is a statistical and visualization tool for wikis.* It is developed by [https://sites.google.com/site/emijrp/ Emilio J. Rodríguez-Posada] and it is on alpha stage.
+
+== Features ==
+  * Wiki datasets *downloader*
+  * Wiki XML *preprocessor*
+  * Global, page-by-page, user-by-user and sample *analysis*
+    * Summary
+    * Activity by year, month, day of week, hour
+    * Networks visualization
+    * Authorship scanner
+  * *Export* in several formats
 
 We are working in this documentation.
