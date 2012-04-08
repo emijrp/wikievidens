@@ -1,4 +1,20 @@
 #summary How to install WikiEvidens
 #sidebar Sidebar
 
+== How to install !WikiEvidens? ==
+
+You can *download* !WikiEvidens code from SVN repository: {{{svn checkout http://wikievidens.googlecode.com/svn/trunk/ wikievidens-read-only}}}
+
+To *install* !WikiEvidens you have to fulfill these requirements:
+  * Mandatory: python, python-tk, python-sqlite, p7zip-full, python-matplotlib
+  * Optional: python-nltk, graphviz
+
+=== GNU/Linux ===
+
+All the packages above are available in Ubuntu repositories. You have two choices:
+  * Use the console: {{{sudo apt-get install ...}}}
+  * ...or use the Ubuntu Software Centre.
+
+=== Windows ===
+
 ...
