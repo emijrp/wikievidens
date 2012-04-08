@@ -1,6 +1,6 @@
 #summary The sidebar page
 
-  * [Documentation What is !WikiEvidens?]
+  * [Documentation What is WikiEvidens?]
   * [Requirements Requirements]
   * [Download Download]
   * [Install Install]
