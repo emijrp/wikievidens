@@ -1,0 +1,12 @@
+#summary All the WikiEvidens features
+#sidebar Sidebar
+
+== Features ==
+  * Wiki datasets *downloader*
+  * Wiki XML *preprocessor*
+  * Global, page-by-page, user-by-user and sample *analysis*
+    * Summary
+    * Activity by year, month, day of week, hour
+    * Networks visualization
+    * Authorship scanner
+  * *Export* in several formats
