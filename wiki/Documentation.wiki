@@ -5,64 +5,6 @@
 
 *!WikiEvidens is a statistical and visualization tool for wikis.* It is alpha.
 
-== How to install !WikiEvidens? ==
-
-You can *download* !WikiEvidens code from SVN repository: {{{svn checkout http://wikievidens.googlecode.com/svn/trunk/ wikievidens-read-only}}}
-
-To *install* !WikiEvidens you have to fulfill these requirements:
-  * Mandatory: python, python-tk, python-sqlite, p7zip-full, python-matplotlib
-  * Optional: python-nltk, graphviz
-
-=== GNU/Linux ===
-
-All the packages above are available in Ubuntu repositories. You have two choices:
-  * Use the console: {{{sudo apt-get install ...}}}
-  * ...or use the Ubuntu Software Centre.
-
-=== Windows ===
-
-...
-
-== First steps ==
-<img src="http://wikipapers.referata.com/w/images/Wikievidens0.0.6.png" width=450px align=right/>
-After installing the requirements and downloading !WikiEvidens, you can run the application like this: {{{python wegui.py}}}
-
-!WikiEvidens is divided into tabs. Follow the next steps to analyse a wiki:
-  # Download a wiki dump
-  # Preprocess the downloaded wiki dump
-  # Analyse what you want: the whole wiki, single page, single user, page or user batches, categories...
-  # Export data
-
-In the next sections there are further information about every tab.
-
-== Download tab ==
-
-=== Wikis ===
-
-=== Special:Export ===
-
-=== Dump generator ===
-
-=== Other datasets ===
-
-== Preprocess tab ==
-
-...
-
-== Analysis tab ==
-
-=== Global ===
-
-=== Pages ===
-
-=== Users ===
-
-=== Samples ===
-
-== Export tab ==
-
-...
-
 == Contribute ==
 
 If you want to send any *suggestion*, reach me at emijrp@gmail.com. For *bugs*, you can use the [http://code.google.com/p/wikievidens/issues/list issues] section.
