@@ -1,6 +1,9 @@
 #summary How to install WikiEvidens
 #sidebar Sidebar
 
+*Table of contents:*
+<wiki:toc />
+
 == Download ==
 
 You can *download* !WikiEvidens code from SVN repository: {{{svn checkout http://wikievidens.googlecode.com/svn/trunk/ wikievidens-read-only}}}
