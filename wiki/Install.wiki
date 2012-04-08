@@ -23,6 +23,6 @@ All the packages above are available in Ubuntu repositories. You have two choice
 
 ...
 
-== Install WikiEvidens ==
+== Install !WikiEvidens ==
 
 You don't need to install WikiEvidens, just download the code into a directory and run: {{{python wegui.py}}}
