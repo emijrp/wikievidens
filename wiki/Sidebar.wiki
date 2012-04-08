@@ -2,8 +2,6 @@
 
   * [Documentation What is WikiEvidens?]
   * [Features Features]
-  * [Requirements Requirements]
-  * [Download Download]
   * [Install Install]
   * [FirstSteps First steps]
   * [Usage Usage]
