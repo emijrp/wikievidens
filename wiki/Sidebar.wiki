@@ -4,6 +4,7 @@
   * [Requirements Requirements]
   * [Download Download]
   * [Install Install]
+  * [FirstSteps First steps]
   * [Usage Usage]
     * [DownloadTab Download tab]
     * [PreprocessTab Preprocess tab]
