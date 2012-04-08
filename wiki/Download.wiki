@@ -1,6 +1,0 @@
-#summary How to download WikiEvidens
-#sidebar Sidebar
-
-== Download ==
-
-You can download WikiEvidens from the [http://code.google.com/p/wikievidens/source/checkout SVN repository].
