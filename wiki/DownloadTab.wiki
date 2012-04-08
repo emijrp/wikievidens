@@ -1,4 +1,10 @@
 #summary All about the Download tab
 #sidebar Sidebar
 
-...
+=== Wikis ===
+
+=== Special:Export ===
+
+=== Dump generator ===
+
+=== Other datasets ===
