@@ -1,0 +1,4 @@
+#summary How to install WikiEvidens
+#sidebar Sidebar
+
+...
