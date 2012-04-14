@@ -139,6 +139,7 @@ class WikiEvidens:
         self.block = False #semaphore
         self.users = []
         self.pages = []
+        self.limit = 1000 #limit for queries results
         self.font = ("Arial", 10)
         
         #start menu
@@ -571,26 +572,40 @@ class WikiEvidens:
             print "Error, no cursor"
             sys.exit()
     
-    def loadPages(self):
+    def loadPages(self, sort='page_title', offset=0):
+        #todo: sort and offset
+        if not sort in ['page_title'] or \
+           offset < 0:
+            return
+        
         for i in range(len(self.pages)):
             self.frameanalysispagestree.delete(str(i))
         self.pages = []
         cursor = self.createCursor()
-        result = cursor.execute("SELECT page_title, page_creation_timestamp, page_last_timestamp, page_size, page_editcount FROM page WHERE 1 ORDER BY page_title")
+        result = cursor.execute("SELECT page_title, page_creation_timestamp, page_last_timestamp, page_size, page_editcount FROM page WHERE 1 ORDER BY page_title LIMIT ?", (self.limit,))
         pages = [[page_title, page_creation_timestamp, page_last_timestamp, (wecore.str2date(page_last_timestamp)-wecore.str2date(page_creation_timestamp)).days, '%.2f' % (int(page_size)/1024.0), page_editcount] for page_title, page_creation_timestamp, page_last_timestamp, page_size, page_editcount in result]
         c = 0
         for page_title, firstedit, lastedit, age, size, edits in pages:
-            self.frameanalysispagestree.insert('', 'end', str(c), text=page_title, values=(page_title, firstedit, lastedit, age, size, edits))
-            self.pages.append(page_title)
-            c += 1
+            #print page_title
+            try: #fix, falla con el título '"'
+                self.frameanalysispagestree.insert('', 'end', str(c), text=page_title, values=(page_title, firstedit, lastedit, age, size, edits))
+                self.pages.append(page_title)
+                c += 1
+            except:
+                pass
         return
     
-    def loadUsers(self):
+    def loadUsers(self, sort='user_name', offset=0):
+        #todo: sort and offset
+        if not sort in ['user_name'] or \
+           offset < 0:
+            return
+        
         for i in range(len(self.users)):
             self.frameanalysisuserstree.delete(str(i))
         self.users = []
         cursor = self.createCursor()
-        result = cursor.execute("SELECT user_name, user_editcount, user_first_timestamp, user_last_timestamp FROM user WHERE 1 ORDER BY user_name")
+        result = cursor.execute("SELECT user_name, user_editcount, user_first_timestamp, user_last_timestamp FROM user WHERE 1 ORDER BY user_name LIMIT ?", (self.limit,))
         users = [[user_name, user_first_timestamp, user_last_timestamp, (wecore.str2date(user_last_timestamp)-wecore.str2date(user_first_timestamp)).days, user_editcount] for user_name, user_editcount, user_first_timestamp, user_last_timestamp in result]
         c = 0
         for user_name, firstedit, lastedit, age, edits in users:
