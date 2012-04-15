@@ -22,8 +22,9 @@ import sys
 domains = {
     ur"(?im)https?://prensahistorica\.mcu\.es": None, 
     ur"(?im)https?://bibliotecadigital\.carm\.es": None,
-    ur"(?im)https?://([^/]+\.)?bibliotecavirtualdeandalucia\.es": None,
-    ur"(?im)https?://([^/]+\.)?bnc\.cat": None,
+    ur"(?im)https?://([^/ ]+\.)?bibliotecavirtualdeandalucia\.es": None,
+    ur"(?im)https?://([^/ ]+\.)?bnc\.cat": None,
+    ur"(?im)https?://([^/ ]+\.)?pares\.mcu\.es[^\|\]\s]+(nid|txt_id_desc_ud)\=": None,
 }
 for k, v in domains.items():
     domains[k] = re.compile(k)
@@ -31,9 +32,10 @@ for k, v in domains.items():
 ee_r = re.compile(ur"(?im)(Enlaces?\s*externos?|Bibliograf[íi]a)")
 
 def convert(text):
-    text = re.sub(ur"&quot;", '"', text)
-    text = re.sub(ur"&lt;", "<", text)
-    text = re.sub(ur"&gt;", ">", text)
+    text = text.replace('&gt;', '>')
+    text = text.replace('&lt;', '<')
+    text = text.replace('&quot;', '"')
+    text = text.replace('&amp;', '&')
     return text
 
 def getEEBiblio(text):
@@ -63,6 +65,7 @@ def main():
         if re.findall(title_r, l): #get title
             if title: #print previous page
                 text = convert(text)
+                #print text
                 search = [len(re.findall(compiled, text)) for regexp, compiled in domains.items()]
                 sumsearch = sum(search)
                 if sumsearch > 0:
@@ -73,7 +76,10 @@ def main():
                     for regexp, compiled in domains.items():
                         sumsearch2 = len(re.findall(compiled, text))
                         if sumsearch2:
-                            print '         %s | Details: <ref> (%d), == EE/Biblio == (%d)' % (regexp, sum([len(re.findall(compiled, ref)) for ref in re.findall(ref_r, text)]), len(re.findall(compiled, getEEBiblio(text)))) 
+                            inrefs = sum([len(re.findall(compiled, ref)) for ref in re.findall(ref_r, text)])
+                            inee = len(re.findall(compiled, getEEBiblio(text)))
+                            other = sumsearch2 - (inrefs + inee)
+                            print '         %s | Details: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (regexp, inrefs, inee, other)
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
