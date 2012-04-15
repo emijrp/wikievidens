@@ -125,7 +125,7 @@ def main():
             title = re.findall(title_r, l)[0]
             text = ""
             c += 1
-            #if c > 10000:
+            #if c > 1000:
             #    break
         elif re.findall(text_start_r, l): #gets text start
             if re.findall(text_end_r, l):
@@ -146,7 +146,7 @@ def main():
     ranking = [[props['totallinks'], props['totalarticles'], repository] for repository, props in repositories.items()]
     ranking.sort(reverse=True)
     for totallinks, totalarticles, repository in ranking:
-        output = u'\n%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
+        output = u'%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
         print output.encode('utf-8')
 
 if __name__ == "__main__":
