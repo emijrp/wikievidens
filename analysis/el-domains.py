@@ -26,6 +26,7 @@ import sys
   Llevan a portada http://www.europeana.eu/ark:/12148/bpt6k109477z
                    http://www.europeana.eu/ark:/12148/bpt6k1096855.r=
   han expirado http://www.bibliotecavirtualdeandalucia.es/catalogo/consulta/resultados_busqueda.cmd?id=1691&posicion=7&forma=ficha
+  a veces sin le das a F5 el error de sesión desaparece
 """
 
 repositories = {
@@ -34,6 +35,24 @@ repositories = {
     u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)(https?://bibliotecadigital\.carm\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"BV Andalucía": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualdeandalucia\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"BD Cataluña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ateneodemadrid\.com/biblioteca_digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Valenciana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bv2\.gva\.es\.com/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Navarra Digital": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?administracionelectronica\.navarra\.es/binadi/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?liburuklik\.euskadi\.net/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"ARCA. Revistas Catalanas": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat/digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Jardín Botánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibdigital\.rjb\.csic\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?csbg\.org/bibliotecadixital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual Miguel de Cervantes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cervantesvirtual\.com/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Digital Complutense": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?alfama\.sim\.ucm\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Memoria Digital Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.cbuc\.cat/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Colecciones digitales Univ. Barcelona": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bib\.ub\.edu/recursos-informacio/colleccions/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Memoria de Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriademadrid\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Somin UV": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roderic\.uv\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"CERES": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Portal teatro Silgo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Pares. Portal Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s]+(?:nid|txt_id_desc_ud)\=[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
 }
 for repository, props in repositories.items():
@@ -103,8 +122,8 @@ def main():
             title = re.findall(title_r, l)[0]
             text = ""
             c += 1
-            if c > 100000:
-                break
+            #if c > 100000:
+            #    break
         elif re.findall(text_start_r, l): #gets text start
             if re.findall(text_end_r, l):
                 text = l.split('<text xml:space="preserve">')[1].split("</text>")[0]
