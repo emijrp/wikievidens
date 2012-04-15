@@ -29,12 +29,12 @@ import sys
 """
 
 repositories = {
-    u"Europeana": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s]+/record/[^\|\]\s]*?(?:[\|\]\s])" }, 
-    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)https?://prensahistorica\.mcu\.es[^\|\]\s]*?(?:[\|\]\s])" }, 
-    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)https?://bibliotecadigital\.carm\.es[^\|\]\s]*?(?:[\|\]\s])" }, 
-    u"BV Andalucía": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?bibliotecavirtualdeandalucia\.es[^\|\]\s]*?(?:[\|\]\s])" }, 
-    u"BD Cataluña": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s]*?(?:[\|\]\s])" }, 
-    u"Pares. Portal Archivos": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s]+(?:nid|txt_id_desc_ud)\=[^\|\]\s]*?(?:[\|\]\s])" }, 
+    u"Europeana": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s]+/record/[^\|\]\s\<]*?(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)https?://prensahistorica\.mcu\.es[^\|\]\s\<]*?(?:[\|\]\s\<])" }, 
+    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)https?://bibliotecadigital\.carm\.es[^\|\]\s\<]*?(?:[\|\]\s\<])" }, 
+    u"BV Andalucía": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?bibliotecavirtualdeandalucia\.es[^\|\]\s\<]*?(?:[\|\]\s\<])" }, 
+    u"BD Cataluña": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?(?:[\|\]\s\<])" }, 
+    u"Pares. Portal Archivos": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s]+(?:nid|txt_id_desc_ud)\=[^\|\]\s\<]*?(?:[\|\]\s\<])" }, 
 }
 for repository, props in repositories.items():
     repositories[repository]['compiled'] = re.compile(props['regexp'])
