@@ -73,7 +73,7 @@ def main():
                     for regexp, compiled in domains.items():
                         sumsearch2 = len(re.findall(compiled, text))
                         if sumsearch2:
-                            print '    %s | <ref> (%d), == EE/Biblio == (%d)' % (regexp, sum([len(re.findall(compiled, ref)) for ref in re.findall(ref_r, text)]), len(re.findall(compiled, getEEBiblio(text)))) 
+                            print '         %s | <ref> (%d), == EE/Biblio == (%d)' % (regexp, sum([len(re.findall(compiled, ref)) for ref in re.findall(ref_r, text)]), len(re.findall(compiled, getEEBiblio(text)))) 
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
