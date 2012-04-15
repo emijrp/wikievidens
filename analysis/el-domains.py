@@ -96,15 +96,15 @@ def main():
     for l in f:
         if re.findall(title_r, l): #get title
             if title: #print previous page
-                text = convert(text)
+                text = convert(unicode(text, 'utf-8'))
                 #print text
                 search = [len(re.findall(props['compiled'], text)) for repository, props in repositories.items()]
                 sumsearch = sum(search)
                 if sumsearch > 0:
                     #print text
                     print '-'*72
-                    print '%07d) %s [%d bytes] http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
-                    print '         Categories: %s' % (' | '.join(re.findall(ur"(?im)\[\[\s*(?:Category|Categoría)\s*:\s*([^\|\n\]]+)\s*[\|\]]", text)))
+                    print '%07d) [[%s]] (%d bytes) http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
+                    print '         Categories: %s' % (' | '.join(re.findall(ur"(?im)\[\[\s*(?:Category|Categoría)\s*:\s*([^\|\]]+)\s*[\|\]]", text)))
                     print '         [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
                     for repository, props in repositories.items():
                         sumsearch2 = len(re.findall(props['compiled'], text))
