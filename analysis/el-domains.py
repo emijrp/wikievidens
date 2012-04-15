@@ -67,12 +67,13 @@ def main():
                 sumsearch = sum(search)
                 if sumsearch > 0:
                     #print text
-                    print '-'*50
-                    print '%d) %s [%d bytes] [%d URLs matched / %d URLs in this page] http://es.wikipedia.org/wiki/%s' % (c, title, len(text), sumsearch, len(re.findall(http_r, text)), re.sub(' ', '_', title))
+                    print '-'*72
+                    print '%d) %s [%d bytes] http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
+                    print '    [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
                     for regexp, compiled in domains.items():
                         sumsearch2 = len(re.findall(compiled, text))
                         if sumsearch2:
-                            print '        %s | <ref> (%d), == EE/Biblio == (%d)' % (regexp, sum([len(re.findall(compiled, ref)) for ref in re.findall(ref_r, text)]), len(re.findall(compiled, getEEBiblio(text)))) 
+                            print '    %s | <ref> (%d), == EE/Biblio == (%d)' % (regexp, sum([len(re.findall(compiled, ref)) for ref in re.findall(ref_r, text)]), len(re.findall(compiled, getEEBiblio(text)))) 
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
