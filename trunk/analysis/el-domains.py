@@ -96,16 +96,18 @@ def main():
     for l in f:
         if re.findall(title_r, l): #get title
             if title: #print previous page
+                title = unicode(title, 'utf-8')
                 text = convert(unicode(text, 'utf-8'))
                 #print text
                 search = [len(re.findall(props['compiled'], text)) for repository, props in repositories.items()]
                 sumsearch = sum(search)
                 if sumsearch > 0:
                     #print text
-                    print '-'*72
-                    print '%07d) [[%s]] (%d bytes) http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
-                    print '         Categories: %s' % (' | '.join(re.findall(ur"(?im)\[\[\s*(?:Category|Categoría)\s*:\s*([^\|\]]+)\s*[\|\]]", text)))
-                    print '         [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
+                    output  = u'-'*72
+                    output += u'\n%07d) [[%s]] (%d bytes) http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
+                    output += u'\n         Categories: %s' % (' | '.join(re.findall(ur"(?im)\[\[\s*(?:Category|Categoría)\s*:\s*([^\|\]]+)\s*[\|\]]", text)))
+                    output += u'\n         [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
+                    print output.encode('utf-8')
                     for repository, props in repositories.items():
                         sumsearch2 = len(re.findall(props['compiled'], text))
                         if sumsearch2 > 0:
@@ -116,13 +118,14 @@ def main():
                             inrefs = sum([len(re.findall(props['compiled'], ref)) for ref in re.findall(ref_r, text)])
                             inee = len(re.findall(props['compiled'], getEEBiblio(text)))
                             other = sumsearch2 - (inrefs + inee)
-                            print '         %s: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (repository, inrefs, inee, other)
-                            print '             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
+                            output  = u'\n         %s: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (repository, inrefs, inee, other)
+                            output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
+                            print output.encode('utf-8')
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
             c += 1
-            #if c > 100000:
+            #if c > 10000:
             #    break
         elif re.findall(text_start_r, l): #gets text start
             if re.findall(text_end_r, l):
@@ -139,11 +142,12 @@ def main():
 
     f.close()
     
-    print '== Ranking =='
+    print u'\n== Ranking =='.encode('utf-8')
     ranking = [[props['totallinks'], props['totalarticles'], repository] for repository, props in repositories.items()]
     ranking.sort(reverse=True)
     for totallinks, totalarticles, repository in ranking:
-        print '%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
+        output = u'\n%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
+        print output.encode('utf-8')
 
 if __name__ == "__main__":
     main()
