@@ -68,8 +68,8 @@ def main():
                 if sumsearch > 0:
                     #print text
                     print '-'*72
-                    print '%d) %s [%d bytes] http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
-                    print '    [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
+                    print '%07d) %s [%d bytes] http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
+                    print '         [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
                     for regexp, compiled in domains.items():
                         sumsearch2 = len(re.findall(compiled, text))
                         if sumsearch2:
