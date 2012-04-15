@@ -29,17 +29,17 @@ import sys
 """
 
 repositories = {
-    u"Europeana": { 'regexp': ur"(?im)https?://([^/\s]+\.)?europeana\.eu/[^\|\]\s]+/record/" }, 
-    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)https?://prensahistorica\.mcu\.es" }, 
-    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)https?://bibliotecadigital\.carm\.es" }, 
-    u"BV Andalucía": { 'regexp': ur"(?im)https?://([^/\s]+\.)?bibliotecavirtualdeandalucia\.es" }, 
-    u"BD Cataluña": { 'regexp': ur"(?im)https?://([^/\s]+\.)?bnc\.cat" }, 
-    u"Pares. Portal Archivos": { 'regexp': ur"(?im)https?://([^/\s]+\.)?pares\.mcu\.es[^\|\]\s]+(nid|txt_id_desc_ud)\=" }, 
+    u"Europeana": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s]+/record/[^\|\]\s]*?[\|\]\s]" }, 
+    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)https?://prensahistorica\.mcu\.es[^\|\]\s]*?[\|\]\s]" }, 
+    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)https?://bibliotecadigital\.carm\.es[^\|\]\s]*?[\|\]\s]" }, 
+    u"BV Andalucía": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?bibliotecavirtualdeandalucia\.es[^\|\]\s]*?[\|\]\s]" }, 
+    u"BD Cataluña": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s]*?[\|\]\s]" }, 
+    u"Pares. Portal Archivos": { 'regexp': ur"(?im)https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s]+(?:nid|txt_id_desc_ud)\=[^\|\]\s]*?[\|\]\s]" }, 
 }
-for k, v in repositories.items():
-    repositories[k]['compiled'] = re.compile(k)
-    repositories[k]['totallinks'] = 0
-    repositories[k]['totalarticles'] = 0
+for repository, props in repositories.items():
+    repositories[repository]['compiled'] = re.compile(props['regexp'])
+    repositories[repository]['totallinks'] = 0
+    repositories[repository]['totalarticles'] = 0
 
 ee_r = re.compile(ur"(?im)(Enlaces?\s*externos?|Bibliograf[íi]a)")
 
@@ -98,6 +98,7 @@ def main():
                             inee = len(re.findall(props['compiled'], getEEBiblio(text)))
                             other = sumsearch2 - (inrefs + inee)
                             print '         %s: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (repository, inrefs, inee, other)
+                            print '             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
