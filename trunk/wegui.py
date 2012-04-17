@@ -61,7 +61,7 @@ wikifarms = {
 }
 
 NAME = 'WikiEvidens'
-VERSION = '0.0.8'
+VERSION = '0.0.9'
 HOMEPAGE = 'http://code.google.com/p/wikievidens/'
 LINUX = platform.system().lower() == 'linux'
 PATH = os.path.dirname(__file__)
@@ -184,6 +184,8 @@ class WikiEvidens:
         self.notebook.add(self.frameanalysis, text='(3) Analysis')
         self.frameexport = ttk.Frame(self.master)
         self.notebook.add(self.frameexport, text='(4) Export')
+        self.frameother = ttk.Frame(self.master) #el crawler que detecta errores404, stats.grok.se, etc
+        self.notebook.add(self.frameother, text='Other')
         #end main tabs
         
         #start download tabs

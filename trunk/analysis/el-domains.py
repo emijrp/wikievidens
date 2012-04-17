@@ -80,9 +80,7 @@ def getEEBiblio(text):
         c += 1
     return ee    
 
-def main():
-    #todo: filtrar namespaces
-    
+def main():    
     title_r = re.compile(ur"<title>([^<]+)</title>")
     text_start_r = re.compile(ur"<text xml:space=\"preserve\">")
     text_end_r = re.compile(ur"</text>")
@@ -97,30 +95,42 @@ def main():
         if re.findall(title_r, l): #get title
             if title: #print previous page
                 title = unicode(title, 'utf-8')
-                text = convert(unicode(text, 'utf-8'))
-                #print text
-                search = [len(re.findall(props['compiled'], text)) for repository, props in repositories.items()]
-                sumsearch = sum(search)
-                if sumsearch > 0:
+                #skip other namespaces
+                if title.startswith(u'Categoría:') or \
+                   title.startswith(u'Plantilla:') or \
+                   title.startswith(u'Wikipedia:') or \
+                   title.startswith(u'Portal:') or \
+                   title.startswith(u'Wikiproyecto:') or \
+                   title.startswith(u'MediaWiki:') or \
+                   title.startswith(u'WP:') or \
+                   title.startswith(u'PR:') or \
+                   title.startswith(u'Ayuda:'):
+                    pass
+                else:
+                    text = convert(unicode(text, 'utf-8'))
                     #print text
-                    output  = u'-'*72
-                    output += u'\n%07d) [[%s]] (%d bytes) http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
-                    output += u'\n         Categories: %s' % (' | '.join(re.findall(ur"(?im)\[\[\s*(?:Category|Categoría)\s*:\s*([^\|\]]+)\s*[\|\]]", text)))
-                    output += u'\n         [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
-                    print output.encode('utf-8')
-                    for repository, props in repositories.items():
-                        sumsearch2 = len(re.findall(props['compiled'], text))
-                        if sumsearch2 > 0:
-                            #updating stats for this repository
-                            repositories[repository]['totallinks'] += sumsearch2
-                            repositories[repository]['totalarticles'] += 1
-                            #details
-                            inrefs = sum([len(re.findall(props['compiled'], ref)) for ref in re.findall(ref_r, text)])
-                            inee = len(re.findall(props['compiled'], getEEBiblio(text)))
-                            other = sumsearch2 - (inrefs + inee)
-                            output  = u'\n         %s: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (repository, inrefs, inee, other)
-                            output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
-                            print output.encode('utf-8')
+                    search = [len(re.findall(props['compiled'], text)) for repository, props in repositories.items()]
+                    sumsearch = sum(search)
+                    if sumsearch > 0:
+                        #print text
+                        output  = u'-'*72
+                        output += u'\n%07d) [[%s]] (%d bytes) http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
+                        output += u'\n         Categories: %s' % (' | '.join(re.findall(ur"(?im)\[\[\s*(?:Category|Categoría)\s*:\s*([^\|\]]+)\s*[\|\]]", text)))
+                        output += u'\n         [%d URLs matched / %d URLs in this page]' % (sumsearch, len(re.findall(http_r, text)))
+                        print output.encode('utf-8')
+                        for repository, props in repositories.items():
+                            sumsearch2 = len(re.findall(props['compiled'], text))
+                            if sumsearch2 > 0:
+                                #updating stats for this repository
+                                repositories[repository]['totallinks'] += sumsearch2
+                                repositories[repository]['totalarticles'] += 1
+                                #details
+                                inrefs = sum([len(re.findall(props['compiled'], ref)) for ref in re.findall(ref_r, text)])
+                                inee = len(re.findall(props['compiled'], getEEBiblio(text)))
+                                other = sumsearch2 - (inrefs + inee)
+                                output  = u'\n         %s: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (repository, inrefs, inee, other)
+                                output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
+                                print output.encode('utf-8')
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
