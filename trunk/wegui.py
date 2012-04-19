@@ -184,7 +184,7 @@ class WikiEvidens:
         self.notebook.add(self.frameanalysis, text='(3) Analysis')
         self.frameexport = ttk.Frame(self.master)
         self.notebook.add(self.frameexport, text='(4) Export')
-        self.frameother = ttk.Frame(self.master) #el crawler que detecta errores404, stats.grok.se, etc
+        self.frameother = ttk.Frame(self.master) #el crawler que detecta errores404, stats.grok.se, dbpedia, article feed back tool dumps, fundraising data, etc
         self.notebook.add(self.frameother, text='Other')
         #end main tabs
         
