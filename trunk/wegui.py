@@ -61,7 +61,7 @@ wikifarms = {
 }
 
 NAME = 'WikiEvidens'
-VERSION = '0.0.9'
+VERSION = '0.1.0'
 HOMEPAGE = 'http://code.google.com/p/wikievidens/'
 LINUX = platform.system().lower() == 'linux'
 PATH = os.path.dirname(__file__)
@@ -87,7 +87,6 @@ if PATH: os.chdir(PATH)
 # capturar parámetros por si se quiere ejecutar sin gui desde consola: wegui.py --module=summary invalida la gui y muestra los datos por consola
 # cargar los proyectos de wikimedia y wikia (almacenar en una tabla en un sqlite propia? y actualizar cada poco?) http://download.wikimedia.org/backup-index.html http://community.wikia.com/wiki/Hub:Big_wikis http://community.wikia.com/index.php?title=Special:Newwikis&dir=prev&limit=500&showall=0 http://www.mediawiki.org/wiki/Sites_using_MediaWiki
 # Citizendium (interesantes gráficas http://en.citizendium.org/wiki/CZ:Statistics) no publican el historial completo, solo el current http://en.citizendium.org/wiki/CZ:Downloads
-# permitir descargar solo el historial de una página (special:Export tiene la pega de que solo muestra las últimas 1000 ediciones), con la Api te traes todo en bloques de 500 pero hay que hacer una función que llame a la API (en vez de utilizar pywikipediabot para no añadir una dependencia más)
 # hay otros dumps a parte de los 7z que tienen información útil, por ejemplo los images.sql con metadatos de las fotos, aunque solo los publica wikipedia
 # usar getopt para capturar parámetros desde consola
 # i18n http://www.learningpython.com/2006/12/03/translating-your-pythonpygtk-application/
