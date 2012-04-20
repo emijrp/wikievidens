@@ -325,13 +325,13 @@ class WikiEvidens:
         self.framedownloadspecialexportcheck1var = IntVar()
         self.framedownloadspecialexportcheck1 = Checkbutton(self.framedownloadspecialexport, text='Include only the current revision', variable=self.framedownloadspecialexportcheck1var)
         self.framedownloadspecialexportcheck1.grid(row=5, column=0, columnspan=2, sticky=W)
-        self.framedownloadspecialexportcheck2var = IntVar()
-        self.framedownloadspecialexportcheck2 = Checkbutton(self.framedownloadspecialexport, text='Include templates', variable=self.framedownloadspecialexportcheck2var)
-        self.framedownloadspecialexportcheck2.grid(row=6, column=0, sticky=W)
+        #self.framedownloadspecialexportcheck2var = IntVar() #fix, it fails, when including templates, the .xml doesn't ends in </mediawiki>
+        #self.framedownloadspecialexportcheck2 = Checkbutton(self.framedownloadspecialexport, text='Include templates', variable=self.framedownloadspecialexportcheck2var)
+        #self.framedownloadspecialexportcheck2.grid(row=6, column=0, sticky=W)
         self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Clear", command=lambda: self.framedownloadspecialexporttext.delete(0.0, END), width=15)
-        self.framedownloadspecialexportbutton1.grid(row=5, column=1, columnspan=2, sticky=E)
+        self.framedownloadspecialexportbutton1.grid(row=6, column=1, columnspan=2, sticky=E)
         self.framedownloadspecialexportbutton2 = Button(self.framedownloadspecialexport, text="Download", command=lambda: thread.start_new_thread(self.downloadSpecialExport, ()), width=15)
-        self.framedownloadspecialexportbutton2.grid(row=6, column=1, columnspan=2, sticky=E)
+        self.framedownloadspecialexportbutton2.grid(row=5, column=1, columnspan=2, sticky=E)
         #end download special:export tab
         
         #start download dumpgenerator tab
@@ -490,7 +490,12 @@ class WikiEvidens:
             self.block = True
         
         #fix lo suyo es pedir el Special:Export en el Entry, pero luego nos hace falta el index.php o la api.php ...
-        config = { 'curonly': 0, 'api': '', 'index': self.framedownloadspecialexportentry1var.get()}
+        config = {
+            'curonly': self.framedownloadspecialexportcheck1var.get(),
+            #'templates': self.framedownloadspecialexportcheck2var.get(),
+            'api': '', 
+            'index': self.framedownloadspecialexportentry1var.get(),
+        }
         titles = re.sub(ur'\n\n+', ur'\n', self.framedownloadspecialexporttext.get(1.0, END)).strip().splitlines()
         if not titles:
             self.msg(msg='You have to add one page title at least.', level='error')
