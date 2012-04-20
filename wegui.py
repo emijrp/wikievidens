@@ -322,8 +322,10 @@ class WikiEvidens:
         self.framedownloadspecialexporttext.insert(INSERT, '')
         self.framedownloadspecialexporttext.config(state=NORMAL)
         self.framedownloadspecialexporttext.grid(row=4, column=0, columnspan=2, sticky=W+E)
-        self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Download", command=lambda: thread.start_new_thread(self.downloadSpecialExport, ()), width=15)
-        self.framedownloadspecialexportbutton1.grid(row=5, column=1, columnspan=2, sticky=E)
+        self.framedownloadspecialexportbutton1 = Button(self.framedownloadspecialexport, text="Clear", command=lambda: self.callback, width=15)
+        self.framedownloadspecialexportbutton1.grid(row=5, column=0, sticky=W)
+        self.framedownloadspecialexportbutton2 = Button(self.framedownloadspecialexport, text="Download", command=lambda: thread.start_new_thread(self.downloadSpecialExport, ()), width=15)
+        self.framedownloadspecialexportbutton2.grid(row=5, column=1, columnspan=2, sticky=E)
         #end download special:export tab
         
         #start download dumpgenerator tab
