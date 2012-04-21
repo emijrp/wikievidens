@@ -149,14 +149,20 @@ def main():
                 title = unicode(title, 'utf-8')
                 #skip other namespaces
                 if title.startswith(u'Categoría:') or \
+                   title.startswith(u'Categoria:') or \
                    title.startswith(u'Plantilla:') or \
+                   title.startswith(u'Archivo:') or \
+                   title.startswith(u'Fitxer:') or \
                    title.startswith(u'Wikipedia:') or \
+                   title.startswith(u'Viquipèdia:') or \
                    title.startswith(u'Portal:') or \
                    title.startswith(u'Wikiproyecto:') or \
+                   title.startswith(u'Viquiprojecte:') or \
                    title.startswith(u'MediaWiki:') or \
                    title.startswith(u'WP:') or \
                    title.startswith(u'PR:') or \
-                   title.startswith(u'Ayuda:'):
+                   title.startswith(u'Ayuda:') or \
+                   title.startswith(u'Ajuda:'):
                     pass
                 else:
                     text = convert(unicode(text, 'utf-8'))
