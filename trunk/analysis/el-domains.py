@@ -30,30 +30,53 @@ import sys
 """
 
 repositories = {
-    u"Europeana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s]+/record/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)(https?://prensahistorica\.mcu\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)(https?://bibliotecadigital\.carm\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    #EU
+    u"Europeana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s\<]+/record/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Portal Europeo de Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?archivesportaleurope\.eu[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"The European Library": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?theeuropeanlibrary\.org[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    
+    #ES
+    u"Biblioteca Digital Hispánica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bdh\.bne\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?prensahistorica\.mcu\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"CERES": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Pares. Portal Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s\<]+(?:nid|txt_id_desc_ud)\=[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
+    u"Fototeca Patrimonio Histórico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:mcu\.es/fototeca_patrimonio/|ipce\.mcu\.es/documentacion/fototeca/)[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
+    u"Recolector Hispana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roai\.mcu\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
+    
+    #REG
+    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.carm\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
     u"BV Andalucía": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualdeandalucia\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.aragon\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Fondo Histórico Cortes de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cortesaragon\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Digital de Castilla y León": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.jcyl\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Archivo de la imagen de Castilla-La Mancha": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?clip\.jccm\.es/archivo_de_la_imagen[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Digital de Castilla-La Mancha": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?clip\.jccm\.es/bidicam/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Digital de la Comunidad Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualmadrid\.org[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Memoria Digital Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.cbuc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"ARCA Arxiu de Revistes Catalanes Antigues": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc2\.cbuc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Valenciana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bv2\.gva\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BINADI Biblioteca Digital de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?administracionelectronica\.navarra\.es/binadi/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?liburuklik\.euskadi\.net[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Memoria Digital Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriadigitalvasca\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?csbg\.org/bibliotecadixital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Proyecto Carmesí Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?regmurcia\.com/[^\|\]\s\<]+&sit\=c,373[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    
+    
     u"BD Cataluña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"BD Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ateneodemadrid\.com/biblioteca_digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"BD Valenciana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bv2\.gva\.es\.com/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Biblioteca Navarra Digital": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?administracionelectronica\.navarra\.es/binadi/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"BD Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?liburuklik\.euskadi\.net/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"ARCA. Revistas Catalanas": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat/digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"BD Jardín Botánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibdigital\.rjb\.csic\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"BD Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?csbg\.org/bibliotecadixital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Biblioteca Virtual Miguel de Cervantes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cervantesvirtual\.com/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Biblioteca Digital Complutense": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?alfama\.sim\.ucm\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Memoria Digital Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.cbuc\.cat/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Colecciones digitales Univ. Barcelona": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bib\.ub\.edu/recursos-informacio/colleccions/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Memoria de Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriademadrid\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Somin UV": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roderic\.uv\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"CERES": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Portal teatro Silgo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Pares. Portal Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s]+(?:nid|txt_id_desc_ud)\=[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Portal teatro Siglo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+     
 }
 for repository, props in repositories.items():
     repositories[repository]['compiled'] = re.compile(props['regexp'])
