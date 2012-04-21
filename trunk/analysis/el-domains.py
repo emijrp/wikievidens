@@ -100,11 +100,13 @@ repositories = {
     u"Hemeroteca La Vanguardia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.lavanguardia\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
     u"LOC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?loc\.gov[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
     
-    """
-    qué ha pasado con estas? las eliminó Tomás de la tabla?
-    u"BD Cataluña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"ARCA. Revistas Catalanas": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat/digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, """
 }
+
+"""
+qué ha pasado con estas? las eliminó Tomás de la tabla?
+u"BD Cataluña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+u"ARCA. Revistas Catalanas": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat/digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, """
+    
 for repository, props in repositories.items():
     repositories[repository]['compiled'] = re.compile(props['regexp'])
     repositories[repository]['totallinks'] = 0
