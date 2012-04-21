@@ -140,6 +140,8 @@ def main():
     http_r = re.compile(ur"(?im)https?://")
     f = bz2.BZ2File(sys.argv[1], 'r')
     c = 0
+    cpageswithlinks = 0
+    clinks = 0
     title = ""
     text = ""
     text_lock = False
@@ -170,6 +172,8 @@ def main():
                     search = [len(re.findall(props['compiled'], text)) for repository, props in repositories.items()]
                     sumsearch = sum(search)
                     if sumsearch > 0:
+                        cpageswithlinks += 1
+                        clinks += sumsearch
                         #print text
                         output  = u'-'*72
                         output += u'\n%07d) [[%s]] (%d bytes) http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
@@ -189,12 +193,12 @@ def main():
                                 output  = u'\n         %s: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (repository, inrefs, inee, other)
                                 output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
                                 print output.encode('utf-8')
+                    c += 1
+                    #if c >= 100:
+                    #    break
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
-            c += 1
-            #if c > 1000:
-            #    break
         elif re.findall(text_start_r, l): #gets text start
             if re.findall(text_end_r, l):
                 text = l.split('<text xml:space="preserve">')[1].split("</text>")[0]
@@ -210,12 +214,13 @@ def main():
 
     f.close()
     
-    print u'\n== Ranking =='.encode('utf-8')
+    print u'\n== Ranking =='
     ranking = [[props['totallinks'], props['totalarticles'], repository] for repository, props in repositories.items()]
     ranking.sort(reverse=True)
     for totallinks, totalarticles, repository in ranking:
         output = u'%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
         print output.encode('utf-8')
+    print u"Total pages analysed: %d. Total pages with links: %d. Total links to repositories: %d" % (c, cpageswithlinks, clinks)
 
 if __name__ == "__main__":
     main()
