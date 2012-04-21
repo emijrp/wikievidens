@@ -62,21 +62,48 @@ repositories = {
     u"BD Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?csbg\.org/bibliotecadixital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     u"Proyecto Carmesí Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?regmurcia\.com/[^\|\]\s\<]+&sit\=c,373[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual de La Rioja": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.larioja\.org[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Arxiu Nacional Catalunya. ANC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cultura\.gencat\.net/anc/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
     
-    
-    u"BD Cataluña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"BD Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ateneodemadrid\.com/biblioteca_digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"ARCA. Revistas Catalanas": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat/digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"BD Jardín Botánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibdigital\.rjb\.csic\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Biblioteca Virtual Miguel de Cervantes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cervantesvirtual\.com/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Biblioteca Digital Complutense": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?alfama\.sim\.ucm\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Colecciones digitales Univ. Barcelona": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bib\.ub\.edu/recursos-informacio/colleccions/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    #LOC
+    u"Biblioteca Virtual Diputación de Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bivizar\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
+    u"Biblioteca Digital Ayuntamiento Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?murcia\.es/bibliotecadigitaldemurcia/[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
+    u"Biblioteca Digital Leonesa": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?saber\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
     u"Memoria de Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriademadrid\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Somin UV": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roderic\.uv\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-    u"Portal teatro Siglo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-     
+    u"Biblioteca Digital de Bizkaia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecaforal\.bizkaia\.net[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    
+    #UNI
+    u"Fondo Antiguo Universidad Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?zaguan\.unizar\.es/collection/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Digitum. Fondo Antiguo Universidad de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digitum\.um\.es/xmlui/handle/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Somin. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roderic\.uv\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Fondo Antiguo Universidad de Granada": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digibug\.ugr\.es/handle/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Colecciones patrimoniales Universidad Salamanca (Gredos)": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?gredos\.usal\.es/jspui/handle/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    
+    #INS
+    u"Biblioteca Virtual de Derecho Aragones": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?derechoaragones\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Portal teatro Siglo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual Miguel de Cervantes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cervantesvirtual\.com[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Colecciones digitales Univ. Barcelona": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bib\.ub\.edu/recursos-informacio/colleccions/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Digital Complutense": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?alfama\.sim\.ucm\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ateneodemadrid\.com/biblioteca_digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"BD Jardín Botánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibdigital\.rjb\.csic\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Archivo Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?archivo\.ateneodemadrid\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Biblioteca Virtual Larramendi": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?arramendi\.es/i18n/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Fondo fotográfico siglo XX Universidad de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?coleccionfff\.unav\.es/bvunav[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Cartoteca Digital i Col·leccions d'imatges del Institut Cartografic de Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cartotecadigital\.icc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Almirall, portal del pensamiento del Segle XIX": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?194\.224\.194\.201\:9080/Almirall/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Disposit Digital UAB": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ddd\.uab\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    
+    #TEST
+    u"Archivo ABC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.abc\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"Hemeroteca La Vanguardia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.lavanguardia\.es[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
+    u"LOC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?loc\.gov[^\|\]\s\<]*?)(?:[\|\]\s\<])" },
+    
+    """
+    qué ha pasado con estas? las eliminó Tomás de la tabla?
+    u"BD Cataluña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
+    u"ARCA. Revistas Catalanas": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat/digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, """
 }
 for repository, props in repositories.items():
     repositories[repository]['compiled'] = re.compile(props['regexp'])
