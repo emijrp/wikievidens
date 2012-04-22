@@ -145,6 +145,9 @@ def main():
     cpageswithrepolinks = 0
     clinks = 0
     crepolinks = 0
+    cinrefs = 0
+    cinee = 0
+    cother = 0
     title = ""
     text = ""
     text_lock = False
@@ -193,12 +196,15 @@ def main():
                                 inrefs = sum([len(re.findall(props['compiled'], ref)) for ref in re.findall(ref_r, text)])
                                 inee = len(re.findall(props['compiled'], getEEBiblio(text)))
                                 other = sumsearch2 - (inrefs + inee)
+                                cinrefs += inrefs
+                                cinee += inee
+                                cother += other
                                 output  = u'\n         %s: <ref> (%d), == EE/Biblio == (%d), Other (%d)' % (repository, inrefs, inee, other)
                                 output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
                                 print output.encode('utf-8')
                     c += 1
-                    #if c >= 100:
-                    #    break
+                    if c >= 1000:
+                        break
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
@@ -223,7 +229,7 @@ def main():
     for totallinks, totalarticles, repository in ranking:
         output = u'%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
         print output.encode('utf-8')
-    print u"Total articles analysed: %d. Total articles with links to repositories: %d (%.2f%%).\nTotal http(s) links: %d. Total http(s) links to repositories: %d (%.2f%%)" % (c, cpageswithrepolinks, cpageswithrepolinks/(c/100.0), clinks, crepolinks, crepolinks/(clinks/100.0))
+    print u"\nTotal articles analysed: %d. Total articles with links to repositories: %d (%.2f%%).\nTotal http(s) links: %d. Total http(s) links to repositories: %d (%.2f%%).\nRepository links by location: <ref> (%d, %.2f%%), == EE/Biblio == (%d, %.2f%%), Other (%d, %.2f%%)" % (c, cpageswithrepolinks, cpageswithrepolinks/(c/100.0), clinks, crepolinks, crepolinks/(clinks/100.0), cinrefs, cinrefs/((cinrefs+cinee+cother)/100.0), cinee, cinee/((cinrefs+cinee+cother)/100.0), cother, cother/((cinrefs+cinee+cother)/100.0))
 
 if __name__ == "__main__":
     main()
