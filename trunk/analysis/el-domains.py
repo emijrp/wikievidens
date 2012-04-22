@@ -114,6 +114,7 @@ for repository, props in repositories.items():
 
 ee_r = re.compile(ur"(?im)(Enlaces?\s*externos?|Bibliograf[íi]a|Enllaços\s*externs)")
 http_r = re.compile(ur"(?im)(https?://)")
+redirect_r = re.compile(ur"(?im)^(REDIRECT|REDIRECCI[ÓO]N)\s*\[\[")
 
 def convert(text):
     text = text.replace('&gt;', '>')
@@ -141,7 +142,7 @@ def main():
     http_r = re.compile(ur"(?im)https?://")
     f = bz2.BZ2File(sys.argv[1], 'r')
     c = 0
-    cpageswithlinks = 0
+    cpageswithrepolinks = 0
     clinks = 0
     crepolinks = 0
     title = ""
@@ -151,6 +152,7 @@ def main():
         if re.findall(title_r, l): #get title
             if title: #print previous page
                 title = unicode(title, 'utf-8')
+                text = convert(unicode(text, 'utf-8'))
                 #skip other namespaces
                 if title.startswith(u'Categoría:') or \
                    title.startswith(u'Categoria:') or \
@@ -168,14 +170,12 @@ def main():
                    title.startswith(u'Ayuda:') or \
                    title.startswith(u'Ajuda:'):
                     pass
-                else:
-                    text = convert(unicode(text, 'utf-8'))
-                    #print text
+                elif not re.search(redirect_r, text): #no redirects
                     clinks += len(re.findall(http_r, text))
                     search = [len(re.findall(props['compiled'], text)) for repository, props in repositories.items()]
                     sumsearch = sum(search)
                     if sumsearch > 0:
-                        cpageswithlinks += 1
+                        cpageswithrepolinks += 1
                         crepolinks += sumsearch
                         #print text
                         output  = u'-'*72
@@ -197,7 +197,7 @@ def main():
                                 output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
                                 print output.encode('utf-8')
                     c += 1
-                    #if c >= 1000:
+                    #if c >= 100:
                     #    break
             #reset for the new page
             title = re.findall(title_r, l)[0]
@@ -223,7 +223,7 @@ def main():
     for totallinks, totalarticles, repository in ranking:
         output = u'%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
         print output.encode('utf-8')
-    print u"Total pages analysed: %d. Total pages with links: %d (%.2f%%). Total http(s) links: %d. Total http(s) links to repositories: %d (%.2f%%)" % (c, cpageswithlinks, cpageswithlinks/(c/100.0), clinks, crepolinks, crepolinks/(clinks/100.0))
+    print u"Total articles analysed: %d. Total articles with links to repositories: %d (%.2f%%).\nTotal http(s) links: %d. Total http(s) links to repositories: %d (%.2f%%)" % (c, cpageswithrepolinks, cpageswithrepolinks/(c/100.0), clinks, crepolinks, crepolinks/(clinks/100.0))
 
 if __name__ == "__main__":
     main()
