@@ -112,7 +112,8 @@ for repository, props in repositories.items():
     repositories[repository]['totallinks'] = 0
     repositories[repository]['totalarticles'] = 0
 
-ee_r = re.compile(ur"(?im)(Enlaces?\s*externos?|Bibliograf[íi]a)")
+ee_r = re.compile(ur"(?im)(Enlaces?\s*externos?|Bibliograf[íi]a|Enllaços\s*externs)")
+http_r = re.compile(ur"(?im)(https?://)")
 
 def convert(text):
     text = text.replace('&gt;', '>')
@@ -142,6 +143,7 @@ def main():
     c = 0
     cpageswithlinks = 0
     clinks = 0
+    crepolinks = 0
     title = ""
     text = ""
     text_lock = False
@@ -169,11 +171,12 @@ def main():
                 else:
                     text = convert(unicode(text, 'utf-8'))
                     #print text
+                    clinks += len(re.findall(http_r, text))
                     search = [len(re.findall(props['compiled'], text)) for repository, props in repositories.items()]
                     sumsearch = sum(search)
                     if sumsearch > 0:
                         cpageswithlinks += 1
-                        clinks += sumsearch
+                        crepolinks += sumsearch
                         #print text
                         output  = u'-'*72
                         output += u'\n%07d) [[%s]] (%d bytes) http://es.wikipedia.org/wiki/%s' % (c, title, len(text), re.sub(' ', '_', title))
@@ -194,8 +197,8 @@ def main():
                                 output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
                                 print output.encode('utf-8')
                     c += 1
-                    #if c >= 100:
-                    #    break
+                    if c >= 1000:
+                        break
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
@@ -220,7 +223,7 @@ def main():
     for totallinks, totalarticles, repository in ranking:
         output = u'%s [%d links in %d articles]' % (repository, totallinks, totalarticles)
         print output.encode('utf-8')
-    print u"Total pages analysed: %d. Total pages with links: %d. Total links to repositories: %d" % (c, cpageswithlinks, clinks)
+    print u"Total pages analysed: %d. Total pages with links: %d (%.2f%%). Total http(s) links: %d. Total http(s) links to repositories: %d (%.2f%%)" % (c, cpageswithlinks, cpageswithlinks/(c/100.0), clinks, crepolinks, crepolinks/(clinks/100.0))
 
 if __name__ == "__main__":
     main()
