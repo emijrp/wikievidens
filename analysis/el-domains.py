@@ -203,8 +203,8 @@ def main():
                                 output += u'\n             %s' % ('\n             '.join(re.findall(props['compiled'], text)))
                                 print output.encode('utf-8')
                     c += 1
-                    if c >= 1000:
-                        break
+                    #if c >= 1000:
+                    #    break
             #reset for the new page
             title = re.findall(title_r, l)[0]
             text = ""
