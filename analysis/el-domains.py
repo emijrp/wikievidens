@@ -102,11 +102,6 @@ repositories = {
     
 }
 
-"""
-qué ha pasado con estas? las eliminó Tomás de la tabla?
-u"BD Cataluña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, 
-u"ARCA. Revistas Catalanas": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bnc\.cat/digital/[^\|\]\s\<]*?)(?:[\|\]\s\<])" }, """
-    
 for repository, props in repositories.items():
     repositories[repository]['compiled'] = re.compile(props['regexp'])
     repositories[repository]['totallinks'] = 0
@@ -129,10 +124,9 @@ def getEEBiblio(text):
     c = 0
     while c < len(splits)-1:
         if re.search(ee_r, splits[c]):
-            ee = splits[c+1]
-            break
+            ee += splits[c+1] # += merge biblio and EE if both are available
         c += 1
-    return ee    
+    return ee
 
 def main():    
     title_r = re.compile(ur"<title>([^<]+)</title>")
