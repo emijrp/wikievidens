@@ -114,7 +114,7 @@ for repository, props in repositories.items():
 
 ee_r = re.compile(ur"(?im)(Enlaces?\s*externos?|Bibliograf[íi]a|Enllaços\s*externs)")
 http_r = re.compile(ur"(?im)(https?://)")
-redirect_r = re.compile(ur"(?im)^(REDIRECT|REDIRECCI[ÓO]N)\s*\[\[")
+redirect_r = re.compile(ur"(?im)^\s*#\s*(REDIRECT|REDIRECCI[ÓO]N)\s*\[\[")
 
 def convert(text):
     text = text.replace('&gt;', '>')
