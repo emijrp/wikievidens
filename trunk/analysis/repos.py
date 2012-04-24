@@ -28,7 +28,7 @@ repositories = {
     u"The European Library": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?theeuropeanlibrary\.org)" }, 
     
     #ES
-    u"Biblioteca Digital Hispánica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bdh\.bne\.es)" }, 
+    u"Biblioteca Digital Hispánica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:bdh|hemerotecadigital)\.bne\.es)" }, 
     u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?prensahistorica\.mcu\.es)" }, 
     u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es)" }, 
     u"CERES": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es)" }, 
@@ -56,6 +56,7 @@ repositories = {
     u"Proyecto Carmesí Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?regmurcia\.com/[^\|\]\s\<]+&sit\=c,373)" }, 
     u"Biblioteca Virtual de La Rioja": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.larioja\.org)" }, 
     u"Arxiu Nacional Catalunya. ANC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cultura\.gencat\.net/anc/)" }, 
+    u"Biblioteca Virtual de Asturias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.asturias\.es)" }, 
     
     #LOC
     u"Biblioteca Virtual Diputación de Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bivizar\.es)" },
