@@ -93,6 +93,9 @@ repositories = {
     u"Ruidera. UCLM": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:ruidera\.uclm\.es|hdl\.handle\.net/10578/))" }, 
     u"UvaDoc. Universidad de Valladolid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?uvadoc\.uva\.es)" }, 
     u"Arias Montano: Repositorio Institucional de la Universidad de Huelva": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:rabida\.uhu\.es/dspace/|hdl\.handle\.net/10272/))" }, 
+    u"CEU Repositorio Institucional": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.ceu\.es|hdl\.handle\.net/10637/))" }, 
+    u"Flons So Torres. Universitat Lérida": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:soltorres\.udl\.cat|hdl\.handle\.net/10459/))" }, 
+    u"Biblioteca Digital Universidad de Oviedo": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digibuo\.sheol\.uniovi\.es)" }, 
     
     
     
