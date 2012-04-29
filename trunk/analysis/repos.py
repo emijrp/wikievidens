@@ -51,18 +51,20 @@ repositories = {
     u"BINADI. Biblioteca Digital de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:administracionelectronica\.navarra\.es/binadi/|navarra\.es/appsext/bnd/))" }, 
     u"Biblioteca Digital Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?liburuklik\.euskadi\.net)" }, 
     u"Memoria Digital Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriadigitalvasca\.es)" }, 
-    u"BD Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?csbg\.org/bibliotecadixital/)" }, 
-    u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es/)" }, 
+    u"Galiciana. Biblioteca Digital de Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?galiciana\.bibliotecadegalicia\.xunta\.es)" }, 
+    u"Biblioteca Dixital de Galicia (Cidade de Cultura Galega)": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:csbg\.org/bibliotecadixital/|csbg\.org/prensagalega|cmg\.xunta\.es/visor/prensa/|cmg\.xunta\.es/mediateca/hemeroteca/|bvg\.centromultimedia\.net|cmg\.xunta\.es/mediateca/cartografia/))" }, 
+    u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es)" }, 
     u"Proyecto Carmesí Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?regmurcia\.com/[^\|\]\s\<]+&sit\=c,373)" }, 
-    u"Biblioteca Virtual de La Rioja": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.larioja\.org)" }, 
-    u"Arxiu Nacional Catalunya. ANC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cultura\.gencat\.net/anc/)" }, 
     u"Biblioteca Virtual de Asturias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.asturias\.es)" }, 
+    u"Biblioteca Virtual de La Rioja": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.larioja\.org)" }, 
+    u"ANC. Arxiu Nacional Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cultura\.gencat\.net/anc/)" }, 
+    u"Documentos y Archivos de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?sipca\.es/dara/)" }, 
     
     #LOC
     u"Biblioteca Virtual Diputación de Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bivizar\.es)" },
     u"Biblioteca Digital Ayuntamiento Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?murcia\.es/bibliotecadigitaldemurcia/)" },
     u"Biblioteca Digital Leonesa": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?saber\.es)" },
-    u"Memoria de Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriademadrid\.es/)" }, 
+    u"Memoria de Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriademadrid\.es)" }, 
     u"Biblioteca Digital de Bizkaia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecaforal\.bizkaia\.net)" }, 
     
     #UNI
