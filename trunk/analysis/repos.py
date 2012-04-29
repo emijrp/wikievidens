@@ -73,7 +73,14 @@ repositories = {
     u"Somni. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:roderic\.uv\.es|hdl\.handle\.net/10550/)" }, 
     u"Fondo Antiguo Universidad de Granada": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digibug\.ugr\.es|hdl\.handle\.net/10481/))" }, 
     u"Gredos. Colecciones patrimoniales Universidad Salamanca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:gredos\.usal\.es|hdl\.handle\.net/10366/))" }, 
-    
+    u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/)" }, 
+    u"Colecciones digitales Univ. Barcelona": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bib\.ub\.edu/recursos\-informacio/colleccions/colleccions\-digitals/)" }, 
+    u"Biblioteca Digital Complutense": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?alfama\.sim\.ucm\.es)" }, 
+    u"Fondo fotográfico siglo XX Universidad de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?coleccionfff\.unav\.es/bvunav)" }, 
+    u"Disposit Digital UAB": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ddd\.uab\.cat)" }, 
+    u"Biblioteca Digital UIMP": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bduimp\.es/archivo)" }, 
+    u"DUGi Fons Especials": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dugifonsespecials\.udg\.edu|hdl\.handle\.net/10256\.2/))" }, 
+    u"Fondo Antiguo Universidad de Alcalá": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.uah\.es|hdl\.handle\.net/10017/))" }, 
     
     
     
