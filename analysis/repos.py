@@ -188,7 +188,7 @@ for l in f:
         
         if clinks and clinks % 10000 == 0:
             print 'Analysed', clinks, 'external links'
-            breakk = True
+            #breakk = True
 f.close()
 
 cpageswithrepolinks = len(pageswithrepolinks.keys())
@@ -202,14 +202,10 @@ f = open('repos.%s.links.txt' % lang, 'w')
 f.write(output.encode('utf-8'))
 f.close()
 
-#ranking
-ranking = []
+#repos
+output = u"repository   links   articles    type    ratio"
 for repository, props in repositories.items():
-    if props['totallinks'] > 0:
-        ranking.append([props['totallinks'], "%s    %d  %d   %s    %f" % (repository, props['totallinks'], len(props['articles'].keys()), props['type'], float(props['totallinks'])/len(props['articles'].keys()))])
-ranking.sort(reverse=True)
-output = u"repository   links   articles    type    ratio\n"
-output += u'\n'.join([j for i, j in ranking])
+    output += u"\n%s    %d  %d   %s    %f" % (repository, props['totallinks'], len(props['articles'].keys()), props['type'], float(props['totallinks'])/len(props['articles'].keys()))
 f = open('repos.%s.ranking.txt' % lang, 'w')
 f.write(output.encode('utf-8'))
 f.close()
