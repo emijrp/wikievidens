@@ -188,24 +188,25 @@ for l in f:
         
         if clinks and clinks % 10000 == 0:
             print 'Analysed', clinks, 'external links'
-            #breakk = True
+            breakk = True
 f.close()
 
 cpageswithrepolinks = len(pageswithrepolinks.keys())
 
 #links
-output = u"repository   link  type"
+output = u"repository\tlink\ttype"
 for repository, props in repositories.items():
     for link in props["links"]:
-        output += u'\n%s    %s  %s' % (repository, link, props['type'])
+        output += u'\n%s\t%s\t%s' % (repository, link, props['type'])
 f = open('repos.%s.links.txt' % lang, 'w')
 f.write(output.encode('utf-8'))
 f.close()
 
 #repos
-output = u"repository   links   articles    type    ratio"
+output = u"repository\tlinks\tarticles\ttype\tratio"
 for repository, props in repositories.items():
-    output += u"\n%s    %d  %d   %s    %f" % (repository, props['totallinks'], len(props['articles'].keys()), props['type'], float(props['totallinks'])/len(props['articles'].keys()))
+    totalarticles = len(props['articles'].keys())
+    output += u"\n%s\t%d\t%d\t%s\t%f" % (repository, props['totallinks'], totalarticles, props['type'], totalarticles and float(props['totallinks'])/totalarticles or 0)
 f = open('repos.%s.ranking.txt' % lang, 'w')
 f.write(output.encode('utf-8'))
 f.close()
