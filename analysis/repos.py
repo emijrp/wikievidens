@@ -189,7 +189,7 @@ for l in f:
         
         if clinks and clinks % 1000 == 0:
             print 'Analysed', clinks, 'external links'
-            breakk = True
+            #breakk = True
 f.close()
 
 cpageswithrepolinks = len(pageswithrepolinks.keys())
@@ -213,5 +213,5 @@ f.write(output.encode('utf-8'))
 f.close()
 
 #summary
-print u"\nTotal articles analysed: %d. Total articles with links to repositories: %d (%.2f%%)." % (cpages, cpageswithrepolinks, cpageswithrepolinks/(cpages/100.0))
-print u"Total links: %d. Total links to repositories: %d (%.2f%%)." % (clinks, crepolinks, crepolinks/(clinks/100.0))
+print u"\nTotal articles analysed: %d. Total articles with links to repositories (without TEST): %d (%.2f%%)." % (cpages, cpageswithrepolinks, cpageswithrepolinks/(cpages/100.0))
+print u"Total links: %d. Total links to repositories (without TEST): %d (%.2f%%)." % (clinks, crepolinks, crepolinks/(clinks/100.0))
