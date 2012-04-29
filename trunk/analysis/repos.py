@@ -23,15 +23,15 @@ import sys
 
 repositories = {
     #EU
-    u"Europeana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s\<]+/record/)" }, 
+    u"Europeana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s\<]+/record/|https?://(?:[^/\s]+\.)?europeanaregia\.eu)" }, 
     u"Portal Europeo de Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?archivesportaleurope\.eu)" }, 
     u"The European Library": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?theeuropeanlibrary\.org)" }, 
     
     #ES
-    u"Biblioteca Digital Hispánica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:bdh|hemerotecadigital)\.bne\.es)" }, 
+    u"Biblioteca Digital Hispánica y Hemeroteca Histórica BNE": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:bdh|bibliotecadigitalhispanica|hemerotecadigital)\.bne\.es)" }, 
     u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?prensahistorica\.mcu\.es)" }, 
     u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es)" }, 
-    u"CERES": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es)" }, 
+    u"CERES. Red Digital de Colecciones de Museos de España": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es)" }, 
     u"Pares. Portal Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s\<]+(?:nid|txt_id_desc_ud)\=)" },
     u"Fototeca Patrimonio Histórico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:mcu\.es/fototeca_patrimonio/|ipce\.mcu\.es/documentacion/fototeca/))" },
     u"Recolector Hispana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roai\.mcu\.es)" },
