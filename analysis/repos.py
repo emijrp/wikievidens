@@ -118,7 +118,10 @@ repositories = {
     #TEST
     u"Archivo ABC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.abc\.es)" }, 
     u"Hemeroteca La Vanguardia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.lavanguardia\.es)" },
+    u"Memoria de Chile": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriachilena\.cl)" },
+    u"Biblioteca Digital Mundial de Unesco": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?wdl\.org)" },
     u"LOC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?loc\.gov)" },
+    u"Google Books": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?books\.google\.com)" },
     
 }
 
