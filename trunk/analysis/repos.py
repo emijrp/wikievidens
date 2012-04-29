@@ -81,6 +81,21 @@ repositories = {
     u"Biblioteca Digital UIMP": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bduimp\.es/archivo)" }, 
     u"DUGi Fons Especials": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dugifonsespecials\.udg\.edu|hdl\.handle\.net/10256\.2/))" }, 
     u"Fondo Antiguo Universidad de Alcalá": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.uah\.es|hdl\.handle\.net/10017/))" }, 
+    u"Helvia Difusión. Repositorio Universidad de Huelva": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:helvia\.uco\.es|hdl\.handle\.net/10396/))" }, 
+    u"Jable. Archivo de prensa digital. ULPG": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?jable\.ulpgc\.es)" }, 
+    u"Biblioteca Digital de Castellón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositori\.uji\.es|hdl\.handle\.net/10234/))" }, 
+    u"Repositori Obert UdL. Fons Especials": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositori\.udl\.cat/handle/10459\.2/|hdl\.handle\.net/10459\.2/))" }, 
+    u"Universidad Santigo Compostela": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.usc\.es|hdl\.handle\.net/10347/))" }, 
+    u"Universidad Internacional de Andalucía. Fondo Histórico Digital de La Rábida": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.unia\.es|hdl\.handle\.net/10334/))" }, 
+    u"RIUMA. Universidad de Málaga. Patrimonio": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:riuma\.uma\.es|hdl\.handle\.net/10630/))" }, 
+    u"Rodin. Universidad de Cádiz. Patrimonio bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:rodin\.uca\.es|hdl\.handle\.net/10498/))" }, 
+    u"Repositorio Universidad Coruña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:ruc\.udc\.es|hdl\.handle\.net/2183/))" }, 
+    u"Ruidera. UCLM": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:ruidera\.uclm\.es|hdl\.handle\.net/10578/))" }, 
+    u"UvaDoc. Universidad de Valladolid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?uvadoc\.uva\.es)" }, 
+    u"Arias Montano: Repositorio Institucional de la Universidad de Huelva": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:rabida\.uhu\.es/dspace/|hdl\.handle\.net/10272/))" }, 
+    
+    
+    
     
     
     
