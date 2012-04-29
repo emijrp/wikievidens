@@ -177,18 +177,19 @@ for l in f:
         clinks += 1
         for repository, props in repositories.items():
             if re.search(props['compiled'], el_to):
-                crepolinks += 1
+                if props['type'] != 'TEST':
+                    crepolinks += 1
                 repositories[repository]['links'].append(el_to)
                 repositories[repository]['totallinks'] += 1
-                if not pageswithrepolinks.has_key(el_from):
+                if not pageswithrepolinks.has_key(el_from) and props['type'] != 'TEST':
                     pageswithrepolinks[el_from] = ''
                 if not repositories[repository]['articles'].has_key(el_from):
                     repositories[repository]['articles'][el_from] = ''
                 break
         
-        if clinks and clinks % 10000 == 0:
+        if clinks and clinks % 1000 == 0:
             print 'Analysed', clinks, 'external links'
-            #breakk = True
+            breakk = True
 f.close()
 
 cpageswithrepolinks = len(pageswithrepolinks.keys())
@@ -198,7 +199,7 @@ output = u"repository\tlink\ttype"
 for repository, props in repositories.items():
     for link in props["links"]:
         output += u'\n%s\t%s\t%s' % (repository, link, props['type'])
-f = open('repos.%s.links.txt' % lang, 'w')
+f = open('repos.%s.links.csv' % lang, 'w')
 f.write(output.encode('utf-8'))
 f.close()
 
@@ -207,7 +208,7 @@ output = u"repository\tlinks\tarticles\ttype\tratio"
 for repository, props in repositories.items():
     totalarticles = len(props['articles'].keys())
     output += u"\n%s\t%d\t%d\t%s\t%f" % (repository, props['totallinks'], totalarticles, props['type'], totalarticles and float(props['totallinks'])/totalarticles or 0)
-f = open('repos.%s.ranking.txt' % lang, 'w')
+f = open('repos.%s.ranking.csv' % lang, 'w')
 f.write(output.encode('utf-8'))
 f.close()
 
