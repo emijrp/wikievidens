@@ -97,15 +97,6 @@ repositories = {
     u"Flons So Torres. Universitat Lérida": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:soltorres\.udl\.cat|hdl\.handle\.net/10459/))" }, 
     u"Biblioteca Digital Universidad de Oviedo": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digibuo\.sheol\.uniovi\.es)" }, 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     #INS
     u"Biblioteca Virtual de Derecho Aragones": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?derechoaragones\.es)" }, 
     u"Portal teatro Siglo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es)" }, 
