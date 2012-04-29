@@ -23,105 +23,105 @@ import sys
 
 repositories = {
     #EU
-    u"Europeana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s\<]+/record/|https?://(?:[^/\s]+\.)?europeanaregia\.eu)" }, 
-    u"Portal Europeo de Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?archivesportaleurope\.eu)" }, 
-    u"The European Library": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?theeuropeanlibrary\.org)" }, 
+    u"Europeana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?europeana\.eu/[^\|\]\s\<]+/record/|https?://(?:[^/\s]+\.)?europeanaregia\.eu)", 'type': 'EU' }, 
+    u"Portal Europeo de Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?archivesportaleurope\.eu)", 'type': 'EU' }, 
+    u"The European Library": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?theeuropeanlibrary\.org)", 'type': 'EU' }, 
     
     #ES
-    u"Biblioteca Digital Hispánica y Hemeroteca Histórica BNE": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:bdh|bibliotecadigitalhispanica|hemerotecadigital)\.bne\.es)" }, 
-    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?prensahistorica\.mcu\.es)" }, 
-    u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es)" }, 
-    u"CERES. Red Digital de Colecciones de Museos de España": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es)" }, 
-    u"Pares. Portal Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s\<]+(?:nid|txt_id_desc_ud)\=)" },
-    u"Fototeca Patrimonio Histórico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:mcu\.es/fototeca_patrimonio/|ipce\.mcu\.es/documentacion/fototeca/))" },
-    u"Recolector Hispana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roai\.mcu\.es)" },
+    u"Biblioteca Digital Hispánica y Hemeroteca Histórica BNE": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:bdh|bibliotecadigitalhispanica|hemerotecadigital)\.bne\.es)", 'type': 'ES' }, 
+    u"Biblioteca Virtual de Prensa Histórica": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?prensahistorica\.mcu\.es)", 'type': 'ES' }, 
+    u"Biblioteca Virtual del Patrimonio Bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvpb\.mcu\.es)", 'type': 'ES' }, 
+    u"CERES. Red Digital de Colecciones de Museos de España": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ceres\.mcu\.es)", 'type': 'ES' }, 
+    u"Pares. Portal Archivos": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?pares\.mcu\.es[^\|\]\s\<]+(?:nid|txt_id_desc_ud)\=)", 'type': 'ES' },
+    u"Fototeca Patrimonio Histórico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:mcu\.es/fototeca_patrimonio/|ipce\.mcu\.es/documentacion/fototeca/))", 'type': 'ES' },
+    u"Recolector Hispana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roai\.mcu\.es)", 'type': 'ES' },
     
     #REG
-    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.carm\.es)" },
-    u"Biblioteca Virtual de Andalucía": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualdeandalucia\.es)" }, 
-    u"Biblioteca Virtual de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.aragon\.es)" }, 
-    u"Fondo Histórico Cortes de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cortesaragon\.es)" }, 
-    u"Biblioteca Digital de Castilla y León": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.jcyl\.es)" }, 
-    u"Archivo de la imagen de Castilla-La Mancha": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?clip\.jccm\.es/archivo_de_la_imagen)" }, 
-    u"Biblioteca Digital de Castilla-La Mancha": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?clip\.jccm\.es/bidicam/)" }, 
-    u"Biblioteca Digital de la Comunidad Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualmadrid\.org)" }, 
-    u"Memoria Digital Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.cbuc\.cat)" }, 
-    u"ARCA. Arxiu de Revistes Catalanes Antigues": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc2\.cbuc\.cat)" }, 
-    u"BiValdi. Biblioteca Digital Valenciana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bv2\.gva\.es)" }, 
-    u"BINADI. Biblioteca Digital de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:administracionelectronica\.navarra\.es/binadi/|navarra\.es/appsext/bnd/))" }, 
-    u"Biblioteca Digital Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?liburuklik\.euskadi\.net)" }, 
-    u"Memoria Digital Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriadigitalvasca\.es)" }, 
-    u"Galiciana. Biblioteca Digital de Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?galiciana\.bibliotecadegalicia\.xunta\.es)" }, 
-    u"Biblioteca Dixital de Galicia (Cidade de Cultura Galega)": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:csbg\.org/bibliotecadixital/|csbg\.org/prensagalega|cmg\.xunta\.es/visor/prensa/|cmg\.xunta\.es/mediateca/hemeroteca/|bvg\.centromultimedia\.net|cmg\.xunta\.es/mediateca/cartografia/))" }, 
-    u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es)" }, 
-    u"Proyecto Carmesí Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?regmurcia\.com/[^\|\]\s\<]+&sit\=c,373)" }, 
-    u"Biblioteca Virtual de Asturias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.asturias\.es)" }, 
-    u"Biblioteca Virtual de La Rioja": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.larioja\.org)" }, 
-    u"ANC. Arxiu Nacional Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cultura\.gencat\.net/anc/)" }, 
-    u"Documentos y Archivos de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?sipca\.es/dara/)" }, 
+    u"Biblioteca Digital de la Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.carm\.es)", 'type': 'REG' },
+    u"Biblioteca Virtual de Andalucía": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualdeandalucia\.es)", 'type': 'REG' }, 
+    u"Biblioteca Virtual de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.aragon\.es)", 'type': 'REG' }, 
+    u"Fondo Histórico Cortes de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cortesaragon\.es)", 'type': 'REG' }, 
+    u"Biblioteca Digital de Castilla y León": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.jcyl\.es)", 'type': 'REG' }, 
+    u"Archivo de la imagen de Castilla-La Mancha": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?clip\.jccm\.es/archivo_de_la_imagen)", 'type': 'REG' }, 
+    u"Biblioteca Digital de Castilla-La Mancha": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?clip\.jccm\.es/bidicam/)", 'type': 'REG' }, 
+    u"Biblioteca Digital de la Comunidad Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualmadrid\.org)", 'type': 'REG' }, 
+    u"Memoria Digital Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.cbuc\.cat)", 'type': 'REG' }, 
+    u"ARCA. Arxiu de Revistes Catalanes Antigues": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc2\.cbuc\.cat)", 'type': 'REG' }, 
+    u"BiValdi. Biblioteca Digital Valenciana": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bv2\.gva\.es)", 'type': 'REG' }, 
+    u"BINADI. Biblioteca Digital de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:administracionelectronica\.navarra\.es/binadi/|navarra\.es/appsext/bnd/))", 'type': 'REG' }, 
+    u"Biblioteca Digital Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?liburuklik\.euskadi\.net)", 'type': 'REG' }, 
+    u"Memoria Digital Vasca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriadigitalvasca\.es)", 'type': 'REG' }, 
+    u"Galiciana. Biblioteca Digital de Galicia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?galiciana\.bibliotecadegalicia\.xunta\.es)", 'type': 'REG' }, 
+    u"Biblioteca Dixital de Galicia (Cidade de Cultura Galega)": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:csbg\.org/bibliotecadixital/|csbg\.org/prensagalega|cmg\.xunta\.es/visor/prensa/|cmg\.xunta\.es/mediateca/hemeroteca/|bvg\.centromultimedia\.net|cmg\.xunta\.es/mediateca/cartografia/))", 'type': 'REG' }, 
+    u"Memoria Digital de Canarias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?mdc\.ulpgc\.es)", 'type': 'REG' }, 
+    u"Proyecto Carmesí Región de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?regmurcia\.com/[^\|\]\s\<]+&sit\=c,373)", 'type': 'REG' }, 
+    u"Biblioteca Virtual de Asturias": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.asturias\.es)", 'type': 'REG' }, 
+    u"Biblioteca Virtual de La Rioja": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.larioja\.org)", 'type': 'REG' }, 
+    u"ANC. Arxiu Nacional Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cultura\.gencat\.net/anc/)", 'type': 'REG' }, 
+    u"Documentos y Archivos de Aragón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?sipca\.es/dara/)", 'type': 'REG' }, 
     
     #LOC
-    u"Biblioteca Virtual Diputación de Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bivizar\.es)" },
-    u"Biblioteca Digital Ayuntamiento Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?murcia\.es/bibliotecadigitaldemurcia/)" },
-    u"Biblioteca Digital Leonesa": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?saber\.es)" },
-    u"Memoria de Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriademadrid\.es)" }, 
-    u"Biblioteca Digital de Bizkaia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecaforal\.bizkaia\.net)" }, 
+    u"Biblioteca Virtual Diputación de Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bivizar\.es)", 'type': 'LOC' },
+    u"Biblioteca Digital Ayuntamiento Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?murcia\.es/bibliotecadigitaldemurcia/)", 'type': 'LOC' },
+    u"Biblioteca Digital Leonesa": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?saber\.es)", 'type': 'LOC' },
+    u"Memoria de Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriademadrid\.es)", 'type': 'LOC' }, 
+    u"Biblioteca Digital de Bizkaia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecaforal\.bizkaia\.net)", 'type': 'LOC' }, 
     
     #UNI
-    u"Fondo Antiguo Universidad Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?zaguan\.unizar\.es)" }, 
-    u"Digitum. Fondo Antiguo Universidad de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digitum\.um\.es|hdl\.handle\.net/10201/))" }, 
-    u"Somni. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:roderic\.uv\.es|hdl\.handle\.net/10550/))" }, 
-    u"Fondo Antiguo Universidad de Granada": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digibug\.ugr\.es|hdl\.handle\.net/10481/))" }, 
-    u"Gredos. Colecciones patrimoniales Universidad Salamanca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:gredos\.usal\.es|hdl\.handle\.net/10366/))" }, 
-    u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/)" }, 
-    u"Colecciones digitales Univ. Barcelona": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bib\.ub\.edu/recursos\-informacio/colleccions/colleccions\-digitals/)" }, 
-    u"Biblioteca Digital Complutense": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?alfama\.sim\.ucm\.es)" }, 
-    u"Fondo fotográfico siglo XX Universidad de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?coleccionfff\.unav\.es/bvunav)" }, 
-    u"Disposit Digital UAB": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ddd\.uab\.cat)" }, 
-    u"Biblioteca Digital UIMP": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bduimp\.es/archivo)" }, 
-    u"DUGi Fons Especials": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dugifonsespecials\.udg\.edu|hdl\.handle\.net/10256\.2/))" }, 
-    u"Fondo Antiguo Universidad de Alcalá": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.uah\.es|hdl\.handle\.net/10017/))" }, 
-    u"Helvia Difusión. Repositorio Universidad de Huelva": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:helvia\.uco\.es|hdl\.handle\.net/10396/))" }, 
-    u"Jable. Archivo de prensa digital. ULPG": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?jable\.ulpgc\.es)" }, 
-    u"Biblioteca Digital de Castellón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositori\.uji\.es|hdl\.handle\.net/10234/))" }, 
-    u"Repositori Obert UdL. Fons Especials": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositori\.udl\.cat/handle/10459\.2/|hdl\.handle\.net/10459\.2/))" }, 
-    u"Universidad Santigo Compostela": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.usc\.es|hdl\.handle\.net/10347/))" }, 
-    u"Universidad Internacional de Andalucía. Fondo Histórico Digital de La Rábida": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.unia\.es|hdl\.handle\.net/10334/))" }, 
-    u"RIUMA. Universidad de Málaga. Patrimonio": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:riuma\.uma\.es|hdl\.handle\.net/10630/))" }, 
-    u"Rodin. Universidad de Cádiz. Patrimonio bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:rodin\.uca\.es|hdl\.handle\.net/10498/))" }, 
-    u"Repositorio Universidad Coruña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:ruc\.udc\.es|hdl\.handle\.net/2183/))" }, 
-    u"Ruidera. UCLM": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:ruidera\.uclm\.es|hdl\.handle\.net/10578/))" }, 
-    u"UvaDoc. Universidad de Valladolid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?uvadoc\.uva\.es)" }, 
-    u"Arias Montano: Repositorio Institucional de la Universidad de Huelva": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:rabida\.uhu\.es/dspace/|hdl\.handle\.net/10272/))" }, 
-    u"CEU Repositorio Institucional": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.ceu\.es|hdl\.handle\.net/10637/))" }, 
-    u"Flons So Torres. Universitat Lérida": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:soltorres\.udl\.cat|hdl\.handle\.net/10459/))" }, 
-    u"Biblioteca Digital Universidad de Oviedo": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digibuo\.sheol\.uniovi\.es)" }, 
+    u"Fondo Antiguo Universidad Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?zaguan\.unizar\.es)", 'type': 'UNI' }, 
+    u"Digitum. Fondo Antiguo Universidad de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digitum\.um\.es|hdl\.handle\.net/10201/))", 'type': 'UNI' }, 
+    u"Somni. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:roderic\.uv\.es|hdl\.handle\.net/10550/))", 'type': 'UNI' }, 
+    u"Fondo Antiguo Universidad de Granada": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digibug\.ugr\.es|hdl\.handle\.net/10481/))", 'type': 'UNI' }, 
+    u"Gredos. Colecciones patrimoniales Universidad Salamanca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:gredos\.usal\.es|hdl\.handle\.net/10366/))", 'type': 'UNI' }, 
+    u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/)", 'type': 'UNI' }, 
+    u"Colecciones digitales Univ. Barcelona": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bib\.ub\.edu/recursos\-informacio/colleccions/colleccions\-digitals/)", 'type': 'UNI' }, 
+    u"Biblioteca Digital Complutense": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?alfama\.sim\.ucm\.es)", 'type': 'UNI' }, 
+    u"Fondo fotográfico siglo XX Universidad de Navarra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?coleccionfff\.unav\.es/bvunav)", 'type': 'UNI' }, 
+    u"Disposit Digital UAB": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ddd\.uab\.cat)", 'type': 'UNI' }, 
+    u"Biblioteca Digital UIMP": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bduimp\.es/archivo)", 'type': 'UNI' }, 
+    u"DUGi Fons Especials": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dugifonsespecials\.udg\.edu|hdl\.handle\.net/10256\.2/))", 'type': 'UNI' }, 
+    u"Fondo Antiguo Universidad de Alcalá": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.uah\.es|hdl\.handle\.net/10017/))", 'type': 'UNI' }, 
+    u"Helvia Difusión. Repositorio Universidad de Huelva": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:helvia\.uco\.es|hdl\.handle\.net/10396/))", 'type': 'UNI' }, 
+    u"Jable. Archivo de prensa digital. ULPG": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?jable\.ulpgc\.es)", 'type': 'UNI' }, 
+    u"Biblioteca Digital de Castellón": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositori\.uji\.es|hdl\.handle\.net/10234/))", 'type': 'UNI' }, 
+    u"Repositori Obert UdL. Fons Especials": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositori\.udl\.cat/handle/10459\.2/|hdl\.handle\.net/10459\.2/))", 'type': 'UNI' }, 
+    u"Universidad Santigo Compostela": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.usc\.es|hdl\.handle\.net/10347/))", 'type': 'UNI' }, 
+    u"Universidad Internacional de Andalucía. Fondo Histórico Digital de La Rábida": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.unia\.es|hdl\.handle\.net/10334/))", 'type': 'UNI' }, 
+    u"RIUMA. Universidad de Málaga. Patrimonio": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:riuma\.uma\.es|hdl\.handle\.net/10630/))", 'type': 'UNI' }, 
+    u"Rodin. Universidad de Cádiz. Patrimonio bibliográfico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:rodin\.uca\.es|hdl\.handle\.net/10498/))", 'type': 'UNI' }, 
+    u"Repositorio Universidad Coruña": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:ruc\.udc\.es|hdl\.handle\.net/2183/))", 'type': 'UNI' }, 
+    u"Ruidera. UCLM": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:ruidera\.uclm\.es|hdl\.handle\.net/10578/))", 'type': 'UNI' }, 
+    u"UvaDoc. Universidad de Valladolid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?uvadoc\.uva\.es)", 'type': 'UNI' }, 
+    u"Arias Montano: Repositorio Institucional de la Universidad de Huelva": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:rabida\.uhu\.es/dspace/|hdl\.handle\.net/10272/))", 'type': 'UNI' }, 
+    u"CEU Repositorio Institucional": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:dspace\.ceu\.es|hdl\.handle\.net/10637/))", 'type': 'UNI' }, 
+    u"Flons So Torres. Universitat Lérida": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:soltorres\.udl\.cat|hdl\.handle\.net/10459/))", 'type': 'UNI' }, 
+    u"Biblioteca Digital Universidad de Oviedo": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digibuo\.sheol\.uniovi\.es)", 'type': 'UNI' }, 
     
     #INS
-    u"Biblioteca Virtual de Derecho Aragonés": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?derechoaragones\.es)" }, 
-    u"Portal Teatro Siglo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es)" }, 
-    u"Biblioteca Virtual Miguel de Cervantes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cervantesvirtual\.com)" }, 
-    u"Biblioteca Digital Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ateneodemadrid\.com/biblioteca_digital/)" }, 
-    u"Biblioteca Digital Jardín Botánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibdigital\.rjb\.csic\.es)" }, 
-    u"Archivo Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?archivo\.ateneodemadrid\.es)" }, 
-    u"Biblioteca Virtual Larramendi": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?larramendi\.es/i18n/)" }, 
-    u"Iuris Digital. Biblioteca Digital de la Real Academia de Jurisprudencia y Legislación": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvrajyl\.insde\.es)" }, 
-    u"Cartoteca Digital i Col·leccions d'imatges del Institut Cartografic de Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cartotecadigital\.icc\.cat)" }, 
-    u"Almirall, portal del pensamiento del Segle XIX": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?194\.224\.194\.201\:9080/Almirall/)" }, 
-    u"Repositorio de la Alhambra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:alhambra\-patronato\.es/ria/|hdl\.handle\.net/10514/))" }, 
-    u"Repositorio de la Real Academia de Córdoba de Ciencias, Bellas Letras y Nobles Artes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositorio\.racordoba\.es|hdl\.handle\.net/10853/))" }, 
-    u"Biblioteca Digital Fundación Sierra de Pambley": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualsierrapambley\.org)" }, 
-    u"Biblioteca Saavadra Fajardo de Pensamiento Político Hispánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?saavedrafajardo\.um\.es)" }, 
-    u"Biblioteca Virtual de la Real Academia Nacional de Farmacia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.ranf\.com)" }, 
-    u"Biblioteca Digital Real Academia Historia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.rah\.es)" }, 
+    u"Biblioteca Virtual de Derecho Aragonés": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?derechoaragones\.es)", 'type': 'INS' }, 
+    u"Portal Teatro Siglo de Oro": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?teatrosiglodeoro\.bne\.es)", 'type': 'INS' }, 
+    u"Biblioteca Virtual Miguel de Cervantes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cervantesvirtual\.com)", 'type': 'INS' }, 
+    u"Biblioteca Digital Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?ateneodemadrid\.com/biblioteca_digital/)", 'type': 'INS' }, 
+    u"Biblioteca Digital Jardín Botánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibdigital\.rjb\.csic\.es)", 'type': 'INS' }, 
+    u"Archivo Ateneo Madrid": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?archivo\.ateneodemadrid\.es)", 'type': 'INS' }, 
+    u"Biblioteca Virtual Larramendi": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?larramendi\.es/i18n/)", 'type': 'INS' }, 
+    u"Iuris Digital. Biblioteca Digital de la Real Academia de Jurisprudencia y Legislación": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bvrajyl\.insde\.es)", 'type': 'INS' }, 
+    u"Cartoteca Digital i Col·leccions d'imatges del Institut Cartografic de Catalunya": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?cartotecadigital\.icc\.cat)", 'type': 'INS' }, 
+    u"Almirall, portal del pensamiento del Segle XIX": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?194\.224\.194\.201\:9080/Almirall/)", 'type': 'INS' }, 
+    u"Repositorio de la Alhambra": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:alhambra\-patronato\.es/ria/|hdl\.handle\.net/10514/))", 'type': 'INS' }, 
+    u"Repositorio de la Real Academia de Córdoba de Ciencias, Bellas Letras y Nobles Artes": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:repositorio\.racordoba\.es|hdl\.handle\.net/10853/))", 'type': 'INS' }, 
+    u"Biblioteca Digital Fundación Sierra de Pambley": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtualsierrapambley\.org)", 'type': 'INS' }, 
+    u"Biblioteca Saavadra Fajardo de Pensamiento Político Hispánico": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?saavedrafajardo\.um\.es)", 'type': 'INS' }, 
+    u"Biblioteca Virtual de la Real Academia Nacional de Farmacia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecavirtual\.ranf\.com)", 'type': 'INS' }, 
+    u"Biblioteca Digital Real Academia Historia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecadigital\.rah\.es)", 'type': 'INS' }, 
     
     #TEST
-    u"Archivo ABC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.abc\.es)" }, 
-    u"Hemeroteca La Vanguardia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.lavanguardia\.es)" },
-    u"Memoria de Chile": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriachilena\.cl)" },
-    u"Biblioteca Digital Mundial de Unesco": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?wdl\.org)" },
-    u"LOC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?loc\.gov)" },
-    u"Google Books": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?books\.google\.com)" },
+    u"Archivo ABC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.abc\.es)", 'type': 'TEST' }, 
+    u"Hemeroteca La Vanguardia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?hemeroteca\.lavanguardia\.es)", 'type': 'TEST' },
+    u"Memoria de Chile": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?memoriachilena\.cl)", 'type': 'TEST' },
+    u"Biblioteca Digital Mundial de Unesco": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?wdl\.org)", 'type': 'TEST' },
+    u"LOC": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?loc\.gov)", 'type': 'TEST' },
+    u"Google Books": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?books\.google\.com)", 'type': 'TEST' },
     
 }
 
@@ -136,6 +136,7 @@ if not 'page' in sys.argv[1] or not 'external' in sys.argv[2]:
     print 'param 1 = pages dump, param 2 = externallinks dump'
     sys.exit()
 
+lang = sys.argv[1].split('wiki')[0]
 #load page ids for namespace = 0 non-redirects
 page_r = re.compile(ur"\((\d+?),(\d+?),'(.*?)','(.*?)',(\d+?),(\d+?),(\d+?),([\.\d]+?),'(.*?)',(\d+?),(\d+?),(\d+?)\)")
 f = gzip.open(sys.argv[1], 'r')
@@ -192,21 +193,27 @@ f.close()
 
 cpageswithrepolinks = len(pageswithrepolinks.keys())
 
-print u"== Links =="
+#links
+output = u"repository   link  type"
 for repository, props in repositories.items():
-    output = u"\n=== %s ===" % (repository)
-    print output.encode('utf-8')
-    output = u'\n'.join(props["links"])
-    print output.encode('utf-8')
+    for link in props["links"]:
+        output += u'\n%s    %s  %s' % (repository, link, props['type'])
+f = open('repos.%s.links.txt' % lang, 'w')
+f.write(output.encode('utf-8'))
+f.close()
 
+#ranking
 ranking = []
 for repository, props in repositories.items():
     if props['totallinks'] > 0:
-        ranking.append([props['totallinks'], "%s;%d;%d" % (repository, props['totallinks'], len(props['articles']))])
+        ranking.append([props['totallinks'], "%s    %d  %d   %s    %f" % (repository, props['totallinks'], len(props['articles'].keys()), props['type'], float(props['totallinks'])/len(props['articles'].keys()))])
 ranking.sort(reverse=True)
+output = u"repository   links   articles    type    ratio\n"
+output += u'\n'.join([j for i, j in ranking])
+f = open('repos.%s.ranking.txt' % lang, 'w')
+f.write(output.encode('utf-8'))
+f.close()
 
-print u"\n== Ranking =="
-output = u'\n'.join([j for i, j in ranking])
-print output.encode('utf-8')
+#summary
 print u"\nTotal articles analysed: %d. Total articles with links to repositories: %d (%.2f%%)." % (cpages, cpageswithrepolinks, cpageswithrepolinks/(cpages/100.0))
 print u"Total links: %d. Total links to repositories: %d (%.2f%%)." % (clinks, crepolinks, crepolinks/(clinks/100.0))
