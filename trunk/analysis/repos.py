@@ -188,7 +188,7 @@ for l in f:
         
         if clinks and clinks % 10000 == 0:
             print 'Analysed', clinks, 'external links'
-            breakk = True
+            #breakk = True
 f.close()
 
 cpageswithrepolinks = len(pageswithrepolinks.keys())
