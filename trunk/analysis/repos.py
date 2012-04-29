@@ -70,7 +70,7 @@ repositories = {
     #UNI
     u"Fondo Antiguo Universidad Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?zaguan\.unizar\.es)" }, 
     u"Digitum. Fondo Antiguo Universidad de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digitum\.um\.es|hdl\.handle\.net/10201/))" }, 
-    u"Somni. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:roderic\.uv\.es|hdl\.handle\.net/10550/)" }, 
+    u"Somni. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:roderic\.uv\.es|hdl\.handle\.net/10550/))" }, 
     u"Fondo Antiguo Universidad de Granada": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digibug\.ugr\.es|hdl\.handle\.net/10481/))" }, 
     u"Gredos. Colecciones patrimoniales Universidad Salamanca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:gredos\.usal\.es|hdl\.handle\.net/10366/))" }, 
     u"Fondo antiguo Universidad Sevilla": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?fondosdigitales\.us\.es/fondos/)" }, 
@@ -126,6 +126,7 @@ repositories = {
 }
 
 for repository, props in repositories.items():
+    print 'Compiling', props['regexp']
     repositories[repository]['compiled'] = re.compile(props['regexp'])
     repositories[repository]['links'] = []
     repositories[repository]['totallinks'] = 0
@@ -186,7 +187,7 @@ for l in f:
         
         if clinks and clinks % 10000 == 0:
             print 'Analysed', clinks, 'external links'
-            #breakk = True
+            breakk = True
 f.close()
 
 cpageswithrepolinks = len(pageswithrepolinks.keys())
