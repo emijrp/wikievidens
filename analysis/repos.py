@@ -68,11 +68,18 @@ repositories = {
     u"Biblioteca Digital de Bizkaia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?bibliotecaforal\.bizkaia\.net)" }, 
     
     #UNI
-    u"Fondo Antiguo Universidad Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?zaguan\.unizar\.es/collection/)" }, 
-    u"Digitum. Fondo Antiguo Universidad de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digitum\.um\.es/xmlui/handle/)" }, 
-    u"Somin. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?roderic\.uv\.es)" }, 
-    u"Fondo Antiguo Universidad de Granada": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?digibug\.ugr\.es/handle/)" }, 
-    u"Colecciones patrimoniales Universidad Salamanca (Gredos)": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?gredos\.usal\.es/jspui/handle/)" }, 
+    u"Fondo Antiguo Universidad Zaragoza": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?zaguan\.unizar\.es)" }, 
+    u"Digitum. Fondo Antiguo Universidad de Murcia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digitum\.um\.es|hdl\.handle\.net/10201/))" }, 
+    u"Somni. Fondo Histórico Universidad de Valencia": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:roderic\.uv\.es|hdl\.handle\.net/10550/)" }, 
+    u"Fondo Antiguo Universidad de Granada": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:digibug\.ugr\.es|hdl\.handle\.net/10481/))" }, 
+    u"Gredos. Colecciones patrimoniales Universidad Salamanca": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?(?:gredos\.usal\.es|hdl\.handle\.net/10366/))" }, 
+    
+    
+    
+    
+    
+    
+    
     
     #INS
     u"Biblioteca Virtual de Derecho Aragones": { 'regexp': ur"(?im)(https?://(?:[^/\s]+\.)?derechoaragones\.es)" }, 
