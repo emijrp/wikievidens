@@ -32,7 +32,8 @@ def check_url(url):
 headers = { 'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:11.0) Gecko/20100101 Firefox/11.0' }
 timeout = 25 # pueden ser PDFs, que hacemos?
 for url in open(sys.argv[1], 'r').read().splitlines():
-    if 'pdf' in url.lower() or 'hemeroteca.abc' in url.lower(): #checked sample randomly by hand and they are OK: cervantesvirtual, hemeroteca.lavanguardia.es, saber.es...
+    if 'pdf' in url.lower() or 'hemeroteca.abc' in url.lower():
+        #sample was checked randomly by hand and they are OK: cervantesvirtual, hemeroteca.lavanguardia.es, saber.es...
         print 'Skiping PDF', '|', url
         continue
     
