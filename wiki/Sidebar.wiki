@@ -9,4 +9,5 @@
     * [PreprocessTab Preprocess tab]
     * [AnalysisTab Analysis tab]
     * [ExportTab Export tab]
+  * [Datasets Datasets]
   * [Contribute Contribute]
