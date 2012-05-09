@@ -1,6 +1,7 @@
 #summary Some useful datasets about wikis
 #sidebar Sidebar
 
-Trabajando en ello...
+List of some datasets about wikis:
 
-  * [https://code.google.com/p/wlm-2011-dataset/ wlm-2011-dataset]: it contains all the images uploaded to Wikimedia Commons from September 1 to September 30, 2011, during the Wiki Loves Monuments photo contest.
+  * [https://code.google.com/p/wlm-2011-dataset/ wlm-2011-dataset]: it contains metadata of all the images uploaded to Wikimedia Commons from September 1 to September 30, 2011, during the Wiki Loves Monuments photo contest.
+  * 
