@@ -3,5 +3,5 @@
 
 List of some datasets about wikis:
 
-  * [https://code.google.com/p/wlm-2011-dataset/ wlm-2011-dataset]: it contains metadata of all the images uploaded to Wikimedia Commons from September 1 to September 30, 2011, during the Wiki Loves Monuments 2011 photo contest.
-  * [https://code.google.com/p/wikievidens/source/browse/#svn%2Ftrunk%2Fdatasets%2Frepos-2012-dataset repos-2012-dataset]: it contains metadata about links to digital repositories from Spanish and Catalan Wikipedias.
+  * [https://code.google.com/p/wlm-2011-dataset/ wlm-2011-dataset]: it contains metadata of all the images uploaded to Wikimedia Commons from September 1 to September 30, 2011, during the Wiki Loves Monuments 2011 photo contest. _(link to paper very soon...)_
+  * [https://code.google.com/p/wikievidens/source/browse/#svn%2Ftrunk%2Fdatasets%2Frepos-2012-dataset repos-2012-dataset]: it contains metadata about links to digital repositories from Spanish and Catalan Wikipedias. _(link to paper very soon...)_
