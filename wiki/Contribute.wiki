@@ -1,4 +1,5 @@
 #summary Help to improve WikiEvidens. Contribute!
+#labels Featured
 #sidebar Sidebar
 
 If you want to send any *suggestion*, reach me at emijrp@gmail.com. For *bugs*, you can use the [http://code.google.com/p/wikievidens/issues/list issues] section.
