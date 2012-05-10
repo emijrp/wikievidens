@@ -1,5 +1,4 @@
 #summary Learn to install and use WikiEvidens
-#labels Featured
 #sidebar Sidebar
 == What is !WikiEvidens? ==
 
