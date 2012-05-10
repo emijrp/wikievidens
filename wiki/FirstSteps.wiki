@@ -1,4 +1,5 @@
 #summary Your first steps with WikiEvidens
+#labels Featured
 #sidebar Sidebar
 
 == First steps ==
