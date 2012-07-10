@@ -1,8 +1,8 @@
-== What is !WikiEvidens? ==
-<img src="http://wikipapers.referata.com/w/images/Wikievidens0.0.6.png" width=400px align=right/>
+= What is !WikiEvidens? =
+<img src="http://wikipapers.referata.com/w/images/Wikievidens0.0.6.png" width=420px align=right/>
 *!WikiEvidens is a statistical and visualization tool for wikis.* It is developed by [https://sites.google.com/site/emijrp/ Emilio J. Rodríguez-Posada] and it is on alpha stage.
 
-== Features ==
+= Features =
   * Wiki datasets *downloader*
   * Wiki XML *preprocessor*
   * Global, page-by-page, user-by-user and sample *analysis*
@@ -10,14 +10,19 @@
     * Activity by year, month, day of week, hour
     * Networks visualization
     * Authorship scanner
+    * Many more very soon...
   * *Export* in several formats
 
-== Documentation ==
+= Documentation =
 
 Learn to install and use !WikiEvidens. We are working in a complete *[Documentation]*.
 
-== Contribute ==
-If you want to send any *suggestion*, reach me at emijrp@gmail.com. For *bugs*, you can use the *[http://code.google.com/p/wikievidens/issues/list issues]* section.
+= Publications =
+
+  * Saorín, Tomás; Rodríguez Posada, Emilio José (2012). «[http://www.ub.edu/bid/28/saorin2.htm Análisis de enlaces hacia bibliotecas y archivos digitales de patrimonio cultural desde Wikipedia en español y catalán]». _BiD: textos universitaris de biblioteconomia i documentació_, juny, núm. 28
+
+= Contribute =
+If you want to send any *suggestion*, reach me at [mailto:emijrp@gmail.com emijrp@gmail.com]. For *bugs*, you can use the *[http://code.google.com/p/wikievidens/issues/list issues]* section.
 
 <table width=99%>
 <tr><td align=center>
