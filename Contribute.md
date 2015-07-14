@@ -1,0 +1,1 @@
+If you want to send any **suggestion**, reach me at emijrp@gmail.com. For **bugs**, you can use the [issues](http://code.google.com/p/wikievidens/issues/list) section.
